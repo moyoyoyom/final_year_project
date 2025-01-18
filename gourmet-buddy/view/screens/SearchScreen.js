@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
-import { Header } from "react-native-elements";
+//import { Header } from "react-native-elements";
+import Header from "../UI/components/Header";
 
 import Screen from "../UI/layout/Screen";
 import SearchField from "../UI/components/SearchField";
@@ -8,16 +9,16 @@ import Button from "../UI/components/Button";
 import Divider from "../UI/components/Divider";
 import FoodProductList from "../entity/FoodProductList";
 
-const SearchScreen = () => {
+const SearchScreen = ({ onChangeText }) => {
   //DELETE THIS DUMMY DATA LATER
   const foodProducts = [];
   //View
   return (
     <Screen>
       <Header
-        leftComponent={<Icons.ReturnIcon />}
-        centerComponent={<SearchField />}
-        rightComponent={<Icons.MenuOptionsIcon />}
+        leftItem={<Icons.ReturnIcon />}
+        centerItem={<SearchField onChangeText={onChangeText} />}
+        rightItem={<Icons.CameraIcon />}
       />
       <Button
         buttonText="Scan Barcode or Label"

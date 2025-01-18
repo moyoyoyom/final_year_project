@@ -1,13 +1,21 @@
-import { StyleSheet } from "react-native";
-import { Searchbar } from "react-native-paper";
+import { StyleSheet, View, TextInput } from "react-native";
 
 const SearchField = () => {
-  return <Searchbar placeholder="Search" style={styles.searchBarStyle} />;
+  return (
+    <View style={styles.backgroundStyle}>
+      <TextInput placeholder="Search for product" />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-  searchBarStyle: {
-    width: "120%",
+  backgroundStyle: {
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 20,
+    height: "auto",
+    width: 270,
   },
 });
+
 export default SearchField;
