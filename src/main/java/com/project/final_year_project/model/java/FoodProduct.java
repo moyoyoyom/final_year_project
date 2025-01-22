@@ -3,7 +3,7 @@ package com.project.final_year_project.model.java;
 import java.util.List;
 
 public class FoodProduct {
-    private String productID;
-    private String productName;
-    private List<Ingredient> ingredients;
+    private String code;
+    private String product_id;
+
 }
