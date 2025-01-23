@@ -13,10 +13,6 @@ import com.project.final_year_project.model.java.data.daoImplementation.FoodProd
 public class FinalYearProjectApplication {
 
 	public static void main(String[] args) throws SQLException {
-		// SpringApplication.run(FinalYearProjectApplication.class, args);
-		// Scheduler schedule = new Scheduler();
-		// schedule.runDailyTask();
-
 		FoodProductDao foodProductDao = new FoodProductDaoImpl();
 		List<FoodProduct> results = foodProductDao.getFoodProductByName("coca-cola");
 		for (FoodProduct foodProduct : results) {

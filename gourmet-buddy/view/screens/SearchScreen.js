@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View } from "react-native";
-//import { Header } from "react-native-elements";
 import Header from "../UI/components/Header";
 
 import Screen from "../UI/layout/Screen";
