@@ -22,8 +22,11 @@ public class FoodProductDaoImpl implements FoodProductDao {
     public List<FoodProduct> getFoodProductByName(String productName) throws SQLException {
         List<FoodProduct> results = new ArrayList<>();
         DatabaseConnection connection = new DatabaseConnection();
-        PreparedStatement statement = connection.getConnection()
-                .prepareStatement("SELECT * FROM FoodProduct WHERE product_name = ?");
+        PreparedStatement statement = connection.getConnection().prepareStatement("""
+                SET default_collation = 'nocase';
+
+                SELECT * FROM FoodProduct WHERE product_name = ?;
+                """);
         statement.setString(1, productName);
         try (ResultSet rawResults = statement.executeQuery()) {
             while (rawResults.next()) {

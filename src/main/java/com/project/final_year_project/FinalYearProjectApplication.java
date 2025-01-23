@@ -18,7 +18,7 @@ public class FinalYearProjectApplication {
 		// schedule.runDailyTask();
 
 		FoodProductDao foodProductDao = new FoodProductDaoImpl();
-		List<FoodProduct> results = foodProductDao.getFoodProductByName("Vegetable Oil");
+		List<FoodProduct> results = foodProductDao.getFoodProductByName("coca-cola");
 		for (FoodProduct foodProduct : results) {
 			System.out.println(foodProduct.getAssignedID() + " " + foodProduct.getProductName());
 		}
