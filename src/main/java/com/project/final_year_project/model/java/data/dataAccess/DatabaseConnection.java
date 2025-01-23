@@ -10,4 +10,8 @@ public class DatabaseConnection {
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(databaseUrl);
     }
+
+    public void closeConnection(Connection connection) throws SQLException {
+        connection.close();
+    }
 }
