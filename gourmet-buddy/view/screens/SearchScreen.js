@@ -10,7 +10,20 @@ import FoodProductList from "../entity/FoodProductList";
 
 const SearchScreen = ({ onChangeText }) => {
   //DELETE THIS DUMMY DATA LATER
-  const foodProducts = [];
+  const foodProducts = [
+    {
+      productID: 0,
+      productName: "Vegetable Oil",
+    },
+    {
+      productID: 1,
+      productName: "Pizza",
+    },
+    {
+      productID: 2,
+      productName: "Ice cream",
+    },
+  ];
   //View
   return (
     <Screen>
@@ -25,7 +38,7 @@ const SearchScreen = ({ onChangeText }) => {
         buttonText="Scan Barcode or Label"
         buttonIcon={<Icons.CameraIcon color={"#FFDC7A"} size={30} />}
       />
-      <Divider style={styles.dividerSpacing} />
+      <Divider customDividerStyle={styles.dividerSpacing} />
       <View style={styles.historyTitleRowStyle}>
         <Text style={styles.historyText}> History </Text>
         <Button
@@ -43,10 +56,10 @@ const SearchScreen = ({ onChangeText }) => {
 const styles = StyleSheet.create({
   historyTitleRowStyle: {
     flexDirection: "row",
-    maxHeight: 20,
-    marginBottom: 50,
-    flex: 1,
     justifyContent: "space-between",
+    alignItems: "center",
+    width: "70%",
+    marginBottom: 15,
   },
   mostRecentButtonStyle: {
     paddingLeft: 15,
@@ -55,6 +68,7 @@ const styles = StyleSheet.create({
   },
   mostRecentButtonLabelStyle: {
     fontSize: 14,
+    fontWeight: 600,
   },
   scanButtonStyle: {
     paddingLeft: 30,
@@ -65,7 +79,13 @@ const styles = StyleSheet.create({
     color: "#FFDC7A",
     fontWeight: "bold",
   },
-  historyText: {},
+  historyText: {
+    fontWeight: "bold",
+    fontSize: 17,
+  },
+  dividerSpacing: {
+    marginBottom: 15,
+  },
 });
 
 export default SearchScreen;
