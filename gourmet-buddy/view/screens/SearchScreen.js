@@ -15,18 +15,25 @@ const SearchScreen = ({ onChangeText }) => {
   return (
     <Screen>
       <Header
-        leftItem={<Icons.ReturnIcon />}
+        leftItem={<Icons.ReturnIcon color={"#FFDC7A"} size={30} />}
         centerItem={<SearchField onChangeText={onChangeText} />}
-        rightItem={<Icons.CameraIcon />}
+        rightItem={<Icons.MenuOptionsIcon color={"#FFDC7A"} size={30} />}
       />
       <Button
+        buttonStyle={styles.scanButtonStyle}
+        labelStyle={styles.scanButtonLabelStyle}
         buttonText="Scan Barcode or Label"
-        buttonIcon={<Icons.CameraIcon />}
+        buttonIcon={<Icons.CameraIcon color={"#FFDC7A"} size={30} />}
       />
-      <Divider />
+      <Divider style={styles.dividerSpacing} />
       <View style={styles.historyTitleRowStyle}>
-        <Text> History </Text>
-        <Button buttonText="Most recent" />
+        <Text style={styles.historyText}> History </Text>
+        <Button
+          buttonStyle={styles.mostRecentButtonStyle}
+          labelStyle={styles.mostRecentButtonLabelStyle}
+          buttonText="Most recent"
+          buttonIcon={<Icons.SortAscending size={20} />}
+        />
       </View>
       <FoodProductList foodProducts={foodProducts} />
     </Screen>
@@ -38,6 +45,27 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     maxHeight: 20,
     marginBottom: 50,
+    flex: 1,
+    justifyContent: "space-between",
   },
+  mostRecentButtonStyle: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    minHeight: 40,
+  },
+  mostRecentButtonLabelStyle: {
+    fontSize: 14,
+  },
+  scanButtonStyle: {
+    paddingLeft: 30,
+    paddingRight: 30,
+    backgroundColor: "#0B3007",
+  },
+  scanButtonLabelStyle: {
+    color: "#FFDC7A",
+    fontWeight: "bold",
+  },
+  historyText: {},
 });
+
 export default SearchScreen;
