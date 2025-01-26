@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
-import Header from "../UI/components/Header";
 
+import Header from "../UI/components/Header";
 import Screen from "../UI/layout/Screen";
 import SearchField from "../UI/components/SearchField";
 import Icons from "../UI/components/Icons";
@@ -8,7 +8,7 @@ import Button from "../UI/components/Button";
 import Divider from "../UI/components/Divider";
 import FoodProductList from "../entity/FoodProductList";
 
-const SearchScreen = ({ onChangeText }) => {
+const SearchScreen = ({ searchInputValue, onSubmit }) => {
   //DELETE THIS DUMMY DATA LATER
   const foodProducts = [
     {
@@ -24,12 +24,15 @@ const SearchScreen = ({ onChangeText }) => {
       productName: "Ice cream",
     },
   ];
+
   //View
   return (
     <Screen>
       <Header
         leftItem={<Icons.ReturnIcon color={"#FFDC7A"} size={30} />}
-        centerItem={<SearchField onChangeText={onChangeText} />}
+        centerItem={
+          <SearchField value={searchInputValue} onSubmit={onSubmit} />
+        }
         rightItem={<Icons.MenuOptionsIcon color={"#FFDC7A"} size={30} />}
       />
       <Button
@@ -65,10 +68,12 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     minHeight: 40,
+    borderColor: "#0B3007",
   },
   mostRecentButtonLabelStyle: {
     fontSize: 14,
     fontWeight: 600,
+    color: "#0B3007",
   },
   scanButtonStyle: {
     paddingLeft: 30,
@@ -82,6 +87,7 @@ const styles = StyleSheet.create({
   historyText: {
     fontWeight: "bold",
     fontSize: 17,
+    color: "#0B3007",
   },
   dividerSpacing: {
     marginBottom: 15,

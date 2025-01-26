@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SearchScreen from "./view/screens/SearchScreen";
+
+import SearchScreenPresenter from "./presenter/SearchScreenPresenter";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +16,7 @@ export const App = () => {
       >
         <Stack.Screen
           name="SearchScreen"
-          component={SearchScreen}
+          component={SearchScreenPresenter}
           options={{ title: "Search Screen" }}
         />
       </Stack.Navigator>

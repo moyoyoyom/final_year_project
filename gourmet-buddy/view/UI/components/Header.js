@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 const Header = ({ leftItem, centerItem, rightItem }) => {
   return (
     <View style={styles.headerStyle}>
-      {leftItem ? <View style={styles.headerItem}>{leftItem}</View> : null}
+      {leftItem ? <View>{leftItem}</View> : null}
       {centerItem ? <View>{centerItem}</View> : null}
       {rightItem ? <View>{rightItem}</View> : null}
     </View>

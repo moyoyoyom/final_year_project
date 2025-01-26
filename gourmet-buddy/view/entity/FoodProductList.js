@@ -20,8 +20,8 @@ const FoodProductList = ({ foodProducts, onSelect }) => {
 
 const styles = StyleSheet.create({
   listStyle: {
-    width: "90%",
-    paddingLeft: 20,
+    width: "95%",
+    paddingLeft: 5,
   },
 });
 
