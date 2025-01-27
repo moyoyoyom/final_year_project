@@ -8,7 +8,7 @@ import Button from "../UI/components/Button";
 import Divider from "../UI/components/Divider";
 import FoodProductList from "../entity/FoodProductList";
 
-const SearchScreen = ({ searchInputValue, onSubmit }) => {
+const SearchScreen = ({ onSearch, searchInputValue }) => {
   //DELETE THIS DUMMY DATA LATER
   const foodProducts = [
     {
@@ -31,7 +31,7 @@ const SearchScreen = ({ searchInputValue, onSubmit }) => {
       <Header
         leftItem={<Icons.ReturnIcon color={"#FFDC7A"} size={30} />}
         centerItem={
-          <SearchField value={searchInputValue} onSubmit={onSubmit} />
+          <SearchField value={searchInputValue} onSubmit={onSearch} />
         }
         rightItem={<Icons.MenuOptionsIcon color={"#FFDC7A"} size={30} />}
       />
