@@ -5,7 +5,7 @@ import resultLoader from "../model/ResultLoader";
 
 const SearchFieldPresenter = ({ navigation }) => {
   //Initialisations
-  const productSearchEndpoint = "";
+  const productSearchEndpoint = "http://";
 
   //State
   const [searchValue, setSearchValue] = useState(" ");
