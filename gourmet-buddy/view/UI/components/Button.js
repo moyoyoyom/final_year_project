@@ -20,9 +20,9 @@ const Button = ({
 
 const styles = StyleSheet.create({
   defaultButtonStyle: {
-    minHeight: 50,
+    minHeight: 20,
     borderWidth: 1,
-    borderRadius: 7,
+    borderRadius: 30,
     alignItems: "center",
     justifyContent: "center",
     padding: 10,

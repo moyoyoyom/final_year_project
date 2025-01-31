@@ -1,10 +1,10 @@
-import { ScrollView } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 import FoodProductItem from "./FoodProductItem";
 
 const FoodProductList = ({ foodProducts, onSelect }) => {
   return (
-    <ScrollView>
+    <ScrollView style={styles.listStyle}>
       {foodProducts.map((foodProduct) => {
         return (
           <FoodProductItem
@@ -17,5 +17,12 @@ const FoodProductList = ({ foodProducts, onSelect }) => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  listStyle: {
+    width: "95%",
+    paddingLeft: 5,
+  },
+});
 
 export default FoodProductList;

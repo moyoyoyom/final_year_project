@@ -6,7 +6,7 @@ const Screen = ({ children }) => {
   return (
     <View style={styles.screenStyle}>
       {children}
-      <StatusBar style="dark"></StatusBar>
+      <StatusBar style="light"></StatusBar>
     </View>
   );
 };

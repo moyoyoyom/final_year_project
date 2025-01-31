@@ -1,9 +1,13 @@
 import { StyleSheet, View, TextInput } from "react-native";
 
-const SearchField = () => {
+const SearchField = ({ value, onSubmit }) => {
   return (
     <View style={styles.backgroundStyle}>
-      <TextInput placeholder="Search for product" />
+      <TextInput
+        value={value}
+        onSubmitEditing={onSubmit}
+        placeholder="Search for product"
+      />
     </View>
   );
 };
