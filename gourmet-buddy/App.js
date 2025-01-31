@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import SearchScreenPresenter from "./presenter/SearchScreenPresenter";
 import SearchResultsScreenPresenter from "./presenter/SearchResultsScreenPresenter";
+import CreateAccountScreenPresenter from "./presenter/CreateAccountScreenPresenter";
 
 const Stack = createNativeStackNavigator();
 
@@ -10,7 +11,7 @@ export const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SearchScreen"
+        initialRouteName="CreateAccountScreen"
         screenOptions={{
           headerShown: false,
         }}
@@ -24,6 +25,11 @@ export const App = () => {
           name="SearchResultsScreen"
           component={SearchResultsScreenPresenter}
           options={{ title: " Results Screen " }}
+        />
+        <Stack.Screen
+          name="CreateAccountScreen"
+          component={CreateAccountScreenPresenter}
+          options={{ title: " Create Account " }}
         />
       </Stack.Navigator>
     </NavigationContainer>
