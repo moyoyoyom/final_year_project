@@ -3,19 +3,35 @@ import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import Button from "../UI/components/Button";
 import Screen from "../UI/layout/Screen";
 
-const CreateAccountScreen = (onPress) => {
+const CreateAccountScreen = ({
+  onPress,
+  onSubmit,
+  usernameValue,
+  passwordValue,
+  onUsernameChange,
+  onPasswordChange,
+}) => {
   return (
     <Screen screenStyle={styles.backgroundStyle}>
       <Text style={styles.titleStyle}> Create Your Account </Text>
       <View style={styles.loginBackground}>
         <Text style={styles.infoStyling}> Username </Text>
-        <TextInput style={styles.inputStyling} />
+        <TextInput
+          style={styles.inputStyling}
+          value={usernameValue}
+          onChangeText={onUsernameChange}
+        />
         <Text style={styles.infoStyling}> Password </Text>
-        <TextInput style={styles.inputStyling} />
+        <TextInput
+          style={styles.inputStyling}
+          value={passwordValue}
+          onChangeText={onPasswordChange}
+        />
         <Button
           buttonText={"Sign Up"}
           buttonStyle={styles.loginButton}
           labelStyle={styles.loginLabelStyle}
+          onClick={onSubmit}
         />
         <View style={styles.alternativePane}>
           <Text> Already have an account? </Text>

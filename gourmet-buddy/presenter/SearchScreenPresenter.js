@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import SearchScreen from "../view/screens/SearchScreen";
 import API from "../model/API";
 import resultLoader from "../model/ResultLoader";
@@ -35,8 +36,9 @@ const SearchFieldPresenter = ({ navigation }) => {
   return (
     <SearchScreen
       onSearch={goToResultsScreen}
-      value={searchValue}
+      //value={searchValue}
       onSubmit={handleSubmit}
+      searchInputValue={searchValue}
     />
   );
 };
