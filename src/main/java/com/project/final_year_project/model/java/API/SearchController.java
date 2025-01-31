@@ -10,11 +10,4 @@ public class SearchController {
     public String returnSearchResult() {
         return "Found";
     }
-    // post
-    /*
-     * @RequestMapping(value = "/search, method = RequestMethod.POST")
-     * 
-     * @ResponseStatus(HttpStatus.CREATED) public void addSearch(@RequestBody String
-     * searchTerm) { System.out.println("posted"); }
-     */
 }
