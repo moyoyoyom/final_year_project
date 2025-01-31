@@ -8,9 +8,9 @@ const CreateAccountScreenPresenter = () => {
   const [passwordValue, setPasswordValue] = useState("");
 
   //Handlers
-  const handleSubmit = () => {
-    const enteredUsername = getUsername;
-    const enteredPassword = getPassword;
+  const handleSignUp = () => {
+    const enteredUsername = usernameValue;
+    const enteredPassword = passwordValue;
     console.log(enteredUsername);
     console.log(enteredPassword);
   };
@@ -30,6 +30,7 @@ const CreateAccountScreenPresenter = () => {
       passwordValue={passwordValue}
       onUsernameChange={getUsername}
       onPasswordChange={getPassword}
+      onSignUpClick={handleSignUp}
     />
   );
 };

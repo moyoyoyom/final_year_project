@@ -5,7 +5,7 @@ import Screen from "../UI/layout/Screen";
 
 const CreateAccountScreen = ({
   onPress,
-  onSubmit,
+  onSignUpClick,
   usernameValue,
   passwordValue,
   onUsernameChange,
@@ -31,7 +31,7 @@ const CreateAccountScreen = ({
           buttonText={"Sign Up"}
           buttonStyle={styles.loginButton}
           labelStyle={styles.loginLabelStyle}
-          onClick={onSubmit}
+          onClick={onSignUpClick}
         />
         <View style={styles.alternativePane}>
           <Text> Already have an account? </Text>
