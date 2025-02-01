@@ -1,18 +1,28 @@
 import { useState } from "react";
+import API from "../model/API";
 
 import CreateAccountScreen from "../view/screens/CreateAccountScreen";
+import { Alert } from "react-native";
 
 const CreateAccountScreenPresenter = () => {
+  //Initialisations
+  const userEndpoint = "http://localhost:8090/api/users/account";
+
   //State
   const [usernameValue, setUsernameValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
 
   //Handlers
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     const enteredUsername = usernameValue;
     const enteredPassword = passwordValue;
-    console.log(enteredUsername);
-    console.log(enteredPassword);
+    const result = await API.post(userEndpoint, {
+      enteredUsername,
+      enteredPassword,
+    });
+    if (result.isSuccess) {
+      console.log(" a new user has been added");
+    } else Alert.alert(result.message);
   };
 
   const getUsername = (value) => {
