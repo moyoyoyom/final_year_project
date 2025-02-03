@@ -1,7 +1,12 @@
-import { View } from "react-native";
+import Header from "../UI/components/Header";
+import Screen from "../UI/layout/Screen";
 
 const SearchResultsScreen = () => {
-  return <View />;
+  return (
+    <Screen>
+      <Header />
+    </Screen>
+  );
 };
 
 export default SearchResultsScreen;

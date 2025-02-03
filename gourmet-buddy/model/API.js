@@ -7,7 +7,7 @@ const fetchObject = async (endpoint, method, data = null) => {
   if (data)
     requestObject = {
       ...request,
-      headers: { "Content-type": "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     };
 
