@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import com.project.final_year_project.model.java.data.User;
+import com.project.final_year_project.model.java.User;
 import com.project.final_year_project.model.java.data.dao.UserDao;
 
 public class UserDaoImplementation implements UserDao {
