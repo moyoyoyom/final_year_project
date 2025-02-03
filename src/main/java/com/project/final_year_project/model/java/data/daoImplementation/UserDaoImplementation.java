@@ -20,26 +20,28 @@ public class UserDaoImplementation implements UserDao {
     }
 
     @Override
-    public Optional<User> getUserByUsername(String username) throws SQLException {
-        Optional<User> resultUser = Optional.ofNullable(null);
-        Connection databaConnection = DriverManager.getConnection(databaseUrl);
-        PreparedStatement selectUserStatement = databaConnection.prepareStatement("""
-                    SELECT userID, username, password
-                    FROM Users
-                    WHERE username = ?
-                """);
-        selectUserStatement.setString(1, username);
-
-        try (ResultSet result = selectUserStatement.executeQuery()) {
-            while (result.next()) {
-                Integer resultUserID = result.getInt(1);
-                String resultUsername = result.getString(2);
-                String resultPassword = result.getString(3);
-                return Optional.of(new User(resultUserID, resultUsername, resultPassword));
-            }
-        }
-
-        return resultUser;
+    public void getUserByUsername(String username) throws SQLException {
+        /*
+         * Optional<User> resultUser = Optional.ofNullable(null);
+         * Connection databaConnection = DriverManager.getConnection(databaseUrl);
+         * PreparedStatement selectUserStatement = databaConnection.prepareStatement("""
+         * SELECT userID, username, password
+         * FROM Users
+         * WHERE username = ?
+         * """);
+         * selectUserStatement.setString(1, username);
+         * 
+         * try (ResultSet result = selectUserStatement.executeQuery()) {
+         * while (result.next()) {
+         * Integer resultUserID = result.getInt(1);
+         * String resultUsername = result.getString(2);
+         * String resultPassword = result.getString(3);
+         * return Optional.of(new User(resultUserID, resultUsername, resultPassword));
+         * }
+         * }
+         * 
+         * return resultUser;
+         */
     }
 
     @Override

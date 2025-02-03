@@ -8,7 +8,7 @@ import com.project.final_year_project.model.java.data.User;
 public interface UserDao {
     public User getUserByID(Integer ID);
 
-    public Optional<User> getUserByUsername(String username) throws SQLException;
+    public void getUserByUsername(String username) throws SQLException;
 
     public void createUser(Integer ID, String username, String password) throws SQLException;
 
