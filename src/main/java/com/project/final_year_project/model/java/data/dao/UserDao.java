@@ -3,7 +3,7 @@ package com.project.final_year_project.model.java.data.dao;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import com.project.final_year_project.model.java.data.User;
+import com.project.final_year_project.model.java.User;
 
 public interface UserDao {
     public User getUserByID(Integer ID);

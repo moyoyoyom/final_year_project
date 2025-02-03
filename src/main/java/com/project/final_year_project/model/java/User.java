@@ -1,4 +1,4 @@
-package com.project.final_year_project.model.java.data;
+package com.project.final_year_project.model.java;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

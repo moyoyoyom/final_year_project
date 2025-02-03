@@ -4,9 +4,9 @@ import API from "../model/API";
 import CreateAccountScreen from "../view/screens/CreateAccountScreen";
 import { Alert } from "react-native";
 
-const CreateAccountScreenPresenter = () => {
+const CreateAccountScreenPresenter = ({ navigation }) => {
   //Initialisations
-  const userEndpoint = "http://localhost:8090/api/users/account";
+  const userEndpoint = "http://192.168.1.253:8090/api/users/account";
 
   //State
   const [usernameValue, setUsernameValue] = useState("");
@@ -25,6 +25,24 @@ const CreateAccountScreenPresenter = () => {
     } else Alert.alert(result.message);
   };
 
+  const postUserOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username: usernameValue, password: passwordValue }),
+  };
+
+  const postUser = async () => {
+    try {
+      await fetch(userEndpoint, postUserOptions).then((response) => {
+        response.json().then((data) => {
+          navigation.navigate("SearchScreen");
+        });
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const getUsername = (value) => {
     setUsernameValue(value);
   };
@@ -40,7 +58,7 @@ const CreateAccountScreenPresenter = () => {
       passwordValue={passwordValue}
       onUsernameChange={getUsername}
       onPasswordChange={getPassword}
-      onSignUpClick={handleSignUp}
+      onSignUpClick={postUser}
     />
   );
 };

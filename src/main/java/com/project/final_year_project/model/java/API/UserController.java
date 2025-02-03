@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.final_year_project.model.java.data.User;
+import com.project.final_year_project.model.java.User;
 import com.project.final_year_project.model.java.service.UserService;
 
 @RestController

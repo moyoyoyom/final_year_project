@@ -2,7 +2,7 @@ package com.project.final_year_project.model.java.service;
 
 import org.springframework.stereotype.Service;
 
-import com.project.final_year_project.model.java.data.User;
+import com.project.final_year_project.model.java.User;
 import com.project.final_year_project.model.java.data.repository.UserRepository;
 
 @Service
