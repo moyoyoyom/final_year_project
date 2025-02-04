@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SearchScreenPresenter from "./presenter/SearchScreenPresenter";
 import SearchResultsScreenPresenter from "./presenter/SearchResultsScreenPresenter";
 import CreateAccountScreenPresenter from "./presenter/CreateAccountScreenPresenter";
+import LoginScreenPresenter from "./presenter/LoginScreenPresenter";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,11 @@ export const App = () => {
           name="CreateAccountScreen"
           component={CreateAccountScreenPresenter}
           options={{ title: " Create Account " }}
+        />
+        <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreenPresenter}
+          options={{ title: " Log In " }}
         />
       </Stack.Navigator>
     </NavigationContainer>

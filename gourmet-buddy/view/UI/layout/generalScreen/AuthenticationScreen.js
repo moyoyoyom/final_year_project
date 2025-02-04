@@ -17,7 +17,7 @@ const AuthenticationScreen = ({
     type == "Login" ? "Log In to Your Account" : "Create Your Account";
   const authenticateButtonText = type == "Login" ? "Log In" : "Sign Up";
   const switchPageText =
-    type == "Login" ? "Don't have an account?" : "Already have an account";
+    type == "Login" ? "Don't have an account?" : "Already have an account?";
   const switchPageLink = type == "Login" ? "Sign Up" : "Log In";
 
   //View

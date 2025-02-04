@@ -1,7 +1,5 @@
 import { useState } from "react";
-import API from "../model/API";
 
-import { Alert } from "react-native";
 import AuthenticationScreen from "../view/UI/layout/generalScreen/AuthenticationScreen";
 
 const CreateAccountScreenPresenter = ({ navigation }) => {
@@ -22,7 +20,7 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
   const postUser = async () => {
     try {
       await fetch(userEndpoint, postUserOptions).then((response) => {
-        response.json().then((data) => {
+        response.json().then(() => {
           navigation.navigate("SearchScreen");
         });
       });
