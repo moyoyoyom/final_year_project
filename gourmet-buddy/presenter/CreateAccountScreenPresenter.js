@@ -1,8 +1,8 @@
 import { useState } from "react";
 import API from "../model/API";
 
-import CreateAccountScreen from "../view/screens/CreateAccountScreen";
 import { Alert } from "react-native";
+import AuthenticationScreen from "../view/UI/layout/generalScreen/AuthenticationScreen";
 
 const CreateAccountScreenPresenter = ({ navigation }) => {
   //Initialisations
@@ -13,18 +13,6 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
   const [passwordValue, setPasswordValue] = useState("");
 
   //Handlers
-  const handleSignUp = async () => {
-    const enteredUsername = usernameValue;
-    const enteredPassword = passwordValue;
-    const result = await API.post(userEndpoint, {
-      enteredUsername,
-      enteredPassword,
-    });
-    if (result.isSuccess) {
-      console.log(" a new user has been added");
-    } else Alert.alert(result.message);
-  };
-
   const postUserOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -51,14 +39,20 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
     setPasswordValue(value);
   };
 
+  const onPageSwitch = () => {
+    navigation.navigate("LoginScreen");
+  };
+
   //View
   return (
-    <CreateAccountScreen
+    <AuthenticationScreen
       usernameValue={usernameValue}
       passwordValue={passwordValue}
       onUsernameChange={getUsername}
       onPasswordChange={getPassword}
-      onSignUpClick={postUser}
+      onAuthenticateClick={postUser}
+      onPageSwitch={onPageSwitch}
+      type={"SignUp"}
     />
   );
 };
