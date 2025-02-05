@@ -1,11 +1,12 @@
-import { useState } from "react";
-import API from "../model/API";
-
-import CreateAccountScreen from "../view/screens/CreateAccountScreen";
 import { Alert } from "react-native";
+import { useState } from "react";
+
+import AuthenticationScreen from "../view/UI/layout/generalScreen/AuthenticationScreen";
 
 const CreateAccountScreenPresenter = ({ navigation }) => {
   //Initialisations
+  const authenticationType = "SignUp";
+
   const userEndpoint = "http://192.168.1.253:8090/api/users/account";
 
   //State
@@ -13,18 +14,6 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
   const [passwordValue, setPasswordValue] = useState("");
 
   //Handlers
-  const handleSignUp = async () => {
-    const enteredUsername = usernameValue;
-    const enteredPassword = passwordValue;
-    const result = await API.post(userEndpoint, {
-      enteredUsername,
-      enteredPassword,
-    });
-    if (result.isSuccess) {
-      console.log(" a new user has been added");
-    } else Alert.alert(result.message);
-  };
-
   const postUserOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -34,12 +23,12 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
   const postUser = async () => {
     try {
       await fetch(userEndpoint, postUserOptions).then((response) => {
-        response.json().then((data) => {
+        response.json().then(() => {
           navigation.navigate("SearchScreen");
         });
       });
     } catch (error) {
-      console.error(error);
+      Alert.alert(error);
     }
   };
 
@@ -51,14 +40,20 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
     setPasswordValue(value);
   };
 
+  const onPageSwitch = () => {
+    navigation.navigate("LoginScreen");
+  };
+
   //View
   return (
-    <CreateAccountScreen
+    <AuthenticationScreen
       usernameValue={usernameValue}
       passwordValue={passwordValue}
       onUsernameChange={getUsername}
       onPasswordChange={getPassword}
-      onSignUpClick={postUser}
+      onAuthenticateClick={postUser}
+      onPageSwitch={onPageSwitch}
+      type={authenticationType}
     />
   );
 };
