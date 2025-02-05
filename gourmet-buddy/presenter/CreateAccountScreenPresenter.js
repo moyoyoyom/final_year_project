@@ -1,9 +1,12 @@
+import { Alert } from "react-native";
 import { useState } from "react";
 
 import AuthenticationScreen from "../view/UI/layout/generalScreen/AuthenticationScreen";
 
 const CreateAccountScreenPresenter = ({ navigation }) => {
   //Initialisations
+  const authenticationType = "SignUp";
+
   const userEndpoint = "http://192.168.1.253:8090/api/users/account";
 
   //State
@@ -25,7 +28,7 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
         });
       });
     } catch (error) {
-      console.error(error);
+      Alert.alert(error);
     }
   };
 
@@ -50,7 +53,7 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
       onPasswordChange={getPassword}
       onAuthenticateClick={postUser}
       onPageSwitch={onPageSwitch}
-      type={"SignUp"}
+      type={authenticationType}
     />
   );
 };

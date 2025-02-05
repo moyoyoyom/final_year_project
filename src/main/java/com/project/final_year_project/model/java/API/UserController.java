@@ -1,6 +1,7 @@
 package com.project.final_year_project.model.java.API;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +30,13 @@ public class UserController {
     public ResponseEntity<User> createAccount(@RequestBody User user) {
         User newUser = userService.saveUser(user);
         return ResponseEntity.ok(newUser);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<User> loginToAccount(@RequestBody User enteredUser) {
+        if (userService.logInUser(enteredUser.getUsername(), enteredUser.getPassword())) {
+            return ResponseEntity.ok(enteredUser);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(enteredUser);
     }
 }

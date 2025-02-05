@@ -13,13 +13,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    /*
-     * public void addNewUser(String username) throws SQLException { // check if the
-     * user exists Optional<User> user = userDao.getUserByUsername(username); // add
-     * them to the database user.ifPresent(e -> { try {
-     * userDao.createUser(e.getUserID(), e.getUsername(), e.getPassword()); } catch
-     * (SQLException exception) { exception.printStackTrace(); } }); }
-     */
+    public boolean logInUser(String enterdUsername, String enteredPassword) {
+        User foundUser = userRepository.findByUsername(enterdUsername);
+        if ((foundUser != null) && (foundUser.getPassword().equals(enteredPassword))) {
+            return true;
+        }
+        return false;
+    }
 
     public User saveUser(User user) {
         return userRepository.save(user);
