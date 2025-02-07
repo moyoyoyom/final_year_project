@@ -36,6 +36,7 @@ const AuthenticationScreen = ({
           style={styles.inputStyling}
           value={passwordValue}
           onChangeText={onPasswordChange}
+          secureTextEntry={true}
         />
         <Button
           buttonText={authenticateButtonText}
