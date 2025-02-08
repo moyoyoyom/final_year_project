@@ -7,7 +7,7 @@ import Icons from "../UI/components/Icons";
 import Button from "../UI/components/Button";
 import Divider from "../UI/components/Divider";
 import FoodProductList from "../entity/FoodProductList";
-import NavigationBar from "../UI/components/NavigationBar";
+import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
 
 const SearchScreen = ({ onSearch, searchInputValue }) => {
   //DELETE THIS DUMMY DATA LATER
@@ -53,7 +53,7 @@ const SearchScreen = ({ onSearch, searchInputValue }) => {
         />
       </View>
       <FoodProductList foodProducts={foodProducts} />
-      <NavigationBar />
+      <NavigationBarPresenter />
     </Screen>
   );
 };

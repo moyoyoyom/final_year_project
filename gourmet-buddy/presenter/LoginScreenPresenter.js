@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import AuthenticationScreen from "../view/UI/layout/generalScreen/AuthenticationScreen";
+import { saveUserToken } from "../model/UserTokenStorage";
 
 const LoginScreenPresenter = ({ navigation }) => {
   //Initialisations
@@ -30,7 +31,7 @@ const LoginScreenPresenter = ({ navigation }) => {
       await fetch(loginEndpoint, postLoginOptions).then((response) => {
         response.json().then(() => {
           if (response.status < 400) {
-            AsyncStorage.setItem("isUserLoggedIn".JSON.stringify(true));
+            //await saveUserToken(user)
             navigation.navigate("SearchScreen");
           } else {
             Alert.alert(

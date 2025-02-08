@@ -7,28 +7,41 @@ import CreateAccountScreenPresenter from "./presenter/CreateAccountScreenPresent
 import LoginScreenPresenter from "./presenter/LoginScreenPresenter";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
+import ProfileScreenPresenter from "./presenter/ProfileScreenPresenter";
+import ExploreScreenPresenter from "./presenter/ExploreScreenPresenter";
+import { checkUserAuthenticationStatus } from "./model/UserTokenStorage";
 
 const Stack = createNativeStackNavigator();
 
 export const App = () => {
   //State
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-
-  //Handlers
-  const getLoginData = async () => {
-    const loginData = await AsyncStorage.getItem("isUserLoggedIn");
-    setIsUserLoggedIn(loginData);
-  };
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(null);
 
   useEffect(() => {
-    getLoginData();
+    const checkIfUserIsLoggedIn = async () => {
+      const logInStatus = await checkUserAuthenticationStatus();
+      setIsUserLoggedIn(logInStatus);
+    };
+    checkIfUserIsLoggedIn();
   }, []);
+
+  //Handlers
+  async function getLoginData() {
+    const loginData = await AsyncStorage.getItem("isUserLoggedIn");
+    console.log(loginData, "at App.js");
+    setIsUserLoggedIn(loginData);
+  }
+
+  /*getLoginData = async () => {
+    const loginData = await AsyncStorage.getItem("isUserLoggedIn");
+    setIsUserLoggedIn(loginData);
+  };*/
 
   //View
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={isUserLoggedIn ? "LoginScreen" : "SearchScreen"}
+        initialRouteName={isUserLoggedIn ? "SearchScreen" : "LoginScreen"}
         screenOptions={{
           headerShown: false,
         }}
@@ -52,6 +65,16 @@ export const App = () => {
           name="SearchResultsScreen"
           component={SearchResultsScreenPresenter}
           options={{ title: " Results Screen " }}
+        />
+        <Stack.Screen
+          name="ProfileScreen"
+          component={ProfileScreenPresenter}
+          options={{ title: "Profile Screen" }}
+        />
+        <Stack.Screen
+          name="ExploreScreen"
+          component={ExploreScreenPresenter}
+          options={{ title: "Explore Screen" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

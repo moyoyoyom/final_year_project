@@ -1,16 +1,22 @@
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import Icons from "./Icons";
 
-const NavigationBar = () => {
+const NavigationBar = ({ onExplorePress, onSearchPress, onProfilePress }) => {
   //Initialisations
   const iconSize = 40;
   const iconColor = "#0B3007";
   //View
   return (
     <View style={styles.navBarContainer}>
-      <Icons.ExploreIcon color={iconColor} size={iconSize} />
-      <Icons.SearchIcon color={iconColor} size={iconSize} />
-      <Icons.ProfileIcon color={iconColor} size={iconSize} />
+      <Pressable onPress={onExplorePress}>
+        <Icons.ExploreIcon color={iconColor} size={iconSize} />
+      </Pressable>
+      <Pressable onPress={onSearchPress}>
+        <Icons.SearchIcon color={iconColor} size={iconSize} />
+      </Pressable>
+      <Pressable onPress={onProfilePress}>
+        <Icons.ProfileIcon color={iconColor} size={iconSize} />
+      </Pressable>
     </View>
   );
 };
