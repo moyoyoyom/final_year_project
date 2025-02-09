@@ -4,7 +4,7 @@ import ProfileScreen from "../view/screens/ProfileScreen";
 const ProfileScreenPresenter = ({ navigation }) => {
   //Handlers
   const onLogoutPress = () => {
-    AsyncStorage.setItem("isUserLoggedIn", "");
+    AsyncStorage.removeItem("userToken");
     navigation.navigate("LoginScreen");
   };
 

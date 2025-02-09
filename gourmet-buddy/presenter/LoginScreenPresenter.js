@@ -20,18 +20,23 @@ const LoginScreenPresenter = ({ navigation }) => {
     navigation.navigate("CreateAccountScreen");
   };
 
-  postLoginOptions = {
+  const postLoginOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username: usernameValue, password: passwordValue }),
   };
 
-  const postLogin = async () => {
+  /*const postLogin = async () => {
     try {
       await fetch(loginEndpoint, postLoginOptions).then((response) => {
-        response.json().then(() => {
-          if (response.status < 400) {
-            //await saveUserToken(user)
+        console.log("Checkpoint 0");
+        response.json().then(async () => {
+          console.log("Checkpoint 0.5");
+          const data = await response.json();
+          console.log("Checkpoint 1");
+          if (response.status < 400 && data.token) {
+            console.log("Checkpoint 2");
+            await saveUserToken(data.token);
             navigation.navigate("SearchScreen");
           } else {
             Alert.alert(
@@ -42,6 +47,39 @@ const LoginScreenPresenter = ({ navigation }) => {
       });
     } catch (error) {
       Alert.alert(error);
+    }
+  };
+  */
+
+  /*const postLogin = async () => {
+    try {
+      const response = await fetch(loginEndpoint, postLoginOptions);
+      const data = await response.json();
+      if (response.ok && data.token) {
+        await AsyncStorage.setItem("userToken", data.userToken);
+        navigation.replace("SearchScreen");
+      } else {
+        Alert.alert("Failed login. Invalid credentials");
+        console.log(response);
+        console.log(data.token);
+      }
+    } catch (error) {
+      console.log("Login error", error);
+    }
+  }; */
+
+  const postLogin = async () => {
+    try {
+      const response = await fetch(loginEndpoint, postLoginOptions);
+      const data = JSON.parse(await response.text());
+      if (response.ok) {
+        await AsyncStorage.setItem("userToken", data.userToken);
+        console.log(data.userToken);
+        navigation.replace("SearchScreen");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      Alert.alert("Error", error.message);
     }
   };
 
