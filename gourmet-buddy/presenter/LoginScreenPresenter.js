@@ -74,7 +74,9 @@ const LoginScreenPresenter = ({ navigation }) => {
       const data = JSON.parse(await response.text());
       if (response.ok) {
         await AsyncStorage.setItem("userToken", data.userToken);
-        console.log(data.userToken);
+        const storedToken = await AsyncStorage.getItem("userToken");
+        console.log("Stored token:", storedToken);
+        saveUserToken(storedToken);
         navigation.replace("SearchScreen");
       }
     } catch (error) {

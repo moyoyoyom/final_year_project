@@ -21,6 +21,7 @@ export const App = () => {
     const checkIfUserHasAToken = async () => {
       try {
         const foundToken = await AsyncStorage.getItem("userToken");
+        console.log("Retrieved this token: ", foundToken);
         setUserToken(foundToken);
       } catch (error) {
         Alert.alert("Problem finding token");
@@ -29,29 +30,37 @@ export const App = () => {
     checkIfUserHasAToken();
   }, []);
 
+  useEffect(() => {
+    console.log(userToken);
+  }, [userToken]);
+
   //View
+  const NavigationStack = () => {};
   return (
-    <NavigationContainer>
+    <NavigationContainer key={userToken ? "loggedIn" : "notLoggedIn"}>
       <Stack.Navigator
-        initialRouteName={userToken ? "SearchScreen" : "LoginScreen"}
+        //initialRouteName={userToken != null ? "SearchScreen" : "LoginScreen"}
         screenOptions={{
           headerShown: false,
         }}
       >
+        {userToken ? (
+          <Stack.Screen
+            name="SearchScreen"
+            component={SearchScreenPresenter}
+            options={{ title: "Search Screen" }}
+          />
+        ) : (
+          <Stack.Screen
+            name="LoginScreen"
+            component={LoginScreenPresenter}
+            options={{ title: " Log In " }}
+          />
+        )}
         <Stack.Screen
           name="CreateAccountScreen"
           component={CreateAccountScreenPresenter}
           options={{ title: " Create Account " }}
-        />
-        <Stack.Screen
-          name="LoginScreen"
-          component={LoginScreenPresenter}
-          options={{ title: " Log In " }}
-        />
-        <Stack.Screen
-          name="SearchScreen"
-          component={SearchScreenPresenter}
-          options={{ title: "Search Screen" }}
         />
         <Stack.Screen
           name="SearchResultsScreen"
