@@ -5,22 +5,54 @@ import SearchScreenPresenter from "./presenter/SearchScreenPresenter";
 import SearchResultsScreenPresenter from "./presenter/SearchResultsScreenPresenter";
 import CreateAccountScreenPresenter from "./presenter/CreateAccountScreenPresenter";
 import LoginScreenPresenter from "./presenter/LoginScreenPresenter";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
+import ProfileScreenPresenter from "./presenter/ProfileScreenPresenter";
+import ExploreScreenPresenter from "./presenter/ExploreScreenPresenter";
+import { saveUserToken } from "./model/UserTokenStorage";
 
 const Stack = createNativeStackNavigator();
 
 export const App = () => {
+  //State
+  const [userToken, setUserToken] = useState(null);
+
+  useEffect(() => {
+    const checkIfUserHasAToken = async () => {
+      try {
+        const foundToken = await AsyncStorage.getItem("userToken");
+        console.log("Retrieved this token: ", foundToken);
+        setUserToken(foundToken);
+      } catch (error) {
+        Alert.alert("Problem finding token");
+      }
+    };
+    checkIfUserHasAToken();
+  }, []);
+
+  useEffect(() => {
+    console.log(userToken);
+  }, [userToken]);
+
+  //View
   return (
-    <NavigationContainer>
+    <NavigationContainer key={userToken ? "loggedIn" : "notLoggedIn"}>
       <Stack.Navigator
-        initialRouteName="CreateAccountScreen"
+        initialRouteName={userToken != null ? "SearchScreen" : "LoginScreen"}
         screenOptions={{
           headerShown: false,
         }}
       >
+        <Stack.Screen name="SearchScreen" options={{ title: "Search Screen" }}>
+          {(props) => <SearchScreenPresenter {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name="LoginScreen" options={{ title: " Log In " }}>
+          {(props) => <LoginScreenPresenter {...props} />}
+        </Stack.Screen>
         <Stack.Screen
-          name="SearchScreen"
-          component={SearchScreenPresenter}
-          options={{ title: "Search Screen" }}
+          name="CreateAccountScreen"
+          component={CreateAccountScreenPresenter}
+          options={{ title: " Create Account " }}
         />
         <Stack.Screen
           name="SearchResultsScreen"
@@ -28,14 +60,14 @@ export const App = () => {
           options={{ title: " Results Screen " }}
         />
         <Stack.Screen
-          name="CreateAccountScreen"
-          component={CreateAccountScreenPresenter}
-          options={{ title: " Create Account " }}
+          name="ProfileScreen"
+          component={ProfileScreenPresenter}
+          options={{ title: "Profile Screen" }}
         />
         <Stack.Screen
-          name="LoginScreen"
-          component={LoginScreenPresenter}
-          options={{ title: " Log In " }}
+          name="ExploreScreen"
+          component={ExploreScreenPresenter}
+          options={{ title: "Explore Screen" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

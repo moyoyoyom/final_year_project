@@ -26,6 +26,18 @@ const SortAscending = ({ color, size }) => (
   <MaterialCommunityIcons name="sort-ascending" size={size} color={color} />
 );
 
+const ExploreIcon = ({ color, size }) => (
+  <Ionicons name="compass-outline" size={size} color={color} />
+);
+
+const SearchIcon = ({ color, size }) => (
+  <Ionicons name="search" size={size} color={color} />
+);
+
+const ProfileIcon = ({ color, size }) => (
+  <Ionicons name="person-circle-outline" size={size} color={color} />
+);
+
 //Compose
 Icons.ReturnIcon = ReturnIcon;
 Icons.ForwardIcon = ForwardIcon;
@@ -33,5 +45,8 @@ Icons.MenuOptionsIcon = MenuOptionsIcon;
 Icons.CameraIcon = CameraIcon;
 Icons.SortAscending = SortAscending;
 Icons.DefaultImage = DefaultImage;
+Icons.ExploreIcon = ExploreIcon;
+Icons.SearchIcon = SearchIcon;
+Icons.ProfileIcon = ProfileIcon;
 
 export default Icons;

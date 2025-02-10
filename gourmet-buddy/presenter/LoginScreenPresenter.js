@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import AuthenticationScreen from "../view/UI/layout/generalScreen/AuthenticationScreen";
-import { Alert } from "react-native";
+import { saveUserToken } from "../model/UserTokenStorage";
 
 const LoginScreenPresenter = ({ navigation }) => {
   //Initialisations
@@ -18,7 +20,7 @@ const LoginScreenPresenter = ({ navigation }) => {
     navigation.navigate("CreateAccountScreen");
   };
 
-  postLoginOptions = {
+  const postLoginOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username: usernameValue, password: passwordValue }),
@@ -26,19 +28,18 @@ const LoginScreenPresenter = ({ navigation }) => {
 
   const postLogin = async () => {
     try {
-      await fetch(loginEndpoint, postLoginOptions).then((response) => {
-        response.json().then(() => {
-          if (response.status < 400) {
-            navigation.navigate("SearchScreen");
-          } else {
-            Alert.alert(
-              "Unable to log in. Please ensure your credentials are correct"
-            );
-          }
-        });
-      });
+      const response = await fetch(loginEndpoint, postLoginOptions);
+      const data = JSON.parse(await response.text());
+      if (response.ok) {
+        await AsyncStorage.setItem("userToken", data.userToken);
+        const storedToken = await AsyncStorage.getItem("userToken");
+        console.log("Stored token:", storedToken);
+        saveUserToken(storedToken);
+        navigation.replace("SearchScreen");
+      }
     } catch (error) {
-      Alert.alert(error);
+      console.error("Login error:", error);
+      Alert.alert("Error", error.message);
     }
   };
 
