@@ -35,28 +35,20 @@ export const App = () => {
   }, [userToken]);
 
   //View
-  const NavigationStack = () => {};
   return (
     <NavigationContainer key={userToken ? "loggedIn" : "notLoggedIn"}>
       <Stack.Navigator
-        //initialRouteName={userToken != null ? "SearchScreen" : "LoginScreen"}
+        initialRouteName={userToken != null ? "SearchScreen" : "LoginScreen"}
         screenOptions={{
           headerShown: false,
         }}
       >
-        {userToken ? (
-          <Stack.Screen
-            name="SearchScreen"
-            component={SearchScreenPresenter}
-            options={{ title: "Search Screen" }}
-          />
-        ) : (
-          <Stack.Screen
-            name="LoginScreen"
-            component={LoginScreenPresenter}
-            options={{ title: " Log In " }}
-          />
-        )}
+        <Stack.Screen name="SearchScreen" options={{ title: "Search Screen" }}>
+          {(props) => <SearchScreenPresenter {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name="LoginScreen" options={{ title: " Log In " }}>
+          {(props) => <LoginScreenPresenter {...props} />}
+        </Stack.Screen>
         <Stack.Screen
           name="CreateAccountScreen"
           component={CreateAccountScreenPresenter}
