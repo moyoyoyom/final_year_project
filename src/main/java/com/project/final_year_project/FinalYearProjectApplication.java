@@ -13,12 +13,5 @@ public class FinalYearProjectApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) throws SQLException {
 		SpringApplication.run(FinalYearProjectApplication.class, args);
-
-		/*
-		 * FoodProductDao foodProductDao = new FoodProductDaoImpl(); List<FoodProduct>
-		 * results = foodProductDao.getFoodProductByName("coca-cola"); for (FoodProduct
-		 * foodProduct : results) { System.out.println(foodProduct.getAssignedID() + " "
-		 * + foodProduct.getProductName()); }
-		 */
 	}
 }
