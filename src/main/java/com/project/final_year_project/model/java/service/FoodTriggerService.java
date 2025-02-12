@@ -16,8 +16,6 @@ public class FoodTriggerService {
     }
 
     public List<FoodTrigger> getAllTriggersByFoodGroups() {
-        List<FoodTrigger> foodTriggers = foodTriggerRepository.findAll();
-        System.out.println(foodTriggers);
-        return foodTriggers;
+        return foodTriggerRepository.findAll();
     }
 }

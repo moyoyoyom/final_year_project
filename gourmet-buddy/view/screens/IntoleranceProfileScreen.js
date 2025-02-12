@@ -1,7 +1,8 @@
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import Screen from "../UI/layout/Screen";
 import SearchField from "../UI/components/SearchField";
 import Button from "../UI/components/Button";
+import TriggerList from "../entity/TriggerList";
 
 const IntoleranceProfileScreen = ({ foodTriggers }) => {
   //Initialisations
@@ -23,7 +24,7 @@ const IntoleranceProfileScreen = ({ foodTriggers }) => {
         customSearchFieldStyle={styles.searchFieldStyle}
         placeholderText={searchBarPlaceholder}
       />
-      <ScrollView>{foodTriggers}</ScrollView>
+      <TriggerList triggerFoods={foodTriggers} />
       <Button
         buttonText={"What food do you avoid?"}
         buttonStyle={styles.buttonStyle}
