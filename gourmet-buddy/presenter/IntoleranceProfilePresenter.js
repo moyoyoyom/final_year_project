@@ -16,6 +16,7 @@ const IntoleranceProfilePresenter = () => {
 
   //State
   const [foodTriggers, setFoodTriggers] = useState([]);
+  const [userFoodTriggers, setUserFoodTriggers] = useState([]);
 
   //Handlers
   const getFoodTriggersFromEndpoint = async () => {
@@ -31,8 +32,17 @@ const IntoleranceProfilePresenter = () => {
     }
   };
 
+  const onTriggerSelect = (selectedTrigger) => {
+    setUserFoodTriggers([...userFoodTriggers, selectedTrigger]);
+  };
+
   //View
-  return <IntoleranceProfileScreen foodTriggers={foodTriggers} />;
+  return (
+    <IntoleranceProfileScreen
+      foodTriggers={foodTriggers}
+      onTriggerSelect={onTriggerSelect}
+    />
+  );
 };
 
 export default IntoleranceProfilePresenter;

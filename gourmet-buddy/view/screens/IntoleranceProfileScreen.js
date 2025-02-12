@@ -4,7 +4,7 @@ import SearchField from "../UI/components/SearchField";
 import Button from "../UI/components/Button";
 import TriggerList from "../entity/TriggerList";
 
-const IntoleranceProfileScreen = ({ foodTriggers }) => {
+const IntoleranceProfileScreen = ({ foodTriggers, onTriggerSelect }) => {
   //Initialisations
   const searchBarPlaceholder = "Search for more allergens";
 
@@ -24,7 +24,7 @@ const IntoleranceProfileScreen = ({ foodTriggers }) => {
         customSearchFieldStyle={styles.searchFieldStyle}
         placeholderText={searchBarPlaceholder}
       />
-      <TriggerList triggerFoods={foodTriggers} />
+      <TriggerList triggerFoods={foodTriggers} onSelect={onTriggerSelect} />
       <Button
         buttonText={"What food do you avoid?"}
         buttonStyle={styles.buttonStyle}
@@ -57,9 +57,11 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
     width: "80%",
+    minHeight: 45,
   },
   buttonStyle: {
     marginBottom: 30,
+    marginTop: 15,
     backgroundColor: "#0B3007",
     borderColor: "#0B3007",
     width: "80%",
@@ -67,6 +69,7 @@ const styles = StyleSheet.create({
   buttonLabelStyle: {
     fontWeight: 600,
     padding: 5,
+    color: "#FFDC7A",
   },
   backgroundStyle: {
     backgroundColor: "#D5DBB8",
