@@ -2,6 +2,8 @@ package com.project.final_year_project.model.java;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,9 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @Entity
 @Table(name = "FoodGroups")
 public class FoodGroup {
@@ -22,12 +22,14 @@ public class FoodGroup {
     @Column(nullable = false)
     private String groupName;
 
-    @OneToMany(mappedBy = "foodGroup")
-    private List<FoodTrigger> foodTriggers;
+    // @OneToMany(mappedBy = "foodGroup")
+    // @JsonManagedReference
+    // private List<FoodTrigger> foodTriggers;
 
-    public FoodGroup(Integer foodGroupID, String groupName) {
+    public FoodGroup(Integer foodGroupID, String groupName /* , List<FoodTrigger> foodTriggers */) {
         this.foodGroupID = foodGroupID;
         this.groupName = groupName;
+        // this.foodTriggers = foodTriggers;
     }
 
     // Getters and setters
@@ -46,4 +48,11 @@ public class FoodGroup {
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
+
+    /*
+     * public List<FoodTrigger> getFoodTriggers() { return foodTriggers; }
+     * 
+     * public void setFoodTriggers(List<FoodTrigger> foodTriggers) {
+     * this.foodTriggers = foodTriggers; }
+     */
 }

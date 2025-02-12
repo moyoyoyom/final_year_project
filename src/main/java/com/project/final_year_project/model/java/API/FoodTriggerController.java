@@ -12,7 +12,7 @@ import com.project.final_year_project.model.java.FoodTrigger;
 import com.project.final_year_project.model.java.service.FoodTriggerService;
 
 @RestController
-@RequestMapping("api/foodtriggers")
+@RequestMapping("/api/foodtriggers")
 public class FoodTriggerController {
     private final FoodTriggerService foodTriggerService;
 

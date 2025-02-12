@@ -3,7 +3,7 @@ import Screen from "../UI/layout/Screen";
 import SearchField from "../UI/components/SearchField";
 import Button from "../UI/components/Button";
 
-const IntoleranceProfileScreen = () => {
+const IntoleranceProfileScreen = ({ foodTriggers }) => {
   //Initialisations
   const searchBarPlaceholder = "Search for more allergens";
 
@@ -23,7 +23,7 @@ const IntoleranceProfileScreen = () => {
         customSearchFieldStyle={styles.searchFieldStyle}
         placeholderText={searchBarPlaceholder}
       />
-      <ScrollView></ScrollView>
+      <ScrollView>{foodTriggers}</ScrollView>
       <Button
         buttonText={"What food do you avoid?"}
         buttonStyle={styles.buttonStyle}
