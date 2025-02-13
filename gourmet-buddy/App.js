@@ -10,6 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import ProfileScreenPresenter from "./presenter/ProfileScreenPresenter";
 import ExploreScreenPresenter from "./presenter/ExploreScreenPresenter";
 import IntoleranceProfilePresenter from "./presenter/IntoleranceProfilePresenter";
+import DislikeProfilePresenter from "./presenter/DislikeProfilePresenter";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,7 +39,7 @@ export const App = () => {
   return (
     <NavigationContainer key={userToken ? "loggedIn" : "notLoggedIn"}>
       <Stack.Navigator
-        initialRouteName="IntoleranceProfilePresenter" //{userToken != null ? "SearchScreen" : "LoginScreen"}
+        initialRouteName={userToken != null ? "SearchScreen" : "LoginScreen"}
         screenOptions={{
           headerShown: false,
         }}
@@ -50,7 +51,7 @@ export const App = () => {
           {(props) => <LoginScreenPresenter {...props} />}
         </Stack.Screen>
         <Stack.Screen
-          name="IntoleranceProfilePresenter"
+          name="IntoleranceProfileScreen"
           component={IntoleranceProfilePresenter}
         />
         <Stack.Screen
@@ -72,6 +73,10 @@ export const App = () => {
           name="ExploreScreen"
           component={ExploreScreenPresenter}
           options={{ title: "Explore Screen" }}
+        />
+        <Stack.Screen
+          name="DislikeProfileScreen"
+          component={DislikeProfilePresenter}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -2,6 +2,8 @@ import { Alert } from "react-native";
 import { useState } from "react";
 
 import AuthenticationScreen from "../view/UI/layout/generalScreen/AuthenticationScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { saveUserToken } from "../model/UserTokenStorage";
 
 const CreateAccountScreenPresenter = ({ navigation }) => {
   //Initialisations
@@ -32,6 +34,27 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
     }
   };
 
+  const postNewUser = async () => {
+    try {
+      const response = await fetch(userEndpoint, postUserOptions);
+      console.log("response", response);
+      const data = JSON.parse(await response.text());
+      console.log("Data", data);
+      if (response.ok) {
+        console.log("response is ok");
+        await AsyncStorage.setItem("userToken", data.userToken);
+        console.log("data token", data.token);
+        const storedToken = await AsyncStorage.getItem("userToken");
+        console.log("New user created, here is their token:", storedToken);
+        saveUserToken(storedToken);
+        navigation.navigate("IntoleranceProfileScreen");
+      }
+    } catch (error) {
+      console.error("Account creation error:", error);
+      Alert.alert("Error", error.message);
+    }
+  };
+
   const getUsername = (value) => {
     setUsernameValue(value);
   };
@@ -51,7 +74,7 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
       passwordValue={passwordValue}
       onUsernameChange={getUsername}
       onPasswordChange={getPassword}
-      onAuthenticateClick={postUser}
+      onAuthenticateClick={postNewUser}
       onPageSwitch={onPageSwitch}
       type={authenticationType}
     />

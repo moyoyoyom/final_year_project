@@ -31,9 +31,14 @@ public class UserController {
      * @return a response entity with the status code 200 and created account
      */
     @PostMapping("/account")
-    public ResponseEntity<User> createAccount(@RequestBody User user) {
+    public ResponseEntity<?> createAccount(@RequestBody User user) {
         User newUser = userService.saveUser(user);
-        return ResponseEntity.ok(newUser);
+        String token = JWTUtility.generateUserToken(newUser.getUsername());
+        System.out.println(token);
+        newUser.getUserID();
+        Map<String, String> userToken = Map.of("userToken", token, "username", newUser.getUsername(), "userID",
+                Long.toString(newUser.getUserID()));
+        return ResponseEntity.ok(userToken);
     }
 
     /**

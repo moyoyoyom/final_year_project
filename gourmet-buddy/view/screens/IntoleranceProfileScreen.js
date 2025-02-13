@@ -4,7 +4,11 @@ import SearchField from "../UI/components/SearchField";
 import Button from "../UI/components/Button";
 import TriggerList from "../entity/TriggerList";
 
-const IntoleranceProfileScreen = ({ foodTriggers, onTriggerSelect }) => {
+const IntoleranceProfileScreen = ({
+  foodTriggers,
+  onTriggerSelect,
+  onNextPageSelect,
+}) => {
   //Initialisations
   const searchBarPlaceholder = "Search for more allergens";
 
@@ -29,6 +33,7 @@ const IntoleranceProfileScreen = ({ foodTriggers, onTriggerSelect }) => {
         buttonText={"What food do you avoid?"}
         buttonStyle={styles.buttonStyle}
         labelStyle={styles.buttonLabelStyle}
+        onClick={onNextPageSelect}
       />
     </Screen>
   );
