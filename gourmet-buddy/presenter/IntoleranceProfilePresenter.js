@@ -15,22 +15,26 @@ const IntoleranceProfilePresenter = ({ navigation }) => {
     headers: { "Content-Type": "application/json" },
   };
 
-  const token = AsyncStorage.getItem("userToken");
-  const decodedUser = jwtDecode(token);
-
-  const postUserRelationshipOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user: user, foodTrigger: foodTrigger }),
-  };
-
   useEffect(() => {
     getFoodTriggersFromEndpoint();
+  }, []);
+
+  useEffect(() => {
+    const findUserToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem("userToken");
+        setUserToken(token);
+      } catch (error) {
+        Alert.error(error);
+      }
+    };
+    findUserToken();
   }, []);
 
   //State
   const [foodTriggers, setFoodTriggers] = useState([]);
   const [userFoodTriggers, setUserFoodTriggers] = useState([]);
+  const [userToken, setUserToken] = useState(null);
 
   //Handlers
   const getFoodTriggersFromEndpoint = async () => {
@@ -70,6 +74,7 @@ const IntoleranceProfilePresenter = ({ navigation }) => {
   };
 
   const postEachUserRelationshipOptions = async () => {
+    const decodedUser = jwtDecode(userToken);
     foodTriggers.forEach(async (foodTrigger) => {
       try {
         await fetch(userRelationshipsEndpoint, {

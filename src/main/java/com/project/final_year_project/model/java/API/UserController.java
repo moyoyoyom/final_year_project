@@ -52,7 +52,8 @@ public class UserController {
     public ResponseEntity<?> loginToAccount(@RequestBody User enteredUser) {
         String token = JWTUtility.generateUserToken(enteredUser.getUsername());
         if (userService.logInUser(enteredUser.getUsername(), enteredUser.getPassword())) {
-            Map<String, String> userToken = Map.of("userToken", token, "username", enteredUser.getUsername());
+            Map<String, String> userToken = Map.of("userToken", token, "username", enteredUser.getUsername(), "userID",
+                    Long.toString(enteredUser.getUserID()));
             return ResponseEntity.ok(userToken);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(enteredUser);
