@@ -32,12 +32,12 @@ public class UserController {
      */
     @PostMapping("/account")
     public ResponseEntity<?> createAccount(@RequestBody User user) {
-        User newUser = userService.saveUser(user);
-        String token = JWTUtility.generateUserToken(newUser.getUsername());
+        userService.saveUser(user);
+        String token = JWTUtility.generateUserToken(user);
         System.out.println(token);
-        newUser.getUserID();
-        Map<String, String> userToken = Map.of("userToken", token, "username", newUser.getUsername(), "userID",
-                Long.toString(newUser.getUserID()));
+        user.getUserID();
+        Map<String, String> userToken = Map.of("userToken", token, "username", user.getUsername(), "password",
+                user.getPassword(), "userID", Long.toString(user.getUserID()));
         return ResponseEntity.ok(userToken);
     }
 
@@ -50,7 +50,7 @@ public class UserController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> loginToAccount(@RequestBody User enteredUser) {
-        String token = JWTUtility.generateUserToken(enteredUser.getUsername());
+        String token = JWTUtility.generateUserToken(enteredUser);
         if (userService.logInUser(enteredUser.getUsername(), enteredUser.getPassword())) {
             Map<String, String> userToken = Map.of("userToken", token, "username", enteredUser.getUsername(), "userID",
                     Long.toString(enteredUser.getUserID()));

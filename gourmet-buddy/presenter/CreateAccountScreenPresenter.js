@@ -43,7 +43,7 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
       if (response.ok) {
         console.log("response is ok");
         await AsyncStorage.setItem("userToken", data.userToken);
-        console.log("data token", data.token);
+        console.log("data token", data.userToken);
         const storedToken = await AsyncStorage.getItem("userToken");
         console.log("New user created, here is their token:", storedToken);
         saveUserToken(storedToken);

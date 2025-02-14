@@ -5,15 +5,21 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Embeddable
+@Getter
+@Setter
+@Data
 @NoArgsConstructor
 public class UserIngredientRelationshipID implements Serializable {
-    @Column
+    @Column(nullable = false)
     private Long userID;
 
-    @Column
+    @Column(nullable = false)
     private Integer foodTriggerID;
 
     public UserIngredientRelationshipID(Long userID, Integer foodTriggerID) {

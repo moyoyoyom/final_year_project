@@ -1,5 +1,7 @@
 package com.project.final_year_project.model.java;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Entity
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Table(name = "users")
 public class User {
     @Id

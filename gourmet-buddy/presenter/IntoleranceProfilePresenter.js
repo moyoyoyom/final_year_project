@@ -54,33 +54,33 @@ const IntoleranceProfilePresenter = ({ navigation }) => {
   };
 
   const onNextPageSelect = () => {
-    postEachUserRelationshipOptions();
+    postEachUserRelationship();
     navigation.navigate("DislikeProfileScreen");
   };
 
-  //post user food triggers to create user ingredients relationship entity
-  const saveUserFoodTriggers = async () => {
-    try {
-      const response = await fetch(
-        userRelationshipsEndpoint,
-        postUserRelationshipOptions
-      );
-      if (response.ok) {
-        Alert.alert("Your intolerances have been saved");
-      }
-    } catch (error) {
-      Alert.alert("There have been problems saving your intolerances");
-    }
-  };
-
-  const postEachUserRelationshipOptions = async () => {
+  const postEachUserRelationship = async () => {
     const decodedUser = jwtDecode(userToken);
+    console.log(decodedUser);
     foodTriggers.forEach(async (foodTrigger) => {
       try {
         await fetch(userRelationshipsEndpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ user: decodedUser, foodTrigger: foodTrigger }),
+          body: JSON.stringify({
+            userIngredientRelationshipID: {
+              userID: decodedUser.userID,
+              foodTriggerID: foodTrigger.foodTriggerID,
+            },
+            relationship: "CANNOTEAT",
+            user: {
+              userID: decodedUser.userID,
+            },
+            foodTrigger: {
+              foodTriggerID: foodTrigger.foodTriggerID,
+              triggerName: foodTrigger.triggerName,
+              foodGroupID: foodTrigger.foodGroupID,
+            },
+          }),
         });
       } catch (error) {
         Alert.alert("There have been issues saving your intolerances");
