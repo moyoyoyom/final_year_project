@@ -31,9 +31,14 @@ public class UserController {
      * @return a response entity with the status code 200 and created account
      */
     @PostMapping("/account")
-    public ResponseEntity<User> createAccount(@RequestBody User user) {
-        User newUser = userService.saveUser(user);
-        return ResponseEntity.ok(newUser);
+    public ResponseEntity<?> createAccount(@RequestBody User user) {
+        userService.saveUser(user);
+        String token = JWTUtility.generateUserToken(user);
+        System.out.println(token);
+        user.getUserID();
+        Map<String, String> userToken = Map.of("userToken", token, "username", user.getUsername(), "password",
+                user.getPassword(), "userID", Long.toString(user.getUserID()));
+        return ResponseEntity.ok(userToken);
     }
 
     /**
@@ -45,9 +50,10 @@ public class UserController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> loginToAccount(@RequestBody User enteredUser) {
-        String token = JWTUtility.generateUserToken(enteredUser.getUsername());
+        String token = JWTUtility.generateUserToken(enteredUser);
         if (userService.logInUser(enteredUser.getUsername(), enteredUser.getPassword())) {
-            Map<String, String> userToken = Map.of("userToken", token, "username", enteredUser.getUsername());
+            Map<String, String> userToken = Map.of("userToken", token, "username", enteredUser.getUsername(), "userID",
+                    Long.toString(enteredUser.getUserID()));
             return ResponseEntity.ok(userToken);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(enteredUser);

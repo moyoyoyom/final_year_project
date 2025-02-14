@@ -38,6 +38,10 @@ const ProfileIcon = ({ color, size }) => (
   <Ionicons name="person-circle-outline" size={size} color={color} />
 );
 
+const AddIcon = ({ color, size }) => (
+  <Ionicons name="add" size={size} color={color} />
+);
+
 //Compose
 Icons.ReturnIcon = ReturnIcon;
 Icons.ForwardIcon = ForwardIcon;
@@ -48,5 +52,6 @@ Icons.DefaultImage = DefaultImage;
 Icons.ExploreIcon = ExploreIcon;
 Icons.SearchIcon = SearchIcon;
 Icons.ProfileIcon = ProfileIcon;
+Icons.AddIcon = AddIcon;
 
 export default Icons;

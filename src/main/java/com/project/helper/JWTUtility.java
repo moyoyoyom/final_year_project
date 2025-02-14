@@ -1,5 +1,7 @@
 package com.project.helper;
 
+import com.project.final_year_project.model.java.User;
+
 import java.util.Base64;
 import java.util.Date;
 
@@ -18,9 +20,10 @@ public class JWTUtility {
      * @param username name of user who is going to recieve a token
      * @return the generated token for that user
      */
-    public static String generateUserToken(String username) {
+    public static String generateUserToken(User user) {
         Date expirationDate = new Date(System.currentTimeMillis() + 1000 * 60 * 60);
-        String token = Jwts.builder().setSubject(username).setIssuedAt(new Date()).setExpiration(expirationDate)
+        String token = Jwts.builder().setSubject(user.getUsername()).claim("userID", user.getUserID())
+                .claim("password", user.getPassword()).setIssuedAt(new Date()).setExpiration(expirationDate)
                 .signWith(signWithKey, SignatureAlgorithm.HS256).compact();
         return token;
     }

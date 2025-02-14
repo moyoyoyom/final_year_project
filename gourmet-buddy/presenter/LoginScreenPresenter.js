@@ -10,6 +10,11 @@ const LoginScreenPresenter = ({ navigation }) => {
   const authenticationType = "Login";
 
   const loginEndpoint = "http://192.168.1.253:8090/api/users/login";
+  const postLoginOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username: usernameValue, password: passwordValue }),
+  };
 
   //State
   const [usernameValue, setUsernameValue] = useState("");
@@ -18,12 +23,6 @@ const LoginScreenPresenter = ({ navigation }) => {
   //Handlers
   const onPageSwitch = () => {
     navigation.navigate("CreateAccountScreen");
-  };
-
-  const postLoginOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username: usernameValue, password: passwordValue }),
   };
 
   const postLogin = async () => {
