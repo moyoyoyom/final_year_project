@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet } from "react-native";
 import TriggerItem from "./TriggerItem";
 
-const TriggerList = ({ triggerFoods, onSelect }) => {
+const TriggerList = ({ triggerFoods, onSelect, selectedItem }) => {
   //View
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -11,6 +11,7 @@ const TriggerList = ({ triggerFoods, onSelect }) => {
             key={triggerFood.foodTriggerID}
             triggerFood={triggerFood}
             onSelect={onSelect}
+            isSelected={selectedItem === triggerFood}
           />
         );
       })}

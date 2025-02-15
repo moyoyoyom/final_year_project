@@ -8,6 +8,7 @@ const IntoleranceProfileScreen = ({
   foodTriggers,
   onTriggerSelect,
   onNextPageSelect,
+  selectedItem,
 }) => {
   //Initialisations
   const searchBarPlaceholder = "Search for more allergens";
@@ -28,7 +29,11 @@ const IntoleranceProfileScreen = ({
         customSearchFieldStyle={styles.searchFieldStyle}
         placeholderText={searchBarPlaceholder}
       />
-      <TriggerList triggerFoods={foodTriggers} onSelect={onTriggerSelect} />
+      <TriggerList
+        triggerFoods={foodTriggers}
+        onSelect={onTriggerSelect}
+        selectedItem={selectedItem}
+      />
       <Button
         buttonText={"What food do you avoid?"}
         buttonStyle={styles.buttonStyle}
