@@ -14,6 +14,7 @@ const IntoleranceProfilePresenter = ({ navigation }) => {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   };
+  const screenType = "intoleranceProfile";
 
   useEffect(() => {
     getFoodTriggersFromEndpoint();

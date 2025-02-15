@@ -9,22 +9,32 @@ const IntoleranceProfileScreen = ({
   onTriggerSelect,
   onNextPageSelect,
   selectedItems,
+  screenType,
 }) => {
   //Initialisations
-  const searchBarPlaceholder = "Search for more allergens";
+  const searchBarPlaceholder =
+    "Search for more allergens, sensitivities or intolerances etc.";
+  const screenTitle =
+    screenType == "intoleranceProfile"
+      ? "What can't you eat?"
+      : "What don't you like?";
+  const firstSubtitle =
+    screenType == "intoleranceProfile"
+      ? "Add anything you are allergic / intolerant towards."
+      : "Add any food products that you can eat, but simply do not like.";
+  const secondSubtitle =
+    screenType == "intoleranceProfile"
+      ? "We'll use this to find food products you can eat"
+      : "We'll use this to find things you can and would like to eat.";
+  const buttonText =
+    screenType == "intoleranceProfile" ? "What food do yo avoid?" : "All done!";
 
   //View
   return (
     <Screen screenStyle={styles.backgroundStyle}>
-      <Text style={styles.screenTitle}> What can't you eat? </Text>
-      <Text style={styles.descriptionText}>
-        {" "}
-        Add anything you're allergic / intolerant towards.{" "}
-      </Text>
-      <Text style={styles.descriptionText}>
-        {" "}
-        We'll use this to find food products you can eat.{" "}
-      </Text>
+      <Text style={styles.screenTitle}> {screenTitle} </Text>
+      <Text style={styles.descriptionText}>{firstSubtitle}</Text>
+      <Text style={styles.descriptionText}>{secondSubtitle}</Text>
       <SearchField
         customSearchFieldStyle={styles.searchFieldStyle}
         placeholderText={searchBarPlaceholder}
@@ -35,7 +45,7 @@ const IntoleranceProfileScreen = ({
         selectedItems={selectedItems}
       />
       <Button
-        buttonText={"What food do you avoid?"}
+        buttonText={buttonText}
         buttonStyle={styles.buttonStyle}
         labelStyle={styles.buttonLabelStyle}
         onClick={onNextPageSelect}
