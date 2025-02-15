@@ -14,6 +14,7 @@ const IntoleranceProfilePresenter = ({ navigation }) => {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   };
+  const screenType = "intoleranceProfile";
 
   useEffect(() => {
     getFoodTriggersFromEndpoint();
@@ -35,6 +36,7 @@ const IntoleranceProfilePresenter = ({ navigation }) => {
   const [foodTriggers, setFoodTriggers] = useState([]);
   const [userFoodTriggers, setUserFoodTriggers] = useState([]);
   const [userToken, setUserToken] = useState(null);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   //Handlers
   const getFoodTriggersFromEndpoint = async () => {
@@ -51,6 +53,13 @@ const IntoleranceProfilePresenter = ({ navigation }) => {
 
   const onTriggerSelect = (selectedTrigger) => {
     setUserFoodTriggers([...userFoodTriggers, selectedTrigger]);
+    if (!selectedItems.includes(selectedTrigger)) {
+      setSelectedItems([...selectedItems, selectedTrigger]);
+    } else {
+      setSelectedItems(
+        selectedItems.filter((trigger) => trigger !== selectedTrigger)
+      );
+    }
   };
 
   const onNextPageSelect = () => {
@@ -61,7 +70,7 @@ const IntoleranceProfilePresenter = ({ navigation }) => {
   const postEachUserRelationship = async () => {
     const decodedUser = jwtDecode(userToken);
     console.log(decodedUser);
-    foodTriggers.forEach(async (foodTrigger) => {
+    userFoodTriggers.forEach(async (foodTrigger) => {
       try {
         await fetch(userRelationshipsEndpoint, {
           method: "POST",
@@ -94,6 +103,7 @@ const IntoleranceProfilePresenter = ({ navigation }) => {
       foodTriggers={foodTriggers}
       onTriggerSelect={onTriggerSelect}
       onNextPageSelect={onNextPageSelect}
+      selectedItems={selectedItems}
     />
   );
 };
