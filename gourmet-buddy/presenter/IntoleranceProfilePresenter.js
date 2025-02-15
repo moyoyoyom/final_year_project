@@ -35,7 +35,7 @@ const IntoleranceProfilePresenter = ({ navigation }) => {
   const [foodTriggers, setFoodTriggers] = useState([]);
   const [userFoodTriggers, setUserFoodTriggers] = useState([]);
   const [userToken, setUserToken] = useState(null);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   //Handlers
   const getFoodTriggersFromEndpoint = async () => {
@@ -52,7 +52,13 @@ const IntoleranceProfilePresenter = ({ navigation }) => {
 
   const onTriggerSelect = (selectedTrigger) => {
     setUserFoodTriggers([...userFoodTriggers, selectedTrigger]);
-    setSelectedItem(selectedTrigger);
+    if (!selectedItems.includes(selectedTrigger)) {
+      setSelectedItems([...selectedItems, selectedTrigger]);
+    } else {
+      setSelectedItems(
+        selectedItems.filter((trigger) => trigger !== selectedTrigger)
+      );
+    }
   };
 
   const onNextPageSelect = () => {
@@ -96,7 +102,7 @@ const IntoleranceProfilePresenter = ({ navigation }) => {
       foodTriggers={foodTriggers}
       onTriggerSelect={onTriggerSelect}
       onNextPageSelect={onNextPageSelect}
-      selectedItem={selectedItem}
+      selectedItems={selectedItems}
     />
   );
 };
