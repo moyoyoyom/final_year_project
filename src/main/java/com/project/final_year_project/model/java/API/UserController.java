@@ -1,6 +1,7 @@
 package com.project.final_year_project.model.java.API;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,9 +52,11 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> loginToAccount(@RequestBody User enteredUser) {
         String token = JWTUtility.generateUserToken(enteredUser);
-        if (userService.logInUser(enteredUser.getUsername(), enteredUser.getPassword())) {
-            Map<String, String> userToken = Map.of("userToken", token, "username", enteredUser.getUsername(), "userID",
-                    Long.toString(enteredUser.getUserID()));
+        Optional<User> optionalUser = userService.logInUser(enteredUser.getUsername(), enteredUser.getPassword());
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            Map<String, String> userToken = Map.of("userToken", token, "username", user.getUsername(), "userID",
+                    Long.toString(user.getUserID()));
             return ResponseEntity.ok(userToken);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(enteredUser);
