@@ -16,8 +16,12 @@ public class UserService {
     }
 
     public Optional<User> logInUser(String enterdUsername, String enteredPassword) {
-        Optional<User> foundUser = Optional.of(userRepository.findByUsername(enterdUsername));
-        return foundUser;
+        Optional<User> foundUser = Optional.ofNullable(userRepository.findByUsername(enterdUsername));
+        if (foundUser.isPresent()) {
+            if (foundUser.get().getPassword().equals(enteredPassword))
+                return foundUser;
+        }
+        return Optional.empty();
     }
 
     public User saveUser(User user) {

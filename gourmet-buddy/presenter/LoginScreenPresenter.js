@@ -25,10 +25,19 @@ const LoginScreenPresenter = ({ navigation }) => {
     navigation.navigate("CreateAccountScreen");
   };
 
+  const getUsername = (value) => {
+    setUsernameValue(value);
+  };
+
+  const getPassword = (value) => {
+    setPasswordValue(value);
+  };
+
   const postLogin = async () => {
     try {
       const response = await fetch(loginEndpoint, postLoginOptions);
       const data = JSON.parse(await response.text());
+      console.log(data);
       if (response.ok) {
         await AsyncStorage.setItem("userToken", data.userToken);
         const storedToken = await AsyncStorage.getItem("userToken");
@@ -47,8 +56,8 @@ const LoginScreenPresenter = ({ navigation }) => {
     <AuthenticationScreen
       usernameValue={usernameValue}
       passwordValue={passwordValue}
-      onUsernameChange={setUsernameValue}
-      onPasswordChange={setPasswordValue}
+      onUsernameChange={getUsername}
+      onPasswordChange={getPassword}
       onPageSwitch={onPageSwitch}
       onAuthenticateClick={postLogin}
       type={authenticationType}
