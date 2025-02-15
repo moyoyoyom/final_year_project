@@ -53,11 +53,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#0B3007",
   },
   selectedTriggerText: {
-    triggerText: {
-      fontSize: 15,
-      fontWeight: 600,
-      color: "#FFDC7A",
-    },
+    fontSize: 15,
+    fontWeight: 600,
+    color: "#FFDC7A",
   },
 });
 
