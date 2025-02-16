@@ -35,15 +35,23 @@ const LoginScreenPresenter = ({ navigation }) => {
 
   const postLogin = async () => {
     try {
-      const response = await fetch(loginEndpoint, postLoginOptions);
+      const response = await fetch(loginEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: usernameValue,
+          password: passwordValue,
+        }),
+      });
       const data = JSON.parse(await response.text());
-      console.log(data);
       if (response.ok) {
         await AsyncStorage.setItem("userToken", data.userToken);
         const storedToken = await AsyncStorage.getItem("userToken");
         console.log("Stored token:", storedToken);
         saveUserToken(storedToken);
         navigation.replace("SearchScreen");
+      } else {
+        Alert.alert("Your credentials are incorrect");
       }
     } catch (error) {
       console.error("Login error:", error);

@@ -22,18 +22,6 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
     body: JSON.stringify({ username: usernameValue, password: passwordValue }),
   };
 
-  const postUser = async () => {
-    try {
-      await fetch(userEndpoint, postUserOptions).then((response) => {
-        response.json().then(() => {
-          navigation.navigate("SearchScreen");
-        });
-      });
-    } catch (error) {
-      Alert.alert(error);
-    }
-  };
-
   const postNewUser = async () => {
     try {
       const response = await fetch(userEndpoint, postUserOptions);
