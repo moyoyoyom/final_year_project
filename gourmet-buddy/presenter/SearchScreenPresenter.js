@@ -32,11 +32,14 @@ const SearchFieldPresenter = ({ navigation }) => {
   const goToResultsScreen = () =>
     navigation.navigate("SearchResultsScreen", { postSearch });
 
+  const postBarcodeScan = async ({ data }) => {
+    const response = await fetch("");
+  };
+
   //View
   return (
     <SearchScreen
       onSearch={goToResultsScreen}
-      //value={searchValue}
       onSubmit={handleSubmit}
       searchInputValue={searchValue}
     />
