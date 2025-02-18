@@ -9,7 +9,8 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
   //Initialisations
   const authenticationType = "SignUp";
 
-  const userEndpoint = "http://192.168.1.253:8090/api/users/account";
+  const userEndpoint =
+    "http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/users/account";
 
   //State
   const [usernameValue, setUsernameValue] = useState("");
