@@ -3,6 +3,10 @@ import { useState } from "react";
 import SearchScreen from "../view/screens/SearchScreen";
 import API from "../model/API";
 import resultLoader from "../model/ResultLoader";
+import CameraScreen from "../view/screens/CameraScreen";
+import Screen from "../view/UI/layout/Screen";
+import { Camera, useCameraPermissions } from "expo-camera";
+import { Alert } from "react-native";
 
 const SearchFieldPresenter = ({ navigation }) => {
   //Initialisations
@@ -10,9 +14,10 @@ const SearchFieldPresenter = ({ navigation }) => {
 
   //State
   const [searchValue, setSearchValue] = useState(" ");
-  const [searchResults, areResultsLoading, loadSearchResults] = resultLoader(
-    productSearchEndpoint
-  );
+  const [, , loadSearchResults] = resultLoader(productSearchEndpoint);
+  const [isScanning, setIsScanning] = useState(false);
+  const [hasPermissionBeenGranted, setHasPermissionBeenGranted] =
+    useCameraPermissions();
 
   //Handlers
   const handleSubmit = (newValue) => {
@@ -32,18 +37,56 @@ const SearchFieldPresenter = ({ navigation }) => {
   const goToResultsScreen = () =>
     navigation.navigate("SearchResultsScreen", { postSearch });
 
-  const postBarcodeScan = async ({ data }) => {
-    const response = await fetch("");
+  const onBarcodeScanned = async ({ data }) => {
+    try {
+      const response = await fetch(
+        "http://192.168.1.253:8090/api/foodproducts/${barcode}"
+      );
+      const data = await response.json();
+    } catch (error) {
+      Alert.alert("Unable to scan this product");
+    }
+  };
+
+  const onScanButtonClick = async () => {
+    if (hasPermissionBeenGranted === null) {
+      const { status } = await Camera.getCameraPermissionsAsync();
+      setHasPermissionBeenGranted(status === "granted");
+      if (status !== "granted") {
+        Alert.alert("Camera permission is required");
+        return;
+      }
+    }
+    setIsScanning(true);
   };
 
   //View
   return (
+    <Screen>
+      {isScanning ? (
+        <CameraScreen onBarcodeScanned={onBarcodeScanned} />
+      ) : (
+        <SearchScreen
+          onSearch={goToResultsScreen}
+          onSubmit={handleSubmit}
+          searchInputValue={searchValue}
+          isScanning={isScanning}
+          setIsScanning={setIsScanning}
+          onScanButtonClick={onScanButtonClick}
+        />
+      )}
+    </Screen>
+  );
+  /*return (
     <SearchScreen
       onSearch={goToResultsScreen}
       onSubmit={handleSubmit}
       searchInputValue={searchValue}
+      isScanning={isScanning}
+      setIsScanning={setIsScanning}
+      onScanButtonClick={onScanButtonClick}
     />
-  );
+  ); */
 };
 
 export default SearchFieldPresenter;
