@@ -60,7 +60,8 @@ public class FoodProductController {
                         .ok(new FoodProduct(barcode, productName, ingredients, nutritionalInformationMap));
             }
         } catch (Exception exception) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(barcode);
+            exception.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(barcode);
     }

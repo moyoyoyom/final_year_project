@@ -23,21 +23,21 @@ public class FoodProduct {
     @Column
     private String ingredientsText;
     @Column
-    private Integer energyPer100g;
+    private String energyPer100g;
     @Column
-    private Integer fatPer100g;
+    private String fatPer100g;
     @Column
-    private Integer fiberPer100g;
+    private String fiberPer100g;
     @Column
-    private Integer proteinsPer100g;
+    private String proteinsPer100g;
     @Column
-    private Integer saltPer100g;
+    private String saltPer100g;
     @Column
-    private Integer saturatedFatPer100g;
+    private String saturatedFatPer100g;
     @Column
-    private Integer sodiumPer100g;
+    private String sodiumPer100g;
     @Column
-    private Integer sugarsPer100g;
+    private String sugarsPer100g;
 
     public FoodProduct(String code, String productName, String ingredientsText) {
         this.code = code;
@@ -50,13 +50,13 @@ public class FoodProduct {
         this.code = code;
         this.productName = productName;
         this.ingredientsText = ingredientsText;
-        this.energyPer100g = Integer.valueOf(nutritionalInformation.get("energyPer100g"));
-        this.fatPer100g = Integer.valueOf(nutritionalInformation.get("fatPer100g"));
-        this.fiberPer100g = Integer.valueOf(nutritionalInformation.get("fiberPer100g"));
-        this.proteinsPer100g = Integer.valueOf(nutritionalInformation.get("proteinsPer100g"));
-        this.saltPer100g = Integer.valueOf(nutritionalInformation.get("saltPer100g"));
-        this.saturatedFatPer100g = Integer.valueOf(nutritionalInformation.get("saturatedFatPer100g"));
-        this.sodiumPer100g = Integer.valueOf(nutritionalInformation.get("sodiumPer100g"));
-        this.sugarsPer100g = Integer.valueOf(nutritionalInformation.get("sugarsPer100g"));
+        this.energyPer100g = nutritionalInformation.get("energyPer100g");
+        this.fatPer100g = nutritionalInformation.get("fatPer100g");
+        this.fiberPer100g = nutritionalInformation.get("fiberPer100g");
+        this.proteinsPer100g = nutritionalInformation.get("proteinsPer100g");
+        this.saltPer100g = nutritionalInformation.get("saltPer100g");
+        this.saturatedFatPer100g = nutritionalInformation.get("saturatedFatPer100g");
+        this.sodiumPer100g = nutritionalInformation.get("sodiumPer100g");
+        this.sugarsPer100g = nutritionalInformation.get("sugarsPer100g");
     }
 }

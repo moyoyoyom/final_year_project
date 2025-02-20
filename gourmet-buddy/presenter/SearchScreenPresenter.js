@@ -44,6 +44,7 @@ const SearchFieldPresenter = ({ navigation }) => {
       );
       const data = await response.json();
     } catch (error) {
+      navigation.navigate("SearchScreen");
       Alert.alert("Unable to scan this product");
     }
   };
