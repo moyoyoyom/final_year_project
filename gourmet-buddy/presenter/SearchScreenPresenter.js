@@ -61,11 +61,19 @@ const SearchFieldPresenter = ({ navigation }) => {
     setIsScanning(true);
   };
 
+  const onExitClick = () => {
+    setIsScanning(false);
+    navigation.navigate("SearchScreen");
+  };
+
   //View
   return (
     <Screen>
       {isScanning ? (
-        <CameraScreen onBarcodeScanned={onBarcodeScanned} />
+        <CameraScreen
+          onBarcodeScanned={onBarcodeScanned}
+          onExitClick={onExitClick}
+        />
       ) : (
         <SearchScreen
           onSearch={goToResultsScreen}
@@ -78,16 +86,6 @@ const SearchFieldPresenter = ({ navigation }) => {
       )}
     </Screen>
   );
-  /*return (
-    <SearchScreen
-      onSearch={goToResultsScreen}
-      onSubmit={handleSubmit}
-      searchInputValue={searchValue}
-      isScanning={isScanning}
-      setIsScanning={setIsScanning}
-      onScanButtonClick={onScanButtonClick}
-    />
-  ); */
 };
 
 export default SearchFieldPresenter;
