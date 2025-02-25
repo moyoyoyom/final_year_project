@@ -43,31 +43,6 @@ const SearchFieldPresenter = ({ navigation }) => {
   const goToResultsScreen = () =>
     navigation.navigate("SearchResultsScreen", { postSearch });
 
-  /*const onBarcodeScanned = async ({ data }) => {
-    console.log("scanning");
-    try {
-      if (scanned) return;
-      setScanned(true);
-      const response = await fetch(
-        `http://192.168.1.253:8090/api/foodproducts/${data}`,
-        onBarcodeScanOptions
-      );
-      const data = await response.json();
-      setScannedFoodProductData(data);
-      setIsScanning(false);
-      console.log("done");
-      navigation.navigate("FoodProductDetailsScreen", {
-        foodProduct: scannedFoodProductData,
-      });
-    } catch (error) {
-      navigation.navigate("SearchScreen");
-      Alert.alert("Unable to scan this product");
-      console.error(error);
-    } finally {
-      setTimeout(() => setScanned(false), 10000);
-    }
-  }; */
-
   const onBarcodeScanned = async ({ data }) => {
     console.log("Scanned data:", data);
     if (scanned) return;
@@ -82,8 +57,14 @@ const SearchFieldPresenter = ({ navigation }) => {
       console.log("Raw Response: ", textResponse);
 
       const result = JSON.parse(textResponse);
+      setIsScanning(false);
       setScannedFoodProductData(result);
+      navigation.navigate("FoodProductDetailsScreen", {
+        foodProduct: scannedFoodProductData,
+      });
     } catch (error) {
+      setIsScanning(false);
+      navigation.navigate("SearchScreen");
       console.error("Error fetching product: ", error);
     } finally {
       setTimeout(() => setScanned(false), 10000);
@@ -107,6 +88,13 @@ const SearchFieldPresenter = ({ navigation }) => {
     navigation.navigate("SearchScreen");
   };
 
+  const onSeeResultsClick = () => {
+    setIsScanning(false);
+    navigation.navigate("FoodProductDetailsScreen", {
+      foodProduct: scannedFoodProductData,
+    });
+  };
+
   //View
   return (
     <Screen>
@@ -114,6 +102,8 @@ const SearchFieldPresenter = ({ navigation }) => {
         <CameraScreen
           onBarcodeScanned={onBarcodeScanned}
           onExitClick={onExitClick}
+          scanned={scanned}
+          onSeeResultsClick={onSeeResultsClick}
         />
       ) : (
         <SearchScreen

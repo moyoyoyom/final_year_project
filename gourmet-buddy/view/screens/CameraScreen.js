@@ -2,7 +2,12 @@ import { CameraView } from "expo-camera";
 import { StyleSheet } from "react-native";
 import Button from "../UI/components/Button";
 import Icons from "../UI/components/Icons";
-const CameraScreen = ({ onBarcodeScanned, onExitClick }) => {
+const CameraScreen = ({
+  onBarcodeScanned,
+  onExitClick,
+  scanned,
+  onSeeResultsClick,
+}) => {
   return (
     <CameraView
       facing="back"
@@ -14,6 +19,13 @@ const CameraScreen = ({ onBarcodeScanned, onExitClick }) => {
         buttonStyle={styles.buttonStyle}
         onClick={onExitClick}
       />
+      {scanned ? (
+        <Button
+          buttonText={"See results"}
+          onClick={onSeeResultsClick}
+          buttonStyle={styles.resultsButtonStyle}
+        />
+      ) : null}
     </CameraView>
   );
 };
@@ -30,6 +42,16 @@ const styles = StyleSheet.create({
     margin: 30,
     backgroundColor: "#FFDC7A",
     borderColor: "#FFDC7A",
+  },
+  resultsButtonStyle: {
+    position: "absolute",
+    bottom: 0,
+    backgroundColor: "#FFDC7A",
+    borderColor: "#FFDC7A",
+    width: "80%",
+    height: "7%",
+    marginBottom: 50,
+    alignSelf: "center",
   },
 });
 

@@ -11,6 +11,7 @@ import ProfileScreenPresenter from "./presenter/ProfileScreenPresenter";
 import ExploreScreenPresenter from "./presenter/ExploreScreenPresenter";
 import IntoleranceProfilePresenter from "./presenter/IntoleranceProfilePresenter";
 import DislikeProfilePresenter from "./presenter/DislikeProfilePresenter";
+import FoodProductDetailsScreenPresenter from "./presenter/FoodProductDetailsScreenPreseneter";
 
 const Stack = createNativeStackNavigator();
 
@@ -77,6 +78,10 @@ export const App = () => {
         <Stack.Screen
           name="DislikeProfileScreen"
           component={DislikeProfilePresenter}
+        />
+        <Stack.Screen
+          name="FoodProductDetailsScreen"
+          component={FoodProductDetailsScreenPresenter}
         />
       </Stack.Navigator>
     </NavigationContainer>

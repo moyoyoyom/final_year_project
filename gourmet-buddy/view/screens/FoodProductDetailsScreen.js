@@ -1,3 +1,4 @@
+import { Text } from "react-native";
 import Screen from "../UI/layout/Screen";
 
 const FoodProductDetailsScreen = () => {
