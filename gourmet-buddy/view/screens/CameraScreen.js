@@ -6,7 +6,7 @@ const CameraScreen = ({ onBarcodeScanned, onExitClick }) => {
   return (
     <CameraView
       facing="back"
-      //onBarcodeScanned={onBarcodeScanned}
+      onBarcodeScanned={onBarcodeScanned}
       style={styles.flexStyling}
     >
       <Button
