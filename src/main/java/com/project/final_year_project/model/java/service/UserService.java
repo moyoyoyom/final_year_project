@@ -1,5 +1,7 @@
 package com.project.final_year_project.model.java.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.project.final_year_project.model.java.User;
@@ -13,12 +15,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public boolean logInUser(String enterdUsername, String enteredPassword) {
-        User foundUser = userRepository.findByUsername(enterdUsername);
-        if ((foundUser != null) && (foundUser.getPassword().equals(enteredPassword))) {
-            return true;
+    public Optional<User> logInUser(String enterdUsername, String enteredPassword) {
+        Optional<User> foundUser = Optional.ofNullable(userRepository.findByUsername(enterdUsername));
+        if (foundUser.isPresent()) {
+            if (foundUser.get().getPassword().equals(enteredPassword))
+                return foundUser;
         }
-        return false;
+        return Optional.empty();
     }
 
     public User saveUser(User user) {

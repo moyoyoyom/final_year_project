@@ -8,8 +8,18 @@ import Button from "../UI/components/Button";
 import Divider from "../UI/components/Divider";
 import FoodProductList from "../entity/FoodProductList";
 import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
+import { Camera, CameraView, CameraType } from "expo-camera";
 
-const SearchScreen = ({ onSearch, searchInputValue }) => {
+const SearchScreen = ({
+  onSearch,
+  searchInputValue,
+  isScanning,
+  setIsScanning,
+  onBarCodeScanned,
+  hasBeenScanned,
+  setHasBeenScanned,
+  onScanButtonClick,
+}) => {
   //DELETE THIS DUMMY DATA LATER
   const foodProducts = [
     {
@@ -32,11 +42,16 @@ const SearchScreen = ({ onSearch, searchInputValue }) => {
       <Header
         leftItem={<Icons.ReturnIcon color={"#FFDC7A"} size={30} />}
         centerItem={
-          <SearchField value={searchInputValue} onSubmit={onSearch} />
+          <SearchField
+            value={searchInputValue}
+            onSubmit={onSearch}
+            customSearchFieldStyle={styles.customSearchFieldStyle}
+          />
         }
         rightItem={<Icons.MenuOptionsIcon color={"#FFDC7A"} size={30} />}
       />
       <Button
+        onClick={onScanButtonClick}
         buttonStyle={styles.scanButtonStyle}
         labelStyle={styles.scanButtonLabelStyle}
         buttonText="Scan Barcode or Label"

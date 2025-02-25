@@ -9,7 +9,8 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
   //Initialisations
   const authenticationType = "SignUp";
 
-  const userEndpoint = "http://192.168.1.253:8090/api/users/account";
+  const userEndpoint =
+    "http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/users/account";
 
   //State
   const [usernameValue, setUsernameValue] = useState("");
@@ -20,18 +21,6 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username: usernameValue, password: passwordValue }),
-  };
-
-  const postUser = async () => {
-    try {
-      await fetch(userEndpoint, postUserOptions).then((response) => {
-        response.json().then(() => {
-          navigation.navigate("SearchScreen");
-        });
-      });
-    } catch (error) {
-      Alert.alert(error);
-    }
   };
 
   const postNewUser = async () => {

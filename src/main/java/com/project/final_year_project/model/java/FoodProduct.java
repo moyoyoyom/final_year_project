@@ -1,25 +1,27 @@
 package com.project.final_year_project.model.java;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
 @Getter
 @Setter
+// @Entity
+// @Table(name = "FoodProducts")
 public class FoodProduct {
-    private Integer assignedID;
-    private String productID;
-    private String code;
-    private String productName;
-    private String ingredientsText;
-    private String quantity;
 
-    public FoodProduct(Integer assignedID, String productID, String code, String productName, String ingredientsText,
-            String quanity) {
-        this.assignedID = assignedID;
-        this.productID = productID;
-        this.code = code;
-        this.productName = productName;
-        this.ingredientsText = ingredientsText;
-        this.quantity = quanity;
-    }
+    @JsonProperty("code")
+    private String code;
+
+    @JsonProperty("product_name")
+    private String productName;
+
+    @JsonProperty("ingredients_text")
+    private String ingredientsText;
+
+    @JsonProperty("nutriments")
+    private NutritionalInformation nutritionalInformation;
 }

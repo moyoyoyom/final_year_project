@@ -7,9 +7,9 @@ import { jwtDecode } from "jwt-decode";
 const DislikeProfilePresenter = ({ navigation }) => {
   //Initialisations
   const foodTriggerEndpoint =
-    "http://192.168.1.253:8090/api/foodtriggers/getallbygroups";
+    "http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/foodtriggers/getallbygroups";
   const userRelationshipsEndpoint =
-    "http://192.168.1.253:8090/api/relationships/save";
+    "http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/relationships/save";
   const getFoodTriggersOptions = {
     method: "GET",
     headers: { "Content-Type": "application/json" },
