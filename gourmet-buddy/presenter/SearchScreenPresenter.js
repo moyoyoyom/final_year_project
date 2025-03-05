@@ -11,17 +11,12 @@ import { Alert } from "react-native";
 const SearchFieldPresenter = ({ navigation }) => {
   //Initialisations
   const productSearchEndpoint = "http://";
-  const onBarcodeScanOptions = {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  };
 
   //State
   const [searchValue, setSearchValue] = useState(" ");
   const [, , loadSearchResults] = resultLoader(productSearchEndpoint);
   const [isScanning, setIsScanning] = useState(false);
   const [scanned, setScanned] = useState(false);
-  const [scannedFoodProductData, setScannedFoodProductData] = useState(null);
   const [hasPermissionBeenGranted, setHasPermissionBeenGranted] =
     useCameraPermissions();
 
@@ -75,13 +70,6 @@ const SearchFieldPresenter = ({ navigation }) => {
     navigation.navigate("SearchScreen");
   };
 
-  const onSeeResultsClick = () => {
-    setIsScanning(false);
-    navigation.navigate("FoodProductDetailsScreen", {
-      foodProduct: scannedFoodProductData,
-    });
-  };
-
   //View
   return (
     <Screen>
@@ -89,8 +77,6 @@ const SearchFieldPresenter = ({ navigation }) => {
         <CameraScreen
           onBarcodeScanned={onBarcodeScanned}
           onExitClick={onExitClick}
-          scanned={scanned}
-          onSeeResultsClick={onSeeResultsClick}
         />
       ) : (
         <SearchScreen
