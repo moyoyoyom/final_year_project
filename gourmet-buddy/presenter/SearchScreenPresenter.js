@@ -43,7 +43,7 @@ const SearchFieldPresenter = ({ navigation }) => {
   const goToResultsScreen = () =>
     navigation.navigate("SearchResultsScreen", { postSearch });
 
-  const onBarcodeScanned = async ({ data }) => {
+  /*const onBarcodeScanned = async ({ data }) => {
     console.log("Scanned data:", data);
     if (scanned) return;
     setScanned(true);
@@ -69,6 +69,21 @@ const SearchFieldPresenter = ({ navigation }) => {
     } finally {
       setTimeout(() => setScanned(false), 10000);
     }
+  }; */
+
+  const onBarcodeScanned = async ({ data }) => {
+    console.log("Scanned data: ", data);
+    if (scanned) return;
+    setScanned(true);
+    const response = await API.get(
+      `http://192.168.1.253:8090/api/foodproducts/barcode/${data}`
+    );
+    if (response.isSuccess) {
+      navigation.navigate("FoodProductDetailsScreen", {
+        foodProduct: response,
+      });
+    }
+    setTimeout(() => setScanned(false), 10000);
   };
 
   const onScanButtonClick = async () => {
