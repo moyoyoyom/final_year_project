@@ -49,7 +49,7 @@ const SearchFieldPresenter = ({ navigation }) => {
     setScanned(true);
     try {
       const response = await fetch(
-        `http://192.168.1.253:8090/api/foodproducts/${data}`,
+        `http://192.168.1.253:8090/api/foodproducts/barcode/${data}`,
         onBarcodeScanOptions
       );
 
