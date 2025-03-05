@@ -43,36 +43,7 @@ const SearchFieldPresenter = ({ navigation }) => {
   const goToResultsScreen = () =>
     navigation.navigate("SearchResultsScreen", { postSearch });
 
-  /*const onBarcodeScanned = async ({ data }) => {
-    console.log("Scanned data:", data);
-    if (scanned) return;
-    setScanned(true);
-    try {
-      const response = await fetch(
-        `http://192.168.1.253:8090/api/foodproducts/barcode/${data}`,
-        onBarcodeScanOptions
-      );
-
-      const textResponse = await response.text();
-      console.log("Raw Response: ", textResponse);
-
-      const result = JSON.parse(textResponse);
-      setIsScanning(false);
-      setScannedFoodProductData(result);
-      navigation.navigate("FoodProductDetailsScreen", {
-        foodProduct: scannedFoodProductData,
-      });
-    } catch (error) {
-      setIsScanning(false);
-      navigation.navigate("SearchScreen");
-      console.error("Error fetching product: ", error);
-    } finally {
-      setTimeout(() => setScanned(false), 10000);
-    }
-  }; */
-
   const onBarcodeScanned = async ({ data }) => {
-    console.log("Scanned data: ", data);
     if (scanned) return;
     setScanned(true);
     const response = await API.get(
@@ -83,6 +54,7 @@ const SearchFieldPresenter = ({ navigation }) => {
         foodProduct: response,
       });
     }
+    setIsScanning(false);
     setTimeout(() => setScanned(false), 10000);
   };
 
