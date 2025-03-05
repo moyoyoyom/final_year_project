@@ -37,8 +37,11 @@ public class UserController {
         String token = JWTUtility.generateUserToken(user);
         System.out.println(token);
         user.getUserID();
-        Map<String, String> userToken = Map.of("userToken", token, "username", user.getUsername(), "password",
-                user.getPassword(), "userID", Long.toString(user.getUserID()));
+        Map<String, String> userToken = Map.of(
+                "userToken", token,
+                "username", user.getUsername(),
+                "password", user.getPassword(),
+                "userID", Long.toString(user.getUserID()));
         return ResponseEntity.ok(userToken);
     }
 
@@ -52,11 +55,15 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> loginToAccount(@RequestBody User enteredUser) {
         String token = JWTUtility.generateUserToken(enteredUser);
-        Optional<User> optionalUser = userService.logInUser(enteredUser.getUsername(), enteredUser.getPassword());
+        Optional<User> optionalUser = userService.logInUser(
+                enteredUser.getUsername(),
+                enteredUser.getPassword());
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            Map<String, String> userToken = Map.of("userToken", token, "username", user.getUsername(), "userID",
-                    Long.toString(user.getUserID()));
+            Map<String, String> userToken = Map.of(
+                    "userToken", token,
+                    "username", user.getUsername(),
+                    "userID", Long.toString(user.getUserID()));
             return ResponseEntity.ok(userToken);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(enteredUser);

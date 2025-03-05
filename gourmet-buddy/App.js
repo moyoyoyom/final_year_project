@@ -23,7 +23,6 @@ export const App = () => {
     const checkIfUserHasAToken = async () => {
       try {
         const foundToken = await AsyncStorage.getItem("userToken");
-        console.log("Retrieved this token: ", foundToken);
         setUserToken(foundToken);
       } catch (error) {
         Alert.alert("Problem finding token");
@@ -32,23 +31,19 @@ export const App = () => {
     checkIfUserHasAToken();
   }, []);
 
-  useEffect(() => {
-    console.log(userToken);
-  }, [userToken]);
-
   //View
   return (
-    <NavigationContainer key={userToken ? "loggedIn" : "notLoggedIn"}>
+    <NavigationContainer key={userToken}>
       <Stack.Navigator
         initialRouteName={userToken != null ? "SearchScreen" : "LoginScreen"}
         screenOptions={{
           headerShown: false,
         }}
       >
-        <Stack.Screen name="SearchScreen" options={{ title: "Search Screen" }}>
+        <Stack.Screen name="SearchScreen">
           {(props) => <SearchScreenPresenter {...props} />}
         </Stack.Screen>
-        <Stack.Screen name="LoginScreen" options={{ title: " Log In " }}>
+        <Stack.Screen name="LoginScreen">
           {(props) => <LoginScreenPresenter {...props} />}
         </Stack.Screen>
         <Stack.Screen
@@ -58,23 +53,13 @@ export const App = () => {
         <Stack.Screen
           name="CreateAccountScreen"
           component={CreateAccountScreenPresenter}
-          options={{ title: " Create Account " }}
         />
         <Stack.Screen
           name="SearchResultsScreen"
           component={SearchResultsScreenPresenter}
-          options={{ title: " Results Screen " }}
         />
-        <Stack.Screen
-          name="ProfileScreen"
-          component={ProfileScreenPresenter}
-          options={{ title: "Profile Screen" }}
-        />
-        <Stack.Screen
-          name="ExploreScreen"
-          component={ExploreScreenPresenter}
-          options={{ title: "Explore Screen" }}
-        />
+        <Stack.Screen name="ProfileScreen" component={ProfileScreenPresenter} />
+        <Stack.Screen name="ExploreScreen" component={ExploreScreenPresenter} />
         <Stack.Screen
           name="DislikeProfileScreen"
           component={DislikeProfilePresenter}

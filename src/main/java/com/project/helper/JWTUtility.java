@@ -22,8 +22,13 @@ public class JWTUtility {
      */
     public static String generateUserToken(User user) {
         Date expirationDate = new Date(System.currentTimeMillis() + 1000 * 60 * 60);
-        String token = Jwts.builder().setSubject(user.getUsername()).claim("userID", user.getUserID())
-                .claim("password", user.getPassword()).setIssuedAt(new Date()).setExpiration(expirationDate)
+        String token = Jwts.builder()
+                .setSubject(
+                        user.getUsername())
+                .claim("userID", user.getUserID())
+                .claim("password", user.getPassword())
+                .setIssuedAt(new Date())
+                .setExpiration(expirationDate)
                 .signWith(signWithKey, SignatureAlgorithm.HS256).compact();
         return token;
     }

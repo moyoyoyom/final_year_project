@@ -48,7 +48,6 @@ const LoginScreenPresenter = ({ navigation }) => {
       if (response.ok) {
         await AsyncStorage.setItem("userToken", data.userToken);
         const storedToken = await AsyncStorage.getItem("userToken");
-        console.log("Stored token:", storedToken);
         saveUserToken(storedToken);
         navigation.replace("SearchScreen");
       } else {
