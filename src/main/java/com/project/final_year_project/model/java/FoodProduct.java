@@ -24,4 +24,7 @@ public class FoodProduct {
 
     @JsonProperty("nutriments")
     private NutritionalInformation nutritionalInformation;
+
+    @JsonProperty("image_url")
+    private String imageUrl;
 }

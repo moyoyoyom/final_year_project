@@ -27,7 +27,9 @@ const IntoleranceProfileScreen = ({
       ? "We'll use this to find food products you can eat"
       : "We'll use this to find things you can and would like to eat.";
   const buttonText =
-    screenType == "intoleranceProfile" ? "What food do yo avoid?" : "All done!";
+    screenType == "intoleranceProfile"
+      ? "What food do you avoid?"
+      : "All done!";
 
   //View
   return (
