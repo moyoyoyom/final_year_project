@@ -80,11 +80,8 @@ const SearchFieldPresenter = ({ navigation }) => {
         />
       ) : (
         <SearchScreen
-          onSearch={goToResultsScreen}
           onSubmit={handleSubmit}
           searchInputValue={searchValue}
-          isScanning={isScanning}
-          setIsScanning={setIsScanning}
           onScanButtonClick={onScanButtonClick}
         />
       )}

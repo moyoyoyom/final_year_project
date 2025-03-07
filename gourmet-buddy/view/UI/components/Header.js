@@ -14,14 +14,15 @@ const styles = StyleSheet.create({
   headerStyle: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     backgroundColor: "#0B3007",
-    paddingTop: 35,
-    paddingBottom: 25,
+    paddingTop: 60,
+    paddingBottom: 10,
     marginBottom: 10,
     paddingRight: 10,
     paddingLeft: 10,
     width: "100%",
-    height: "12%",
+    height: "13%",
   },
   headerContent: {
     flex: 1,
