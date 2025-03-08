@@ -1,7 +1,12 @@
 package com.project.final_year_project.model.java.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
+import com.project.final_year_project.model.java.FoodTrigger;
+import com.project.final_year_project.model.java.Relationship;
 import com.project.final_year_project.model.java.User;
 import com.project.final_year_project.model.java.UserIngredientRelationship;
 import com.project.final_year_project.model.java.data.repository.UserIngredientRelationshipRepository;
@@ -26,5 +31,14 @@ public class UserIngredientRelationshipService {
         User user = entityManager.getReference(User.class, userID);
         userIngredientRelationship.setUser(user);
         return userIngredientRelationshipRepository.save(userIngredientRelationship);
+    }
+
+    public List<FoodTrigger> getAllUserSensitivities(Long userID) {
+        List<UserIngredientRelationship> userIngredientRelationships = userIngredientRelationshipRepository
+                .findByUserUserID(userID);
+        return userIngredientRelationships.stream()
+                .filter(relationship -> relationship.getRelationship() == Relationship.CANNOTEAT)
+                .map(UserIngredientRelationship::getFoodTrigger)
+                .collect(Collectors.toList());
     }
 }

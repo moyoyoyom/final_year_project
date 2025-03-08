@@ -5,7 +5,7 @@ import Header from "../UI/components/Header";
 import IconTray from "../UI/components/IconTray";
 import FormattedIngredientText from "../UI/components/FormattedIngredientText";
 
-const FoodProductDetailsScreen = ({ foodProduct }) => {
+const FoodProductDetailsScreen = ({ foodProduct, userSensitivities }) => {
   return (
     <Screen>
       <Header customHeaderStyle={styles.headerStyle} />
