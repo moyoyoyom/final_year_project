@@ -31,6 +31,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFDC7A",
     borderColor: "#FFDC7A",
   },
+  resultsButtonStyle: {
+    position: "absolute",
+    bottom: 0,
+    backgroundColor: "#FFDC7A",
+    borderColor: "#FFDC7A",
+    width: "80%",
+    height: "7%",
+    marginBottom: 50,
+    alignSelf: "center",
+  },
 });
 
 export default CameraScreen;

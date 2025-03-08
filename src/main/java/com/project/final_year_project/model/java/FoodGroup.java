@@ -19,14 +19,9 @@ public class FoodGroup {
     @Column(nullable = false)
     private String groupName;
 
-    // @OneToMany(mappedBy = "foodGroup")
-    // @JsonManagedReference
-    // private List<FoodTrigger> foodTriggers;
-
-    public FoodGroup(Integer foodGroupID, String groupName /* , List<FoodTrigger> foodTriggers */) {
+    public FoodGroup(Integer foodGroupID, String groupName) {
         this.foodGroupID = foodGroupID;
         this.groupName = groupName;
-        // this.foodTriggers = foodTriggers;
     }
 
     // Getters and setters
@@ -45,11 +40,4 @@ public class FoodGroup {
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
-
-    /*
-     * public List<FoodTrigger> getFoodTriggers() { return foodTriggers; }
-     * 
-     * public void setFoodTriggers(List<FoodTrigger> foodTriggers) {
-     * this.foodTriggers = foodTriggers; }
-     */
 }

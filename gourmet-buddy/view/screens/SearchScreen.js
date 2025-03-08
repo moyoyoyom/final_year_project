@@ -8,18 +8,8 @@ import Button from "../UI/components/Button";
 import Divider from "../UI/components/Divider";
 import FoodProductList from "../entity/FoodProductList";
 import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
-import { Camera, CameraView, CameraType } from "expo-camera";
 
-const SearchScreen = ({
-  onSearch,
-  searchInputValue,
-  isScanning,
-  setIsScanning,
-  onBarCodeScanned,
-  hasBeenScanned,
-  setHasBeenScanned,
-  onScanButtonClick,
-}) => {
+const SearchScreen = ({ onSearch, searchInputValue, onScanButtonClick }) => {
   //DELETE THIS DUMMY DATA LATER
   const foodProducts = [
     {

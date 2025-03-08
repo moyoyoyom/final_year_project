@@ -42,6 +42,18 @@ const AddIcon = ({ color, size }) => (
   <Ionicons name="add" size={size} color={color} />
 );
 
+const LikeIcon = ({ color, size }) => (
+  <Ionicons name="heart-outline" size={size} color={color} />
+);
+
+const BuyIcon = ({ color, size }) => (
+  <Ionicons name="cart-outline" size={size} color={color} />
+);
+
+const SaveIcon = ({ color, size }) => (
+  <Ionicons name="bookmark-outline" size={size} color={color} />
+);
+
 //Compose
 Icons.ReturnIcon = ReturnIcon;
 Icons.ForwardIcon = ForwardIcon;
@@ -53,5 +65,8 @@ Icons.ExploreIcon = ExploreIcon;
 Icons.SearchIcon = SearchIcon;
 Icons.ProfileIcon = ProfileIcon;
 Icons.AddIcon = AddIcon;
+Icons.LikeIcon = LikeIcon;
+Icons.BuyIcon = BuyIcon;
+Icons.SaveIcon = SaveIcon;
 
 export default Icons;

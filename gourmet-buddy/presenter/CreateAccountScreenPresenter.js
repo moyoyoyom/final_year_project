@@ -26,15 +26,10 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
   const postNewUser = async () => {
     try {
       const response = await fetch(userEndpoint, postUserOptions);
-      console.log("response", response);
       const data = JSON.parse(await response.text());
-      console.log("Data", data);
       if (response.ok) {
-        console.log("response is ok");
         await AsyncStorage.setItem("userToken", data.userToken);
-        console.log("data token", data.userToken);
         const storedToken = await AsyncStorage.getItem("userToken");
-        console.log("New user created, here is their token:", storedToken);
         saveUserToken(storedToken);
         navigation.navigate("IntoleranceProfileScreen");
       }

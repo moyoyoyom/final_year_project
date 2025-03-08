@@ -19,7 +19,7 @@ public class FoodProductController {
         this.foodProductService = foodProductService;
     }
 
-    @GetMapping("/{barcode}")
+    @GetMapping("barcode/{barcode}")
     public FoodProduct getFoodProductByBarcode(@PathVariable String barcode) {
         return foodProductService.getFoodProductByBarcode(barcode);
     }

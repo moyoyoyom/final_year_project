@@ -16,12 +16,11 @@ import lombok.Setter;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "FoodTriggers", schema = "gourmet_buddy_schema")
+@Table(name = "FoodTriggers")
 public class FoodTrigger {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column()
     private Integer foodTriggerID;
 
     @Column(nullable = false)
