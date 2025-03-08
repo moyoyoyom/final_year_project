@@ -3,6 +3,7 @@ import Button from "../UI/components/Button";
 import Screen from "../UI/layout/Screen";
 import Header from "../UI/components/Header";
 import IconTray from "../UI/components/IconTray";
+import FormattedIngredientText from "../UI/components/FormattedIngredientText";
 
 const FoodProductDetailsScreen = ({ foodProduct }) => {
   return (
@@ -28,7 +29,11 @@ const FoodProductDetailsScreen = ({ foodProduct }) => {
       </View>
       <View style={styles.ingredientsInfoPaneStyle}>
         <Text style={styles.titleStyle}>Ingredients:</Text>
-        <Text> {foodProduct.result.ingredients_text}</Text>
+        <FormattedIngredientText
+          ingredientText={foodProduct.result.ingredients_text}
+          highlightStyle={styles.sensitivityHighlightStyle}
+          keyIngredients={["Sucre", "LAIT"]}
+        />
       </View>
     </Screen>
   );
@@ -67,6 +72,10 @@ const styles = StyleSheet.create({
   ingredientsInfoPaneStyle: {
     marginTop: 20,
     margin: 20,
+  },
+  sensitivityHighlightStyle: {
+    fontWeight: "600",
+    color: "red",
   },
 });
 
