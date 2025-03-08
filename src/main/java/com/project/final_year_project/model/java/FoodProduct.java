@@ -27,4 +27,10 @@ public class FoodProduct {
 
     @JsonProperty("image_url")
     private String imageUrl;
+
+    @JsonProperty("quantity")
+    private String quantity;
+
+    @JsonProperty("brands")
+    private String brands;
 }

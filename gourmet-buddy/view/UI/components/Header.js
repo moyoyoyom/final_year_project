@@ -1,8 +1,8 @@
 import { StyleSheet, View } from "react-native";
 
-const Header = ({ leftItem, centerItem, rightItem }) => {
+const Header = ({ leftItem, centerItem, rightItem, customHeaderStyle }) => {
   return (
-    <View style={styles.headerStyle}>
+    <View style={[styles.headerStyle, customHeaderStyle]}>
       {leftItem ? <View>{leftItem}</View> : null}
       {centerItem ? <View>{centerItem}</View> : null}
       {rightItem ? <View>{rightItem}</View> : null}

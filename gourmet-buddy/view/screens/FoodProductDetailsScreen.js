@@ -1,20 +1,35 @@
 import { Image, StyleSheet, Text, View } from "react-native";
+import Button from "../UI/components/Button";
 import Screen from "../UI/layout/Screen";
 import Header from "../UI/components/Header";
+import IconTray from "../UI/components/IconTray";
 
 const FoodProductDetailsScreen = ({ foodProduct }) => {
   return (
     <Screen>
-      <Header />
+      <Header customHeaderStyle={styles.headerStyle} />
       <View style={styles.titleRowLayout}>
         <Image
           source={{ uri: foodProduct.result.image_url }}
           style={styles.imageStyling}
         />
-        <Text> {foodProduct.result.product_name} </Text>
+        <View style={styles.productInfoPaneStyle}>
+          <Text style={styles.titleStyle}>
+            {foodProduct.result.brands} {foodProduct.result.product_name} -{" "}
+            {foodProduct.result.quantity}
+          </Text>
+          <IconTray />
+          <Button
+            buttonText={"Learn more"}
+            labelStyle={styles.infoButtonLabelStyle}
+            buttonStyle={styles.infoButtonStyle}
+          />
+        </View>
       </View>
-      <Text> Ingredients:</Text>
-      <Text> {foodProduct.result.ingredients_text}</Text>
+      <View style={styles.ingredientsInfoPaneStyle}>
+        <Text style={styles.titleStyle}>Ingredients:</Text>
+        <Text> {foodProduct.result.ingredients_text}</Text>
+      </View>
     </Screen>
   );
 };
@@ -29,6 +44,29 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  titleStyle: {
+    fontSize: 16,
+    fontWeight: 500,
+    marginBottom: 5,
+  },
+  headerStyle: {
+    marginBottom: 40,
+  },
+  infoButtonLabelStyle: {
+    fontWeight: 500,
+    fontSize: 14,
+  },
+  infoButtonStyle: {
+    marginTop: 15,
+    padding: 7,
+  },
+  productInfoPaneStyle: {
+    width: "45%",
+  },
+  ingredientsInfoPaneStyle: {
+    marginTop: 20,
+    margin: 20,
   },
 });
 
