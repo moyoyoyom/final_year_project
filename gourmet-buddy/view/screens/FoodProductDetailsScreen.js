@@ -32,7 +32,7 @@ const FoodProductDetailsScreen = ({ foodProduct, userSensitivities }) => {
         <FormattedIngredientText
           ingredientText={foodProduct.result.ingredients_text}
           highlightStyle={styles.sensitivityHighlightStyle}
-          keyIngredients={["Sucre", "LAIT"]}
+          keyIngredients={userSensitivities}
         />
       </View>
     </Screen>
