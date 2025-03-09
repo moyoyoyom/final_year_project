@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import useLoad from "../model/useLoad";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
+import LoadingScreen from "../view/screens/LoadingScreen";
 
 const FoodProductDetailsScreenPresenter = (props) => {
   //Initialisations
@@ -15,6 +16,7 @@ const FoodProductDetailsScreenPresenter = (props) => {
   const [userToken, setUserToken] = useState(null);
   const [userSensitivities] = useLoad(userSensitivitiesEndpoint);
   const [userID, setUserID] = useState(null);
+  const [userIntolerances, setUserIntolerances] = useState(null);
 
   useEffect(() => {
     AsyncStorage.getItem("userToken")
@@ -29,14 +31,25 @@ const FoodProductDetailsScreenPresenter = (props) => {
       const decodedUser = jwtDecode(userToken);
       setUserID(decodedUser.userID);
     }
-  });
+  }, []);
+
+  useEffect(() => {
+    if (userSensitivities) {
+      const intolerances = userSensitivities.map(
+        (trigger) => trigger.triggerName
+      );
+      setUserIntolerances(intolerances);
+    }
+  }, []);
 
   //View
-  return (
+  return userIntolerances !== null ? (
     <FoodProductDetailsScreen
       foodProduct={foodProduct}
-      userSensitivities={userSensitivities}
+      userSensitivities={userIntolerances}
     />
+  ) : (
+    <LoadingScreen />
   );
 };
 

@@ -69,7 +69,6 @@ const IntoleranceProfilePresenter = ({ navigation }) => {
 
   const postEachUserRelationship = async () => {
     const decodedUser = jwtDecode(userToken);
-    console.log(decodedUser);
     userFoodTriggers.forEach(async (foodTrigger) => {
       try {
         await fetch(userRelationshipsEndpoint, {

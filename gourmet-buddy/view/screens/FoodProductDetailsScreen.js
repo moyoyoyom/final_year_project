@@ -6,6 +6,7 @@ import IconTray from "../UI/components/IconTray";
 import FormattedIngredientText from "../UI/components/FormattedIngredientText";
 
 const FoodProductDetailsScreen = ({ foodProduct, userSensitivities }) => {
+  //View
   return (
     <Screen>
       <Header customHeaderStyle={styles.headerStyle} />

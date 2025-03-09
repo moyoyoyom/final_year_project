@@ -23,7 +23,6 @@ const SearchFieldPresenter = ({ navigation }) => {
   //Handlers
   const handleSubmit = (newValue) => {
     setSearchValue(newValue);
-    console.log(searchValue);
   };
 
   const postSearch = async (search) => {
