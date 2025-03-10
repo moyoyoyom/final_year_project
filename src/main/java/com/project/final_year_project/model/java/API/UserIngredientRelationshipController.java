@@ -1,12 +1,17 @@
 package com.project.final_year_project.model.java.API;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.project.final_year_project.model.java.FoodTrigger;
 import com.project.final_year_project.model.java.UserIngredientRelationship;
 import com.project.final_year_project.model.java.service.UserIngredientRelationshipService;
 
@@ -27,4 +32,11 @@ public class UserIngredientRelationshipController {
                 .saveUserSensitivities(userIngredientRelationship);
         return ResponseEntity.ok(relationship);
     }
+
+    @GetMapping("/cannoteat/{userID}")
+    public ResponseEntity<List<FoodTrigger>> getAllUserSensitivities(@PathVariable Long userID) {
+        List<FoodTrigger> foodTriggers = userIngredientRelationshipService.getAllUserSensitivities(userID);
+        return ResponseEntity.ok(foodTriggers);
+    }
+
 }

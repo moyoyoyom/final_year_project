@@ -3,11 +3,23 @@ import Button from "../UI/components/Button";
 import Screen from "../UI/layout/Screen";
 import Header from "../UI/components/Header";
 import IconTray from "../UI/components/IconTray";
+import FormattedIngredientText from "../UI/components/FormattedIngredientText";
+import Icons from "../UI/components/Icons";
 
-const FoodProductDetailsScreen = ({ foodProduct }) => {
+const FoodProductDetailsScreen = ({
+  foodProduct,
+  userSensitivities,
+  onBackClick,
+}) => {
+  //View
   return (
     <Screen>
-      <Header customHeaderStyle={styles.headerStyle} />
+      <Header
+        customHeaderStyle={styles.headerStyle}
+        leftItem={
+          <Icons.ReturnIcon color={"#FFDC7A"} size={30} onPress={onBackClick} />
+        }
+      />
       <View style={styles.titleRowLayout}>
         <Image
           source={{ uri: foodProduct.result.image_url }}
@@ -28,7 +40,11 @@ const FoodProductDetailsScreen = ({ foodProduct }) => {
       </View>
       <View style={styles.ingredientsInfoPaneStyle}>
         <Text style={styles.titleStyle}>Ingredients:</Text>
-        <Text> {foodProduct.result.ingredients_text}</Text>
+        <FormattedIngredientText
+          ingredientText={foodProduct.result.ingredients_text}
+          highlightStyle={styles.sensitivityHighlightStyle}
+          keyIngredients={userSensitivities}
+        />
       </View>
     </Screen>
   );
@@ -67,6 +83,10 @@ const styles = StyleSheet.create({
   ingredientsInfoPaneStyle: {
     marginTop: 20,
     margin: 20,
+  },
+  sensitivityHighlightStyle: {
+    fontWeight: "600",
+    color: "red",
   },
 });
 

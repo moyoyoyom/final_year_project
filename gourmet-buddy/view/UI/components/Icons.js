@@ -2,8 +2,8 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Icons = {};
 
-const ReturnIcon = ({ color, size }) => (
-  <Ionicons name="chevron-back" size={size} color={color} />
+const ReturnIcon = ({ color, size, onPress }) => (
+  <Ionicons name="chevron-back" size={size} color={color} onPress={onPress} />
 );
 
 const ForwardIcon = ({ color, size }) => (
