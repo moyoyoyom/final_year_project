@@ -6,9 +6,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import LoadingScreen from "../view/screens/LoadingScreen";
 
-const FoodProductDetailsScreenPresenter = (props) => {
+const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   //Initialisations
-  const { foodProduct } = props.route.params;
+  const { foodProduct } = route.params;
 
   const userSensitivitiesEndpoint = `http://192.168.1.253:8090/api/relationships/cannoteat/${userID}`;
 
@@ -42,11 +42,17 @@ const FoodProductDetailsScreenPresenter = (props) => {
     }
   }, []);
 
+  //Handlers
+  const handleBackClick = () => {
+    navigation.navigate("SearchScreen");
+  };
+
   //View
   return userIntolerances !== null ? (
     <FoodProductDetailsScreen
       foodProduct={foodProduct}
       userSensitivities={userIntolerances}
+      onBackClick={handleBackClick}
     />
   ) : (
     <LoadingScreen />
