@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import FoodProductDetailsScreen from "../view/screens/FoodProductDetailsScreen";
 import { jwtDecode } from "jwt-decode";
-import useLoad from "../model/useLoad";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import LoadingScreen from "../view/screens/LoadingScreen";
@@ -62,16 +61,14 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   };
 
   //View
-  if (userIntolerances === null) {
-    return <LoadingScreen />;
-  }
-
-  return (
+  return userIntolerances !== null ? (
     <FoodProductDetailsScreen
       foodProduct={foodProduct}
       userSensitivities={userIntolerances}
       onBackClick={handleBackClick}
     />
+  ) : (
+    <LoadingScreen />
   );
 };
 

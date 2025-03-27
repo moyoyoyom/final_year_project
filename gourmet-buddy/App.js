@@ -24,6 +24,7 @@ export const App = () => {
       try {
         const foundToken = await AsyncStorage.getItem("userToken");
         setUserToken(foundToken);
+        console.log("Found token: ", foundToken);
       } catch (error) {
         Alert.alert("Problem finding token");
       }
