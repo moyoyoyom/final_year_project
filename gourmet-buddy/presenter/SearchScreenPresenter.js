@@ -9,12 +9,8 @@ import { Camera, useCameraPermissions } from "expo-camera";
 import { Alert } from "react-native";
 
 const SearchFieldPresenter = ({ navigation }) => {
-  //Initialisations
-  const productSearchEndpoint = "http://";
-
   //State
   const [searchValue, setSearchValue] = useState(" ");
-  const [, , loadSearchResults] = resultLoader(productSearchEndpoint);
   const [isScanning, setIsScanning] = useState(false);
   const [scanned, setScanned] = useState(false);
   const [hasPermissionBeenGranted, setHasPermissionBeenGranted] =
@@ -24,18 +20,6 @@ const SearchFieldPresenter = ({ navigation }) => {
   const handleSubmit = (newValue) => {
     setSearchValue(newValue);
   };
-
-  const postSearch = async (search) => {
-    const result = await API.post(productSearchEndpoint, search);
-    if (result.isSuccess) {
-      loadSearchResults(productSearchEndpoint);
-    } else {
-      Alert.alert(result.message);
-    }
-  };
-
-  const goToResultsScreen = () =>
-    navigation.navigate("SearchResultsScreen", { postSearch });
 
   const onBarcodeScanned = async ({ data }) => {
     if (scanned) return;

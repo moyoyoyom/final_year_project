@@ -20,7 +20,7 @@ public class FoodProductController {
     }
 
     @GetMapping("barcode/{barcode}")
-    public FoodProduct getFoodProductByBarcode(@PathVariable String barcode) {
+    public FoodProduct getFoodProductByBarcode(@PathVariable("barcode") String barcode) {
         return foodProductService.getFoodProductByBarcode(barcode);
     }
 }
