@@ -45,7 +45,7 @@ const LoginScreenPresenter = ({ navigation }) => {
         await AsyncStorage.setItem("userToken", data.userToken);
         const storedToken = await AsyncStorage.getItem("userToken");
         loginUser(storedToken);
-        navigation.replace("SearchScreen");
+        navigation.replace("AppStack");
       } else {
         Alert.alert("Your credentials are incorrect");
       }
