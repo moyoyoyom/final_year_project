@@ -1,9 +1,7 @@
 import { Alert } from "react-native";
 import { useState } from "react";
-
 import AuthenticationScreen from "../view/UI/layout/generalScreen/AuthenticationScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { saveUserToken } from "../model/UserTokenStorage";
 
 const CreateAccountScreenPresenter = ({ navigation }) => {
   //Initialisations
@@ -30,7 +28,7 @@ const CreateAccountScreenPresenter = ({ navigation }) => {
       if (response.ok) {
         await AsyncStorage.setItem("userToken", data.userToken);
         const storedToken = await AsyncStorage.getItem("userToken");
-        saveUserToken(storedToken);
+        loginUser(storedToken);
         navigation.navigate("IntoleranceProfileScreen");
       }
     } catch (error) {

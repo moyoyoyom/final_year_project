@@ -64,7 +64,7 @@ const DislikeProfilePresenter = ({ navigation }) => {
 
   const onNextPageSelect = () => {
     postEachUserRelationship();
-    navigation.navigate("SearchScreen");
+    navigation.replace("AppStack");
   };
 
   const postEachUserRelationship = async () => {
