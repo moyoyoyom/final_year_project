@@ -34,7 +34,7 @@ public class UserIngredientRelationshipController {
     }
 
     @GetMapping("/cannoteat/{userID}")
-    public ResponseEntity<List<FoodTrigger>> getAllUserSensitivities(@PathVariable Long userID) {
+    public ResponseEntity<List<FoodTrigger>> getAllUserSensitivities(@PathVariable("userID") Long userID) {
         List<FoodTrigger> foodTriggers = userIngredientRelationshipService.getAllUserSensitivities(userID);
         return ResponseEntity.ok(foodTriggers);
     }

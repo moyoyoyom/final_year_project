@@ -54,16 +54,18 @@ public class UserController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> loginToAccount(@RequestBody User enteredUser) {
-        String token = JWTUtility.generateUserToken(enteredUser);
         Optional<User> optionalUser = userService.logInUser(
                 enteredUser.getUsername(),
                 enteredUser.getPassword());
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
+            String token = JWTUtility.generateUserToken(user);
+            String userID = Long.toString(user.getUserID());
             Map<String, String> userToken = Map.of(
                     "userToken", token,
                     "username", user.getUsername(),
-                    "userID", Long.toString(user.getUserID()));
+                    "password", user.getPassword(),
+                    "userID", userID);
             return ResponseEntity.ok(userToken);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(enteredUser);

@@ -8,10 +8,8 @@ import LoadingScreen from "../view/screens/LoadingScreen";
 const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   //Initialisations
   const { user } = useContext(AuthenticationContext);
-  console.log(user);
   const { foodProduct } = route.params;
-  const decodedUser = jwtDecode(user);
-  console.log("User ID: ", decodedUser.userID);
+  const decodedUser = jwtDecode(JSON.stringify(user));
   const userSensitivitiesEndpoint = `http://192.168.1.253:8090/api/relationships/cannoteat/${decodedUser.userID}`;
 
   //State
