@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { jwtDecode } from "jwt-decode";
 import { createContext, useEffect, useState } from "react";
 import { Alert } from "react-native";
 
@@ -10,12 +11,13 @@ export const AuthenticationProvider = ({ children }) => {
   const [isUserLoading, setUserIsLoading] = useState(true);
 
   useEffect(() => {
-    const findStoredUser = async () => {
+    const findStoredToken = async () => {
       try {
-        const foundUser = await AsyncStorage.getItem("user");
-        if (foundUser) {
-          setUser(JSON.parse(foundUser));
-          console.log("Found user: ", foundUser);
+        const foundToken = await AsyncStorage.getItem("user");
+        if (foundToken) {
+          const decodedUser = jwtDecode(foundToken);
+          setUser(decodedUser);
+          console.log("Found user: ", decodedUser);
         } else {
           console.log("No user found");
         }
@@ -25,14 +27,15 @@ export const AuthenticationProvider = ({ children }) => {
         setUserIsLoading(false);
       }
     };
-    findStoredUser();
+    findStoredToken();
   }, []);
 
   //Handlers
-  const loginUser = async (user) => {
+  const loginUser = async (token) => {
     try {
-      await AsyncStorage.setItem("user", JSON.stringify(user));
-      setUser({ ...user });
+      await AsyncStorage.setItem("user", token);
+      const decodedUser = jwtDecode(token);
+      setUser(decodedUser);
       console.log(
         "Successfully logged in: ",
         await AsyncStorage.getItem("user")

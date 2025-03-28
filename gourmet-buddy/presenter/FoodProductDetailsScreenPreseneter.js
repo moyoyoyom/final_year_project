@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import FoodProductDetailsScreen from "../view/screens/FoodProductDetailsScreen";
-import { jwtDecode } from "jwt-decode";
 import { AuthenticationContext } from "../model/AuthenicationContext";
 import useLoad from "../model/useLoad";
 import LoadingScreen from "../view/screens/LoadingScreen";
@@ -8,9 +7,9 @@ import LoadingScreen from "../view/screens/LoadingScreen";
 const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   //Initialisations
   const { user } = useContext(AuthenticationContext);
+  console.log(user.userID);
   const { foodProduct } = route.params;
-  const decodedUser = jwtDecode(JSON.stringify(user));
-  const userSensitivitiesEndpoint = `http://192.168.1.253:8090/api/relationships/cannoteat/${decodedUser.userID}`;
+  const userSensitivitiesEndpoint = `http://192.168.1.253:8090/api/relationships/cannoteat/${user.userID}`;
 
   //State
   const [userSensitivities] = useLoad(userSensitivitiesEndpoint);
