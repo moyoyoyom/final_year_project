@@ -1,11 +1,14 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import ProfileScreen from "../view/screens/ProfileScreen";
+import { useContext } from "react";
+import { AuthenticationContext } from "../model/AuthenicationContext";
 
 const ProfileScreenPresenter = ({ navigation }) => {
+  //Initialisations
+  const { logOutUser } = useContext(AuthenticationContext);
   //Handlers
   const onLogoutPress = () => {
-    AsyncStorage.removeItem("userToken");
-    navigation.navigate("LoginScreen");
+    logOutUser();
+    navigation.replace("AuthenticationStack", { screen: "LoginScreen" });
   };
 
   //View

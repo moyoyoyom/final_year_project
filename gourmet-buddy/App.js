@@ -1,75 +1,45 @@
-import { useEffect, useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useContext } from "react";
+import {
+  AuthenticationContext,
+  AuthenticationProvider,
+} from "./model/AuthenicationContext";
+import { NavigationContainer } from "@react-navigation/native";
+import AppStack from "./navigation/AppStack";
+import AuthenticationStack from "./navigation/AuthenticationStack";
+import LoadingScreen from "./view/screens/LoadingScreen";
 
-import SearchScreenPresenter from "./presenter/SearchScreenPresenter";
-import SearchResultsScreenPresenter from "./presenter/SearchResultsScreenPresenter";
-import CreateAccountScreenPresenter from "./presenter/CreateAccountScreenPresenter";
-import LoginScreenPresenter from "./presenter/LoginScreenPresenter";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import ProfileScreenPresenter from "./presenter/ProfileScreenPresenter";
-import ExploreScreenPresenter from "./presenter/ExploreScreenPresenter";
-import IntoleranceProfilePresenter from "./presenter/IntoleranceProfilePresenter";
-import DislikeProfilePresenter from "./presenter/DislikeProfilePresenter";
-import FoodProductDetailsScreenPresenter from "./presenter/FoodProductDetailsScreenPreseneter";
+//Stack Navigators
+const MainStack = createNativeStackNavigator();
 
-const Stack = createNativeStackNavigator();
+const MainNavigator = () => {
+  const { user, isUserLoading } = useContext(AuthenticationContext);
 
-export const App = () => {
-  //State
-  const [userToken, setUserToken] = useState(null);
+  if (isUserLoading) {
+    return <LoadingScreen />;
+  }
 
-  useEffect(() => {
-    const checkIfUserHasAToken = async () => {
-      try {
-        const foundToken = await AsyncStorage.getItem("userToken");
-        setUserToken(foundToken);
-      } catch (error) {
-        Alert.alert("Problem finding token");
-      }
-    };
-    checkIfUserHasAToken();
-  }, []);
-
-  //View
   return (
-    <NavigationContainer key={userToken}>
-      <Stack.Navigator
-        initialRouteName={userToken != null ? "SearchScreen" : "LoginScreen"}
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="SearchScreen">
-          {(props) => <SearchScreenPresenter {...props} />}
-        </Stack.Screen>
-        <Stack.Screen name="LoginScreen">
-          {(props) => <LoginScreenPresenter {...props} />}
-        </Stack.Screen>
-        <Stack.Screen
-          name="IntoleranceProfileScreen"
-          component={IntoleranceProfilePresenter}
-        />
-        <Stack.Screen
-          name="CreateAccountScreen"
-          component={CreateAccountScreenPresenter}
-        />
-        <Stack.Screen
-          name="SearchResultsScreen"
-          component={SearchResultsScreenPresenter}
-        />
-        <Stack.Screen name="ProfileScreen" component={ProfileScreenPresenter} />
-        <Stack.Screen name="ExploreScreen" component={ExploreScreenPresenter} />
-        <Stack.Screen
-          name="DislikeProfileScreen"
-          component={DislikeProfilePresenter}
-        />
-        <Stack.Screen
-          name="FoodProductDetailsScreen"
-          component={FoodProductDetailsScreenPresenter}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <MainStack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName={user ? "AppStack" : "AuthenticationStack"}
+    >
+      <MainStack.Screen
+        name="AuthenticationStack"
+        component={AuthenticationStack}
+      />
+      <MainStack.Screen name="AppStack" component={AppStack} />
+    </MainStack.Navigator>
+  );
+};
+
+const App = () => {
+  return (
+    <AuthenticationProvider>
+      <NavigationContainer>
+        <MainNavigator />
+      </NavigationContainer>
+    </AuthenticationProvider>
   );
 };
 
