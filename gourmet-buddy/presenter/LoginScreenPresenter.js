@@ -1,21 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import AuthenticationScreen from "../view/UI/layout/generalScreen/AuthenticationScreen";
-import { saveUserToken } from "../model/UserTokenStorage";
+import { AuthenticationContext } from "../model/AuthenicationContext";
 
 const LoginScreenPresenter = ({ navigation }) => {
   //Initialisations
+  const { loginUser } = useContext(AuthenticationContext);
   const authenticationType = "Login";
 
   const loginEndpoint =
     "http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/users/login";
-  const postLoginOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username: usernameValue, password: passwordValue }),
-  };
 
   //State
   const [usernameValue, setUsernameValue] = useState("");
@@ -48,13 +44,12 @@ const LoginScreenPresenter = ({ navigation }) => {
       if (response.ok) {
         await AsyncStorage.setItem("userToken", data.userToken);
         const storedToken = await AsyncStorage.getItem("userToken");
-        saveUserToken(storedToken);
+        loginUser(storedToken);
         navigation.replace("SearchScreen");
       } else {
         Alert.alert("Your credentials are incorrect");
       }
     } catch (error) {
-      console.error("Login error:", error);
       Alert.alert("Error", error.message);
     }
   };

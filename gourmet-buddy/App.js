@@ -1,76 +1,84 @@
-import { useEffect, useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 import SearchScreenPresenter from "./presenter/SearchScreenPresenter";
 import SearchResultsScreenPresenter from "./presenter/SearchResultsScreenPresenter";
 import CreateAccountScreenPresenter from "./presenter/CreateAccountScreenPresenter";
 import LoginScreenPresenter from "./presenter/LoginScreenPresenter";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import ProfileScreenPresenter from "./presenter/ProfileScreenPresenter";
 import ExploreScreenPresenter from "./presenter/ExploreScreenPresenter";
 import IntoleranceProfilePresenter from "./presenter/IntoleranceProfilePresenter";
 import DislikeProfilePresenter from "./presenter/DislikeProfilePresenter";
 import FoodProductDetailsScreenPresenter from "./presenter/FoodProductDetailsScreenPreseneter";
+import { useContext } from "react";
+import {
+  AuthenticationContext,
+  AuthenticationProvider,
+} from "./model/AuthenicationContext";
+import LoadingScreen from "./view/screens/LoadingScreen";
+import { NavigationContainer } from "@react-navigation/native";
 
-const Stack = createNativeStackNavigator();
+//Stack Navigators
+const AuthenticationStack = createNativeStackNavigator();
+const AppStack = createNativeStackNavigator();
 
-export const App = () => {
-  //State
-  const [userToken, setUserToken] = useState(null);
+//Navigator Screens
+const AuthenticationScreens = () => {
+  <AuthenticationStack.Navigator>
+    <AuthenticationStack.Screen
+      name="LoginScreen"
+      component={LoginScreenPresenter}
+    />
+    <AuthenticationStack.Screen
+      name="CreateAccountScreen"
+      component={CreateAccountScreenPresenter}
+    />
+  </AuthenticationStack.Navigator>;
+};
 
-  useEffect(() => {
-    const checkIfUserHasAToken = async () => {
-      try {
-        const foundToken = await AsyncStorage.getItem("userToken");
-        setUserToken(foundToken);
-        console.log("Found token: ", foundToken);
-      } catch (error) {
-        Alert.alert("Problem finding token");
-      }
-    };
-    checkIfUserHasAToken();
-  }, []);
+const AppScreens = () => {
+  <AppStack.Navigator>
+    <AppStack.Screen name="SearchScreen" component={SearchScreenPresenter} />
+    <AppStack.Screen
+      name="IntoleranceProfileScreen"
+      component={IntoleranceProfilePresenter}
+    />
+    <AppStack.Screen
+      name="CreateAccountScreen"
+      component={CreateAccountScreenPresenter}
+    />
+    <AppStack.Screen
+      name="SearchResultsScreen"
+      component={SearchResultsScreenPresenter}
+    />
+    <AppStack.Screen name="ProfileScreen" component={ProfileScreenPresenter} />
+    <AppStack.Screen name="ExploreScreen" component={ExploreScreenPresenter} />
+    <AppStack.Screen
+      name="DislikeProfileScreen"
+      component={DislikeProfilePresenter}
+    />
+    <AppStack.Screen
+      name="FoodProductDetailsScreen"
+      component={FoodProductDetailsScreenPresenter}
+    />
+  </AppStack.Navigator>;
+};
 
-  //View
+const MainNavigator = () => {
+  const { user, isUserLoading } = useContext(AuthenticationContext);
+
+  if (isUserLoading) {
+    return <LoadingScreen />;
+  }
+
+  return user ? <AppScreens /> : <AuthenticationScreens />;
+};
+
+const App = () => {
   return (
-    <NavigationContainer key={userToken}>
-      <Stack.Navigator
-        initialRouteName={userToken != null ? "SearchScreen" : "LoginScreen"}
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="SearchScreen">
-          {(props) => <SearchScreenPresenter {...props} />}
-        </Stack.Screen>
-        <Stack.Screen name="LoginScreen">
-          {(props) => <LoginScreenPresenter {...props} />}
-        </Stack.Screen>
-        <Stack.Screen
-          name="IntoleranceProfileScreen"
-          component={IntoleranceProfilePresenter}
-        />
-        <Stack.Screen
-          name="CreateAccountScreen"
-          component={CreateAccountScreenPresenter}
-        />
-        <Stack.Screen
-          name="SearchResultsScreen"
-          component={SearchResultsScreenPresenter}
-        />
-        <Stack.Screen name="ProfileScreen" component={ProfileScreenPresenter} />
-        <Stack.Screen name="ExploreScreen" component={ExploreScreenPresenter} />
-        <Stack.Screen
-          name="DislikeProfileScreen"
-          component={DislikeProfilePresenter}
-        />
-        <Stack.Screen
-          name="FoodProductDetailsScreen"
-          component={FoodProductDetailsScreenPresenter}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AuthenticationProvider>
+      <NavigationContainer>
+        <MainNavigator />
+      </NavigationContainer>
+    </AuthenticationProvider>
   );
 };
 
