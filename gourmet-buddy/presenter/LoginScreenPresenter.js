@@ -1,9 +1,8 @@
 import { useContext, useState } from "react";
 import { Alert } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import AuthenticationScreen from "../view/UI/layout/generalScreen/AuthenticationScreen";
 import { AuthenticationContext } from "../model/AuthenicationContext";
+import API from "../model/API";
 
 const LoginScreenPresenter = ({ navigation }) => {
   //Initialisations
@@ -31,26 +30,16 @@ const LoginScreenPresenter = ({ navigation }) => {
   };
 
   const postLogin = async () => {
-    try {
-      const response = await fetch(loginEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: usernameValue,
-          password: passwordValue,
-        }),
-      });
-      const data = JSON.parse(await response.text());
-      if (response.ok) {
-        await AsyncStorage.setItem("userToken", data.userToken);
-        const storedToken = await AsyncStorage.getItem("userToken");
-        loginUser(storedToken);
-        navigation.replace("AppStack");
-      } else {
-        Alert.alert("Your credentials are incorrect");
-      }
-    } catch (error) {
-      Alert.alert("Error", error.message);
+    const response = await API.post(loginEndpoint, {
+      username: usernameValue,
+      password: passwordValue,
+    });
+    if (response.isSuccess) {
+      const token = response.result.userToken;
+      loginUser(token);
+      navigation.replace("AppStack");
+    } else {
+      Alert.alert("Your credentials are incorrect");
     }
   };
 

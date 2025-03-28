@@ -1,8 +1,6 @@
 import { useState } from "react";
-
 import SearchScreen from "../view/screens/SearchScreen";
 import API from "../model/API";
-import resultLoader from "../model/ResultLoader";
 import CameraScreen from "../view/screens/CameraScreen";
 import Screen from "../view/UI/layout/Screen";
 import { Camera, useCameraPermissions } from "expo-camera";
