@@ -7,12 +7,17 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import AppStack from "./navigation/AppStack";
 import AuthenticationStack from "./navigation/AuthenticationStack";
+import LoadingScreen from "./view/screens/LoadingScreen";
 
 //Stack Navigators
 const MainStack = createNativeStackNavigator();
 
 const MainNavigator = () => {
-  const { user } = useContext(AuthenticationContext);
+  const { user, isUserLoading } = useContext(AuthenticationContext);
+
+  if (isUserLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <MainStack.Navigator

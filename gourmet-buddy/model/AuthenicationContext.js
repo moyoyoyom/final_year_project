@@ -16,6 +16,8 @@ export const AuthenticationProvider = ({ children }) => {
         if (foundUser) {
           setUser(JSON.parse(foundUser));
           console.log("Found user: ", foundUser);
+        } else {
+          console.log("No user found");
         }
       } catch (error) {
         Alert.alert("Error finding user tokens: ", error);
