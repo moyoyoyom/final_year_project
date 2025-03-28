@@ -15,11 +15,12 @@ export const AuthenticationProvider = ({ children }) => {
         const foundUser = await AsyncStorage.getItem("user");
         if (foundUser) {
           setUser(JSON.parse(foundUser));
-          setUserIsLoading(false);
           console.log("Found user: ", foundUser);
         }
       } catch (error) {
         Alert.alert("Error finding user tokens: ", error);
+      } finally {
+        setUserIsLoading(false);
       }
     };
     findStoredUser();

@@ -21,8 +21,8 @@ const AuthenticationStack = createNativeStackNavigator();
 const AppStack = createNativeStackNavigator();
 
 //Navigator Screens
-const AuthenticationScreens = () => {
-  <AuthenticationStack.Navigator>
+const AuthenticationScreens = () => (
+  <AuthenticationStack.Navigator screenOptions={{ headerShown: false }}>
     <AuthenticationStack.Screen
       name="LoginScreen"
       component={LoginScreenPresenter}
@@ -31,11 +31,11 @@ const AuthenticationScreens = () => {
       name="CreateAccountScreen"
       component={CreateAccountScreenPresenter}
     />
-  </AuthenticationStack.Navigator>;
-};
+  </AuthenticationStack.Navigator>
+);
 
-const AppScreens = () => {
-  <AppStack.Navigator>
+const AppScreens = () => (
+  <AppStack.Navigator screenOptions={{ headerShown: false }}>
     <AppStack.Screen name="SearchScreen" component={SearchScreenPresenter} />
     <AppStack.Screen
       name="IntoleranceProfileScreen"
@@ -59,8 +59,8 @@ const AppScreens = () => {
       name="FoodProductDetailsScreen"
       component={FoodProductDetailsScreenPresenter}
     />
-  </AppStack.Navigator>;
-};
+  </AppStack.Navigator>
+);
 
 const MainNavigator = () => {
   const { user, isUserLoading } = useContext(AuthenticationContext);
