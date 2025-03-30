@@ -26,12 +26,17 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
     navigation.navigate("SearchScreen");
   };
 
+  const handleLearnMoreClick = () => {
+    navigation.navigate("LearnMoreScreen", { foodProduct: foodProduct });
+  };
+
   //View
   return (
     <FoodProductDetailsScreen
       foodProduct={foodProduct}
       userSensitivities={formattedSensitivities}
       onBackClick={handleBackClick}
+      onLearnMoreClick={handleLearnMoreClick}
     />
   );
 };

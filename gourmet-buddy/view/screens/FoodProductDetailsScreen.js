@@ -10,6 +10,7 @@ const FoodProductDetailsScreen = ({
   foodProduct,
   userSensitivities,
   onBackClick,
+  onLearnMoreClick,
 }) => {
   //View
   return (
@@ -35,6 +36,7 @@ const FoodProductDetailsScreen = ({
             buttonText={"Learn more"}
             labelStyle={styles.infoButtonLabelStyle}
             buttonStyle={styles.infoButtonStyle}
+            onClick={onLearnMoreClick}
           />
         </View>
       </View>
