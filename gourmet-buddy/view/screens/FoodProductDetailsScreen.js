@@ -42,11 +42,15 @@ const FoodProductDetailsScreen = ({
       </View>
       <View style={styles.ingredientsInfoPaneStyle}>
         <Text style={styles.titleStyle}>Ingredients:</Text>
-        <FormattedIngredientText
-          ingredientText={foodProduct.result.ingredients_text}
-          highlightStyle={styles.sensitivityHighlightStyle}
-          keyIngredients={userSensitivities}
-        />
+        {foodProduct.result.ingredients_text ? (
+          <FormattedIngredientText
+            ingredientText={foodProduct.result.ingredients_text}
+            highlightStyle={styles.sensitivityHighlightStyle}
+            keyIngredients={userSensitivities}
+          />
+        ) : (
+          <Text> Missing information </Text>
+        )}
       </View>
     </Screen>
   );
