@@ -5,6 +5,7 @@ import LearnMoreScreen from "../view/screens/LearnMoreScreen";
 const LearnMorePresenter = ({ route }) => {
   //Initialisations
   const { foodProduct } = route.params;
+  if (!foodProduct) return;
   console.log(foodProduct);
   const nutriments = formatNutriments(foodProduct);
   const classifiedNutriments = classifyNutriments(nutriments);

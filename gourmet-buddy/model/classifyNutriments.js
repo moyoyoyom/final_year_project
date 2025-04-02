@@ -1,6 +1,6 @@
 import { nutrimentRatingThresholds } from "./data/nutrimentRatingThresholds";
 
-const classifyNutriments = ({ nutriments }) => {
+const classifyNutriments = (nutriments) => {
   return nutriments.map(({ nutriment, amount }) => {
     const nutrimentRatingThreshold = nutrimentRatingThresholds[nutriment];
 

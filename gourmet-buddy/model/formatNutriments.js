@@ -1,4 +1,4 @@
-const formatNutriments = ({ foodProduct }) => {
+const formatNutriments = (foodProduct) => {
   const productNutriments = [
     {
       nutriment: "carbohydratesPer100g",
