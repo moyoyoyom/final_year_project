@@ -1,4 +1,7 @@
-import classifyNutriments from "../model/classifyNutriments";
+import {
+  categoriseNutrimentsList,
+  classifyNutriments,
+} from "../model/classifyNutriments";
 import formatNutriments from "../model/formatNutriments";
 import LearnMoreScreen from "../view/screens/LearnMoreScreen";
 
@@ -11,6 +14,9 @@ const LearnMorePresenter = ({ route }) => {
   const classifiedNutriments = classifyNutriments(nutriments);
 
   console.log(classifiedNutriments);
+  const { pros, cons } = categoriseNutrimentsList(classifiedNutriments);
+  console.log("Pros: ", pros);
+  console.log("Cons: ", cons);
   //View
   return <LearnMoreScreen foodProduct={foodProduct} />;
 };

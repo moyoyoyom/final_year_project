@@ -1,6 +1,6 @@
 import { nutrimentRatingThresholds } from "./data/nutrimentRatingThresholds";
 
-const classifyNutriments = (nutriments) => {
+export const classifyNutriments = (nutriments) => {
   return nutriments.map(({ nutriment, amount }) => {
     const nutrimentRatingThreshold = nutrimentRatingThresholds[nutriment];
 
@@ -25,4 +25,13 @@ const classifyNutriments = (nutriments) => {
   });
 };
 
-export default classifyNutriments;
+export const categoriseNutrimentsList = (nutrimentsList) => {
+  const pros = nutrimentsList.filter(
+    (nutriment) => nutriment.classification === "Healthy"
+  );
+  const cons = nutrimentsList.filter(
+    (nutriment) => nutriment.classification === "Unhealthy"
+  );
+
+  return { pros, cons };
+};
