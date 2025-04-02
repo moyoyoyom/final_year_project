@@ -13,12 +13,10 @@ const LearnMorePresenter = ({ route }) => {
   const nutriments = formatNutriments(foodProduct);
   const classifiedNutriments = classifyNutriments(nutriments);
 
-  console.log(classifiedNutriments);
   const { pros, cons } = categoriseNutrimentsList(classifiedNutriments);
-  console.log("Pros: ", pros);
-  console.log("Cons: ", cons);
+
   //View
-  return <LearnMoreScreen foodProduct={foodProduct} />;
+  return <LearnMoreScreen foodProduct={foodProduct} pros={pros} cons={cons} />;
 };
 
 export default LearnMorePresenter;

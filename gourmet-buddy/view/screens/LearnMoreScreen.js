@@ -3,8 +3,9 @@ import Screen from "../UI/layout/Screen";
 import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
 import Header from "../UI/components/Header";
 import Icons from "../UI/components/Icons";
+import List from "../UI/components/List";
 
-const LearnMoreScreen = ({ foodProduct, onBackClick }) => {
+const LearnMoreScreen = ({ foodProduct, onBackClick, pros, cons }) => {
   return (
     <Screen>
       <Header
@@ -27,6 +28,12 @@ const LearnMoreScreen = ({ foodProduct, onBackClick }) => {
             {foodProduct.result.nutriments?.["energy-kcal"]} kcal per 100g
           </Text>
         </View>
+      </View>
+      <View>
+        <Text>Cons:</Text>
+        <List items={cons} />
+        <Text>Pros:</Text>
+        <List items={pros} />
       </View>
       <NavigationBarPresenter />
     </Screen>
