@@ -3,7 +3,8 @@ import SearchScreenPresenter from "../presenter/SearchScreenPresenter";
 import SearchResultsScreenPresenter from "../presenter/SearchResultsScreenPresenter";
 import ProfileScreenPresenter from "../presenter/ProfileScreenPresenter";
 import ExploreScreenPresenter from "../presenter/ExploreScreenPresenter";
-import FoodProductDetailsScreenPresenter from "../presenter/FoodProductDetailsScreenPreseneter";
+import FoodProductDetailsScreenPresenter from "../presenter/FoodProductDetailsScreenPresenter";
+import LearnMorePresenter from "../presenter/LearnMorePresenter";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ const AppStack = () => (
       name="FoodProductDetailsScreen"
       component={FoodProductDetailsScreenPresenter}
     />
+    <Stack.Screen name="LearnMoreScreen" component={LearnMorePresenter} />
   </Stack.Navigator>
 );
 

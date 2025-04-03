@@ -9,7 +9,12 @@ import Divider from "../UI/components/Divider";
 import FoodProductList from "../entity/FoodProductList";
 import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
 
-const SearchScreen = ({ onSearch, searchInputValue, onScanButtonClick }) => {
+const SearchScreen = ({
+  onSearch,
+  searchInputValue,
+  onScanButtonClick,
+  onReturnClick,
+}) => {
   //DELETE THIS DUMMY DATA LATER
   const foodProducts = [
     {
@@ -30,7 +35,13 @@ const SearchScreen = ({ onSearch, searchInputValue, onScanButtonClick }) => {
   return (
     <Screen>
       <Header
-        leftItem={<Icons.ReturnIcon color={"#FFDC7A"} size={30} />}
+        leftItem={
+          <Icons.ReturnIcon
+            color={"#FFDC7A"}
+            size={30}
+            onPress={onReturnClick}
+          />
+        }
         centerItem={
           <SearchField
             value={searchInputValue}

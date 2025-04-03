@@ -51,6 +51,10 @@ const SearchFieldPresenter = ({ navigation }) => {
     navigation.navigate("SearchScreen");
   };
 
+  const handleReturnClick = () => {
+    navigation.goBack();
+  };
+
   //View
   return (
     <Screen>
@@ -64,6 +68,7 @@ const SearchFieldPresenter = ({ navigation }) => {
           onSubmit={handleSubmit}
           searchInputValue={searchValue}
           onScanButtonClick={onScanButtonClick}
+          onReturnClick={handleReturnClick}
         />
       )}
     </Screen>
