@@ -30,9 +30,9 @@ const LearnMoreScreen = ({ foodProduct, onBackClick, pros, cons }) => {
         </View>
       </View>
       <View style={styles.listContainerStyle}>
-        <Text style={styles.titleStyle}>Cons:</Text>
+        <Text style={styles.subheadingStyle}>Cons:</Text>
         <List items={cons} />
-        <Text style={styles.titleStyle}>Pros:</Text>
+        <Text style={styles.subheadingStyle}>Pros:</Text>
         <List items={pros} />
       </View>
       <NavigationBarPresenter />
@@ -64,6 +64,12 @@ const styles = StyleSheet.create({
     marginTop: 40,
     alignItems: "flex-start",
     width: "90%",
+  },
+  subheadingStyle: {
+    fontSize: 16,
+    fontWeight: 600,
+    marginTop: 20,
+    marginBottom: 5,
   },
 });
 

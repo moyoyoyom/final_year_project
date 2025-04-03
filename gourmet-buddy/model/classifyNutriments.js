@@ -30,7 +30,9 @@ export const categoriseNutrimentsList = (nutrimentsList) => {
     (nutriment) => nutriment.classification === "Healthy"
   );
   const cons = nutrimentsList.filter(
-    (nutriment) => nutriment.classification === "Unhealthy"
+    (nutriment) =>
+      nutriment.classification === "Unhealthy" ||
+      nutriment.classification === "Neutral"
   );
 
   return { pros, cons };

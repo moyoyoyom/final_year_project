@@ -7,7 +7,21 @@ const List = ({ items }) => {
       {items.map((item, index) => {
         return (
           <View key={index}>
-            <Text style={styles.boldText}>{item.nutriment} </Text>
+            <View style={styles.lineStyle}>
+              <Text style={styles.boldText}>{item.nutriment} </Text>
+              <View style={styles.amountSectionStyle}>
+                <View
+                  style={[
+                    styles.indicatorStyle,
+                    item.classification === "Unhealthy" &&
+                      styles.redIndicatorStyle,
+                    item.classification === "Neutral" &&
+                      styles.amberIndicatorStyle,
+                  ]}
+                />
+                <Text>{item.amount}g per 100g</Text>
+              </View>
+            </View>
             <Divider customDividerStyle={[styles.dividerStyle]} />
           </View>
         );
@@ -25,6 +39,31 @@ const styles = StyleSheet.create({
   },
   boldText: {
     fontWeight: 600,
+    marginLeft: 50,
+  },
+  indicatorStyle: {
+    width: 15,
+    height: 15,
+    borderRadius: 15 / 2,
+    backgroundColor: "#43C831",
+    marginRight: 10,
+  },
+  amountSectionStyle: {
+    flexDirection: "row",
+    alignSelf: "flex-end",
+    width: "40%",
+  },
+  lineStyle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  redIndicatorStyle: {
+    backgroundColor: "#D95347",
+  },
+  amberIndicatorStyle: {
+    backgroundColor: "#EEA022",
   },
 });
 
