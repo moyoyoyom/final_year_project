@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import Divider from "../components/Divider";
+import Indicator from "./Indicator";
 
 const List = ({ items }) => {
   return (
@@ -10,16 +11,12 @@ const List = ({ items }) => {
             <View style={styles.lineStyle}>
               <Text style={styles.boldText}>{item.nutriment} </Text>
               <View style={styles.amountSectionStyle}>
-                <View
-                  style={[
-                    styles.indicatorStyle,
-                    item.classification === "Unhealthy" &&
-                      styles.redIndicatorStyle,
-                    item.classification === "Neutral" &&
-                      styles.amberIndicatorStyle,
-                  ]}
-                />
-                <Text>{item.amount}g per 100g</Text>
+                <Indicator status={item.classification} />
+                {item.nutriment === "Calories" ? (
+                  <Text>{item.amount} kcal per 100g</Text>
+                ) : (
+                  <Text>{item.amount}g per 100g</Text>
+                )}
               </View>
             </View>
             <Divider customDividerStyle={[styles.dividerStyle]} />
@@ -33,6 +30,7 @@ const List = ({ items }) => {
 const styles = StyleSheet.create({
   dividerStyle: {
     margin: 0,
+    alignSelf: "center",
   },
   container: {
     width: "100%",

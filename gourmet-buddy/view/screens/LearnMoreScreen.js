@@ -24,9 +24,6 @@ const LearnMoreScreen = ({ foodProduct, onBackClick, pros, cons }) => {
             {foodProduct.result.brands} {foodProduct.result.product_name} -{" "}
             {foodProduct.result.quantity}
           </Text>
-          <Text>
-            {foodProduct.result.nutriments?.["energy-kcal"]} kcal per 100g
-          </Text>
         </View>
       </View>
       <View style={styles.listContainerStyle}>
@@ -63,7 +60,7 @@ const styles = StyleSheet.create({
   listContainerStyle: {
     marginTop: 40,
     alignItems: "flex-start",
-    width: "90%",
+    width: "95%",
   },
   subheadingStyle: {
     fontSize: 16,
