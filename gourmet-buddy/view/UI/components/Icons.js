@@ -42,16 +42,21 @@ const AddIcon = ({ color, size }) => (
   <Ionicons name="add" size={size} color={color} />
 );
 
-const LikeIcon = ({ color, size }) => (
-  <Ionicons name="heart-outline" size={size} color={color} />
+const LikeIcon = ({ color, size, onPress }) => (
+  <Ionicons name="heart-outline" size={size} color={color} onPress={onPress} />
 );
 
-const BuyIcon = ({ color, size }) => (
-  <Ionicons name="cart-outline" size={size} color={color} />
+const BuyIcon = ({ color, size, onPress }) => (
+  <Ionicons name="cart-outline" size={size} color={color} onPress={onPress} />
 );
 
-const SaveIcon = ({ color, size }) => (
-  <Ionicons name="bookmark-outline" size={size} color={color} />
+const SaveIcon = ({ color, size, onPress }) => (
+  <Ionicons
+    name="bookmark-outline"
+    size={size}
+    color={color}
+    onPress={onPress}
+  />
 );
 
 //Compose

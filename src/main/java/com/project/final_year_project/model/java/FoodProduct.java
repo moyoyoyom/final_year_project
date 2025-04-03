@@ -2,6 +2,8 @@ package com.project.final_year_project.model.java;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,10 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-// @Entity
-// @Table(name = "FoodProducts")
+@Entity
+@Table(name = "FoodProducts")
 public class FoodProduct {
-
     @JsonProperty("code")
     private String code;
 

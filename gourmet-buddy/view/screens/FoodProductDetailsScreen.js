@@ -11,6 +11,8 @@ const FoodProductDetailsScreen = ({
   userSensitivities,
   onBackClick,
   onLearnMoreClick,
+  onLikeClick,
+  onSaveClick,
 }) => {
   //View
   return (
@@ -31,7 +33,7 @@ const FoodProductDetailsScreen = ({
             {foodProduct.result.brands} {foodProduct.result.product_name} -{" "}
             {foodProduct.result.quantity}
           </Text>
-          <IconTray />
+          <IconTray onLikeClick={onLikeClick} onSaveClick={onSaveClick} />
           <Button
             buttonText={"Learn more"}
             labelStyle={styles.infoButtonLabelStyle}

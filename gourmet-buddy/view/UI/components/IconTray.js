@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import Icons from "./Icons";
 
-const IconTray = () => {
+const IconTray = ({ onLikeClick, onBuyClick, onSaveClick }) => {
   return (
     <View style={styles.iconTrayStyle}>
       <Icons.LikeIcon size={30} />
