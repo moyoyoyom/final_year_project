@@ -21,7 +21,7 @@ const LearnMoreScreen = ({ foodProduct, onBackClick, pros, cons }) => {
         />
         <View style={styles.productInfoPaneStyle}>
           <Text style={styles.titleStyle}>
-            {foodProduct.result.brands} {foodProduct.result.product_name}
+            {foodProduct.result.brands} {foodProduct.result.product_name} -{" "}
             {foodProduct.result.quantity}
           </Text>
           <Text>
@@ -29,10 +29,10 @@ const LearnMoreScreen = ({ foodProduct, onBackClick, pros, cons }) => {
           </Text>
         </View>
       </View>
-      <View>
-        <Text>Cons:</Text>
+      <View style={styles.listContainerStyle}>
+        <Text style={styles.titleStyle}>Cons:</Text>
         <List items={cons} />
-        <Text>Pros:</Text>
+        <Text style={styles.titleStyle}>Pros:</Text>
         <List items={pros} />
       </View>
       <NavigationBarPresenter />
@@ -59,6 +59,11 @@ const styles = StyleSheet.create({
   productInfoPaneStyle: {
     width: "45%",
     marginLeft: 20,
+  },
+  listContainerStyle: {
+    marginTop: 40,
+    alignItems: "flex-start",
+    width: "90%",
   },
 });
 
