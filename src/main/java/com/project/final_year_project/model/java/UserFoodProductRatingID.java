@@ -20,9 +20,9 @@ public class UserFoodProductRatingID implements Serializable {
     private Long userID;
 
     @Column(nullable = false)
-    private String code;
+    private Integer code;
 
-    public UserFoodProductRatingID(Long userID, String code) {
+    public UserFoodProductRatingID(Long userID, Integer code) {
         this.userID = userID;
         this.code = code;
     }

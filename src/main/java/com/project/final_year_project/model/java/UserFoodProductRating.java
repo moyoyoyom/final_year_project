@@ -1,6 +1,8 @@
 package com.project.final_year_project.model.java;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -11,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,7 +42,10 @@ public class UserFoodProductRating {
     @Column
     private Rating rating;
 
-    public UserFoodProductRating(User user, FoodProduct foodProduct, Rating rating) {
+    public UserFoodProductRating(
+            @JsonProperty("user") User user,
+            @JsonProperty("foodProduct") FoodProduct foodProduct,
+            @JsonProperty("rating") Rating rating) {
         this.user = user;
         this.foodProduct = foodProduct;
         this.rating = rating;

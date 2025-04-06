@@ -17,12 +17,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "FoodProducts")
+@Table(name = "FoodProduct")
 public class FoodProduct {
     @Id
     @Column
     @JsonProperty("code")
-    private String code;
+    private Integer code;
 
     @JsonProperty("product_name")
     @Column
