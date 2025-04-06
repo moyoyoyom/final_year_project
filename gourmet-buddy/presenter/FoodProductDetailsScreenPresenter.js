@@ -2,6 +2,7 @@ import { useContext } from "react";
 import FoodProductDetailsScreen from "../view/screens/FoodProductDetailsScreen";
 import { AuthenticationContext } from "../model/AuthenicationContext";
 import useLoad from "../model/useLoad";
+import API from "../model/API";
 
 const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   //Initialisations
@@ -29,7 +30,20 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
     navigation.navigate("LearnMoreScreen", { foodProduct: foodProduct });
   };
 
-  const handleLikeClick = () => {};
+  const handleLikeClick = async () => {
+    const response = await API.post(ratingEndpoint, {
+      userFoodProductRatingID: {
+        userID: user.userID,
+        foodProduct: foodProduct.result.code,
+      },
+      user: {
+        userID: user.userID,
+      },
+      foodProduct: {
+        foodProduct: foodProduct,
+      },
+    });
+  };
   const handleSaveClick = () => {};
 
   //View

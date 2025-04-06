@@ -4,9 +4,9 @@ import Icons from "./Icons";
 const IconTray = ({ onLikeClick, onBuyClick, onSaveClick }) => {
   return (
     <View style={styles.iconTrayStyle}>
-      <Icons.LikeIcon size={30} />
-      <Icons.BuyIcon size={30} />
-      <Icons.SaveIcon size={30} />
+      <Icons.LikeIcon size={30} onPress={onLikeClick} />
+      <Icons.BuyIcon size={30} onPress={onBuyClick} />
+      <Icons.SaveIcon size={30} onPress={onSaveClick} />
     </View>
   );
 };
