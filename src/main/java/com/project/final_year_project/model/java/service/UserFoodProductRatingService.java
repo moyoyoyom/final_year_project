@@ -1,9 +1,12 @@
 package com.project.final_year_project.model.java.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.project.final_year_project.model.java.User;
 import com.project.final_year_project.model.java.UserFoodProductRating;
+import com.project.final_year_project.model.java.UserFoodProductRatingID;
 import com.project.final_year_project.model.java.data.repository.UserFoodProductRatingRepository;
 
 import jakarta.persistence.EntityManager;
@@ -25,5 +28,10 @@ public class UserFoodProductRatingService {
         User user = entityManager.getReference(User.class, userID);
         userFoodProductRating.setUser(user);
         return userFoodProductRatingRepository.save(userFoodProductRating);
+    }
+
+    public Optional<UserFoodProductRating> getUsersFoodProductRating(Long userID, String code) {
+        UserFoodProductRatingID userFoodProductRatingID = new UserFoodProductRatingID(userID, code);
+        return userFoodProductRatingRepository.findById(userFoodProductRatingID);
     }
 }

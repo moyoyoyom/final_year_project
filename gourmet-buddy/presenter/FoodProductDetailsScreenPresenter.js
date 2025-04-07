@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import FoodProductDetailsScreen from "../view/screens/FoodProductDetailsScreen";
 import { AuthenticationContext } from "../model/AuthenicationContext";
 import useLoad from "../model/useLoad";
@@ -11,11 +11,13 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   const { foodProduct } = route.params;
   const userSensitivitiesEndpoint = `http://192.168.1.253:8090/api/relationships/cannoteat/${user.userID}`;
   const ratingEndpoint = "http://192.168.1.253:8090/api/rating/save";
+  //const initialLikeStatus = 
 
   //State
   const [userSensitivities, isUserSensitivitiesLoading] = useLoad(
     userSensitivitiesEndpoint
   );
+  const [likedStatus, setLikeStatus] = useState(false);
 
   if (isUserSensitivitiesLoading) return;
   console.log(userSensitivities);
@@ -50,6 +52,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
       );
     }
   };
+
   const handleSaveClick = async () => {
     const response = await API.post(ratingEndpoint, {
       user: {
@@ -77,6 +80,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
       onLearnMoreClick={handleLearnMoreClick}
       onLikeClick={handleLikeClick}
       onSaveClick={handleSaveClick}
+      likeStatus={}
     />
   );
 };
