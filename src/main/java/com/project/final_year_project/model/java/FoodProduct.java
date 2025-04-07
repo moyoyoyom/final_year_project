@@ -24,7 +24,7 @@ public class FoodProduct {
     @Id
     @Column
     @JsonProperty("code")
-    private Integer code;
+    private String code;
 
     @JsonProperty("product_name")
     @Column
@@ -51,7 +51,7 @@ public class FoodProduct {
     @Column
     private String brands;
 
-    public FoodProduct(Integer code, String productName, String ingredientsText,
+    public FoodProduct(String code, String productName, String ingredientsText,
             NutritionalInformation nutritionalInformation, String imageURL, String quantity, String brands) {
         this.code = code;
         this.productName = productName;

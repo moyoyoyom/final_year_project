@@ -22,7 +22,7 @@ public class FoodProductService {
     }
 
     public FoodProduct getFoodProductByBarcode(String barcode) {
-        Optional<FoodProduct> cachedFoodProduct = foodProductRepository.findById(Integer.parseInt(barcode));
+        Optional<FoodProduct> cachedFoodProduct = foodProductRepository.findById(barcode);
         if (cachedFoodProduct.isPresent()) {
             return cachedFoodProduct.get();
         }
