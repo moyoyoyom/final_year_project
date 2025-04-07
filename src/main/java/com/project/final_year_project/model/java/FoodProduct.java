@@ -9,6 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Data
 @Entity
 @Table(name = "FoodProduct")
 public class FoodProduct {
@@ -48,4 +50,15 @@ public class FoodProduct {
     @JsonProperty("brands")
     @Column
     private String brands;
+
+    public FoodProduct(Integer code, String productName, String ingredientsText,
+            NutritionalInformation nutritionalInformation, String imageURL, String quantity, String brands) {
+        this.code = code;
+        this.productName = productName;
+        this.ingredientsText = ingredientsText;
+        this.nutritionalInformation = nutritionalInformation;
+        this.imageUrl = imageURL;
+        this.quantity = quantity;
+        this.brands = brands;
+    }
 }
