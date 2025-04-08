@@ -3,11 +3,8 @@ package com.project.final_year_project.model.java;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -36,17 +33,12 @@ public class UserFoodProductRating {
     @JoinColumn(name = "code")
     private FoodProduct foodProduct;
 
-    @Enumerated(EnumType.STRING)
-    @Column
-    private Rating rating;
-
     public UserFoodProductRating(
             @JsonProperty("user") User user,
-            @JsonProperty("foodProduct") FoodProduct foodProduct,
-            @JsonProperty("rating") Rating rating) {
+            @JsonProperty("foodProduct") FoodProduct foodProduct) {
         this.user = user;
         this.foodProduct = foodProduct;
-        this.rating = rating;
-        this.userFoodProductRatingID = new UserFoodProductRatingID(user.getUserID(), foodProduct.getCode());
+        this.userFoodProductRatingID = new UserFoodProductRatingID(user.getUserID(), foodProduct.getCode(),
+                Rating.NONE);
     }
 }

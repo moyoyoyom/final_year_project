@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,14 +24,19 @@ public class UserFoodProductRatingID implements Serializable {
     @Column(nullable = false)
     private String code;
 
-    public UserFoodProductRatingID(Long userID, String code) {
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Rating rating;
+
+    public UserFoodProductRatingID(Long userID, String code, Rating rating) {
         this.userID = userID;
         this.code = code;
+        this.rating = rating;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userID, code);
+        return Objects.hash(userID, code, rating);
     }
 
     @Override
@@ -40,6 +47,7 @@ public class UserFoodProductRatingID implements Serializable {
             return false;
 
         UserFoodProductRatingID comparedObject = (UserFoodProductRatingID) object;
-        return Objects.equals(userID, comparedObject.userID) && Objects.equals(code, comparedObject.code);
+        return Objects.equals(userID, comparedObject.userID) && Objects.equals(code, comparedObject.code)
+                && Objects.equals(rating, comparedObject.rating);
     }
 }

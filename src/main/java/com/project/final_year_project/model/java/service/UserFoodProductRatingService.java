@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.project.final_year_project.model.java.Rating;
 import com.project.final_year_project.model.java.User;
 import com.project.final_year_project.model.java.UserFoodProductRating;
 import com.project.final_year_project.model.java.UserFoodProductRatingID;
@@ -30,8 +31,8 @@ public class UserFoodProductRatingService {
         return userFoodProductRatingRepository.save(userFoodProductRating);
     }
 
-    public Optional<UserFoodProductRating> getUsersFoodProductRating(Long userID, String code) {
-        UserFoodProductRatingID userFoodProductRatingID = new UserFoodProductRatingID(userID, code);
+    public Optional<UserFoodProductRating> getUsersFoodProductRating(Long userID, String code, Rating rating) {
+        UserFoodProductRatingID userFoodProductRatingID = new UserFoodProductRatingID(userID, code, rating);
         return userFoodProductRatingRepository.findById(userFoodProductRatingID);
     }
 }

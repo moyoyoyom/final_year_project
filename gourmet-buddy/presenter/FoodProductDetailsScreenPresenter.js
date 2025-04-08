@@ -46,9 +46,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
       rating: "LIKED",
     });
     if (response.isSuccess) {
-      console.log("Successful");
       loadRating(ratingEndpoint);
-      console.log(rating.rating);
     } else {
       Alert.alert(
         "There have been issues rating this product, try again later."
