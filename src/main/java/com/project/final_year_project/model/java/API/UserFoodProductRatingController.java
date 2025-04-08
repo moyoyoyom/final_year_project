@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.project.final_year_project.model.java.Rating;
 import com.project.final_year_project.model.java.UserFoodProductRating;
 import com.project.final_year_project.model.java.service.UserFoodProductRatingService;
 
@@ -25,17 +24,19 @@ public class UserFoodProductRatingController {
         this.userFoodProductRatingService = userFoodProductRatingService;
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<UserFoodProductRating> saveRating(@RequestBody UserFoodProductRating userFoodProductRating) {
-        UserFoodProductRating rating = userFoodProductRatingService.saveUserFoodProductRating(userFoodProductRating);
+    @PostMapping("/save/{relationship}")
+    public ResponseEntity<UserFoodProductRating> saveRating(@RequestBody UserFoodProductRating userFoodProductRating,
+            @PathVariable("relationship") String relationship) {
+        UserFoodProductRating rating = userFoodProductRatingService.saveUserFoodProductRating(userFoodProductRating,
+                relationship);
         return ResponseEntity.ok(rating);
     }
 
-    @GetMapping("/{userID}/{code}")
+    @GetMapping("/{userID}/{code}/{relationship}")
     public ResponseEntity<UserFoodProductRating> getFoodProductRating(@PathVariable("userID") Long userID,
-            @PathVariable("code") String code) {
+            @PathVariable("code") String code, @PathVariable("relationship") String relationship) {
         Optional<UserFoodProductRating> rating = userFoodProductRatingService.getUsersFoodProductRating(userID, code,
-                Rating.LIKED);
+                relationship);
         if (rating.isPresent())
             return ResponseEntity.ok(rating.get());
         return ResponseEntity.ok(null);

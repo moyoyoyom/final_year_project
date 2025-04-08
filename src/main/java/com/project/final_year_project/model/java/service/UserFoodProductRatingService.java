@@ -24,15 +24,32 @@ public class UserFoodProductRatingService {
         this.userFoodProductRatingRepository = userFoodProductRatingRepository;
     }
 
-    public UserFoodProductRating saveUserFoodProductRating(UserFoodProductRating userFoodProductRating) {
+    public UserFoodProductRating saveUserFoodProductRating(UserFoodProductRating userFoodProductRating,
+            String relationship) {
         Long userID = userFoodProductRating.getUser().getUserID();
         User user = entityManager.getReference(User.class, userID);
+        String code = userFoodProductRating.getFoodProduct().getCode();
+        UserFoodProductRatingID userFoodProductRatingID = new UserFoodProductRatingID(userID, code,
+                getRatingType(relationship));
+
         userFoodProductRating.setUser(user);
+        userFoodProductRating.setUserFoodProductRatingID(userFoodProductRatingID);
         return userFoodProductRatingRepository.save(userFoodProductRating);
     }
 
-    public Optional<UserFoodProductRating> getUsersFoodProductRating(Long userID, String code, Rating rating) {
-        UserFoodProductRatingID userFoodProductRatingID = new UserFoodProductRatingID(userID, code, rating);
+    public Optional<UserFoodProductRating> getUsersFoodProductRating(Long userID, String code, String relationship) {
+        UserFoodProductRatingID userFoodProductRatingID = new UserFoodProductRatingID(userID, code,
+                getRatingType(relationship));
         return userFoodProductRatingRepository.findById(userFoodProductRatingID);
+    }
+
+    public Rating getRatingType(String relationship) {
+        Rating rating = Rating.NONE;
+        if (relationship.equals("LIKED")) {
+            rating = Rating.LIKED;
+        } else if (relationship.equals("SAVED")) {
+            rating = Rating.SAVED;
+        }
+        return rating;
     }
 }
