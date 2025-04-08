@@ -10,16 +10,17 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   const { user } = useContext(AuthenticationContext);
   const { foodProduct } = route.params;
   const userSensitivitiesEndpoint = `http://192.168.1.253:8090/api/relationships/cannoteat/${user.userID}`;
-  const ratingEndpoint = "http://192.168.1.253:8090/api/rating/save";
-  //const initialLikeStatus = 
+  const saveRatingEndpoint = "http://192.168.1.253:8090/api/rating/save";
+  const ratingEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.result.code}`;
 
   //State
   const [userSensitivities, isUserSensitivitiesLoading] = useLoad(
     userSensitivitiesEndpoint
   );
-  const [likedStatus, setLikeStatus] = useState(false);
+  const [rating, isRatingLoading, loadRating] = useLoad(ratingEndpoint);
+  const [likeStatus, setLikeStatus] = useState(rating.rating);
 
-  if (isUserSensitivitiesLoading) return;
+  if (isUserSensitivitiesLoading || isRatingLoading) return;
   console.log(userSensitivities);
 
   const formattedSensitivities = userSensitivities.map(
@@ -35,7 +36,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   };
 
   const handleLikeClick = async () => {
-    const response = await API.post(ratingEndpoint, {
+    const response = await API.post(saveRatingEndpoint, {
       user: {
         userID: user.userID,
       },
@@ -46,6 +47,8 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
     });
     if (response.isSuccess) {
       console.log("Successful");
+      loadRating(ratingEndpoint);
+      console.log(rating.rating);
     } else {
       Alert.alert(
         "There have been issues rating this product, try again later."
@@ -80,7 +83,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
       onLearnMoreClick={handleLearnMoreClick}
       onLikeClick={handleLikeClick}
       onSaveClick={handleSaveClick}
-      likeStatus={}
+      likeStatus={likeStatus}
     />
   );
 };

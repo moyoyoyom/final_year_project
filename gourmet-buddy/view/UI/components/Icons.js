@@ -50,6 +50,10 @@ const BuyIcon = ({ color, size, onPress }) => (
   <Ionicons name="cart-outline" size={size} color={color} onPress={onPress} />
 );
 
+const FilledHeartIcon = ({ color, size, onPress }) => (
+  <Ionicons name="heart-sharp" size={size} color={color} onPress={onPress} />
+);
+
 const SaveIcon = ({ color, size, onPress }) => (
   <Ionicons
     name="bookmark-outline"
@@ -73,5 +77,6 @@ Icons.AddIcon = AddIcon;
 Icons.LikeIcon = LikeIcon;
 Icons.BuyIcon = BuyIcon;
 Icons.SaveIcon = SaveIcon;
+Icons.FilledHeartIcon = FilledHeartIcon;
 
 export default Icons;

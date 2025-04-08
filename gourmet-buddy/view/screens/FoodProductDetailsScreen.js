@@ -13,6 +13,7 @@ const FoodProductDetailsScreen = ({
   onLearnMoreClick,
   onLikeClick,
   onSaveClick,
+  likeStatus,
 }) => {
   //View
   return (
@@ -33,7 +34,11 @@ const FoodProductDetailsScreen = ({
             {foodProduct.result.brands} {foodProduct.result.product_name} -{" "}
             {foodProduct.result.quantity}
           </Text>
-          <IconTray onLikeClick={onLikeClick} onSaveClick={onSaveClick} />
+          <IconTray
+            likeStatus={likeStatus}
+            onLikeClick={onLikeClick}
+            onSaveClick={onSaveClick}
+          />
           <Button
             buttonText={"Learn more"}
             labelStyle={styles.infoButtonLabelStyle}
