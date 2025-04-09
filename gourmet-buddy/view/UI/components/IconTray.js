@@ -5,9 +5,9 @@ const IconTray = ({ onLikeClick, onBuyClick, onSaveClick, likeStatus }) => {
   return (
     <View style={styles.iconTrayStyle}>
       {likeStatus === "LIKED" ? (
-        <Icons.LikeIcon size={30} onPress={onLikeClick} />
-      ) : (
         <Icons.FilledHeartIcon size={30} onPress={onLikeClick} color={"red"} />
+      ) : (
+        <Icons.LikeIcon size={30} onPress={onLikeClick} />
       )}
       <Icons.BuyIcon size={30} onPress={onBuyClick} />
       <Icons.SaveIcon size={30} onPress={onSaveClick} />

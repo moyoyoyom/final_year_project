@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.project.final_year_project.model.java.Rating;
 import com.project.final_year_project.model.java.UserFoodProductRating;
+import com.project.final_year_project.model.java.UserFoodProductRatingID;
 import com.project.final_year_project.model.java.service.UserFoodProductRatingService;
 
 @Controller
@@ -35,10 +37,13 @@ public class UserFoodProductRatingController {
     @GetMapping("/{userID}/{code}/{relationship}")
     public ResponseEntity<UserFoodProductRating> getFoodProductRating(@PathVariable("userID") Long userID,
             @PathVariable("code") String code, @PathVariable("relationship") String relationship) {
+        UserFoodProductRatingID defaultID = new UserFoodProductRatingID(userID, code, Rating.NONE);
+        UserFoodProductRating defaultUserFoodProductRating = new UserFoodProductRating();
+        defaultUserFoodProductRating.setUserFoodProductRatingID(defaultID);
         Optional<UserFoodProductRating> rating = userFoodProductRatingService.getUsersFoodProductRating(userID, code,
                 relationship);
         if (rating.isPresent())
             return ResponseEntity.ok(rating.get());
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(defaultUserFoodProductRating);
     }
 }

@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import FoodProductDetailsScreen from "../view/screens/FoodProductDetailsScreen";
 import { AuthenticationContext } from "../model/AuthenicationContext";
 import useLoad from "../model/useLoad";
 import API from "../model/API";
 import { Alert } from "react-native";
+import LoadingScreen from "../view/screens/LoadingScreen";
 
 const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   //Initialisations
@@ -11,17 +12,21 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   const { foodProduct } = route.params;
   const userSensitivitiesEndpoint = `http://192.168.1.253:8090/api/relationships/cannoteat/${user.userID}`;
   const saveRatingEndpoint = "http://192.168.1.253:8090/api/rating/save";
-  const ratingEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.result.code}/liked`;
+  const likeProductEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.result.code}/liked`;
 
   //State
   const [userSensitivities, isUserSensitivitiesLoading] = useLoad(
     userSensitivitiesEndpoint
   );
-  const [rating, isRatingLoading, loadRating] = useLoad(ratingEndpoint);
-  const [likeStatus, setLikeStatus] = useState(rating.rating);
+  const [likeStatus, isLikeStatusLoading, loadLikeStatus] =
+    useLoad(likeProductEndpoint);
+  const [isProductLiked, setIsProductLiked] = useState("NONE");
 
-  if (isUserSensitivitiesLoading || isRatingLoading) return;
-  console.log(userSensitivities);
+  useEffect(() => {
+    if (likeStatus && !isLikeStatusLoading) {
+      setIsProductLiked(likeStatus.userFoodProductRatingID.rating);
+    }
+  });
 
   const formattedSensitivities = userSensitivities.map(
     (trigger) => trigger.triggerName
@@ -46,7 +51,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
       rating: "LIKED",
     });
     if (response.isSuccess) {
-      loadRating(ratingEndpoint);
+      loadRating(likeProductEndpoint);
     } else {
       Alert.alert(
         "There have been issues rating this product, try again later."
@@ -55,7 +60,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   };
 
   const handleSaveClick = async () => {
-    const response = await API.post(ratingEndpoint, {
+    const response = await API.post(likeProductEndpoint, {
       user: {
         userID: user.userID,
       },
@@ -81,7 +86,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
       onLearnMoreClick={handleLearnMoreClick}
       onLikeClick={handleLikeClick}
       onSaveClick={handleSaveClick}
-      likeStatus={likeStatus}
+      likeStatus={isProductLiked}
     />
   );
 };
