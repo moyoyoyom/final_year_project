@@ -4,7 +4,6 @@ import { AuthenticationContext } from "../model/AuthenicationContext";
 import useLoad from "../model/useLoad";
 import API from "../model/API";
 import { Alert } from "react-native";
-import LoadingScreen from "../view/screens/LoadingScreen";
 
 const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   //Initialisations
@@ -41,7 +40,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   };
 
   const handleLikeClick = async () => {
-    const response = await API.post(`${saveRatingEndpoint}/liked`, {
+    const rating = {
       user: {
         userID: user.userID,
       },
@@ -49,13 +48,25 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
         code: foodProduct.result.code,
       },
       rating: "LIKED",
-    });
-    if (response.isSuccess) {
-      loadRating(likeProductEndpoint);
-    } else {
-      Alert.alert(
-        "There have been issues rating this product, try again later."
-      );
+    };
+
+    if (isProductLiked === "LIKED") {
+      setIsProductLiked("NONE");
+      const response = await API.delete(likeProductEndpoint, rating);
+      if (response.isSuccess) {
+        loadLikeStatus(likeProductEndpoint);
+      } else {
+        Alert.alert("Issue removing your rating from this product.");
+      }
+    } else if (isProductLiked !== "LIKED") {
+      const response = await API.post(`${saveRatingEndpoint}/liked`, rating);
+      if (response.isSuccess) {
+        loadLikeStatus(likeProductEndpoint);
+      } else {
+        Alert.alert(
+          "There have been issues rating this product, try again later."
+        );
+      }
     }
   };
 

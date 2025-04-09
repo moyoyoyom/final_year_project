@@ -43,6 +43,11 @@ public class UserFoodProductRatingService {
         return userFoodProductRatingRepository.findById(userFoodProductRatingID);
     }
 
+    public void removeRating(Long userID, String code, String relationship) {
+        UserFoodProductRatingID ratingID = new UserFoodProductRatingID(userID, code, getRatingType(relationship));
+        userFoodProductRatingRepository.deleteById(ratingID);
+    }
+
     public Rating getRatingType(String relationship) {
         Rating rating = Rating.NONE;
         if (relationship.equalsIgnoreCase("LIKED")) {
