@@ -11,7 +11,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   const { foodProduct } = route.params;
   const userSensitivitiesEndpoint = `http://192.168.1.253:8090/api/relationships/cannoteat/${user.userID}`;
   const saveRatingEndpoint = "http://192.168.1.253:8090/api/rating/save";
-  const ratingEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.result.code}`;
+  const ratingEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.result.code}/liked`;
 
   //State
   const [userSensitivities, isUserSensitivitiesLoading] = useLoad(
@@ -36,7 +36,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   };
 
   const handleLikeClick = async () => {
-    const response = await API.post(saveRatingEndpoint, {
+    const response = await API.post(`${saveRatingEndpoint}/liked`, {
       user: {
         userID: user.userID,
       },

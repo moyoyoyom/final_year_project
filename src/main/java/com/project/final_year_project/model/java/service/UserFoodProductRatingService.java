@@ -45,9 +45,9 @@ public class UserFoodProductRatingService {
 
     public Rating getRatingType(String relationship) {
         Rating rating = Rating.NONE;
-        if (relationship.equals("LIKED")) {
+        if (relationship.equalsIgnoreCase("LIKED")) {
             rating = Rating.LIKED;
-        } else if (relationship.equals("SAVED")) {
+        } else if (relationship.equalsIgnoreCase("SAVED")) {
             rating = Rating.SAVED;
         }
         return rating;
