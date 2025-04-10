@@ -1,7 +1,13 @@
 import { StyleSheet, View } from "react-native";
 import Icons from "./Icons";
 
-const IconTray = ({ onLikeClick, onBuyClick, onSaveClick, likeStatus }) => {
+const IconTray = ({
+  onLikeClick,
+  onBuyClick,
+  onSaveClick,
+  likeStatus,
+  saveStatus,
+}) => {
   return (
     <View style={styles.iconTrayStyle}>
       {likeStatus === "LIKED" ? (
@@ -10,7 +16,11 @@ const IconTray = ({ onLikeClick, onBuyClick, onSaveClick, likeStatus }) => {
         <Icons.LikeIcon size={30} onPress={onLikeClick} />
       )}
       <Icons.BuyIcon size={30} onPress={onBuyClick} />
-      <Icons.SaveIcon size={30} onPress={onSaveClick} />
+      {saveStatus === "SAVED" ? (
+        <Icons.FilledSaveIcon size={30} onPress={onSaveClick} color={"black"} />
+      ) : (
+        <Icons.SaveIcon size={30} onPress={onSaveClick} />
+      )}
     </View>
   );
 };

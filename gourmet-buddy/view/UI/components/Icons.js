@@ -63,6 +63,10 @@ const SaveIcon = ({ color, size, onPress }) => (
   />
 );
 
+const FilledSaveIcon = ({ color, size, onPress }) => (
+  <Ionicons name="bookmark" size={size} color={color} onPress={onPress} />
+);
+
 //Compose
 Icons.ReturnIcon = ReturnIcon;
 Icons.ForwardIcon = ForwardIcon;
@@ -78,5 +82,6 @@ Icons.LikeIcon = LikeIcon;
 Icons.BuyIcon = BuyIcon;
 Icons.SaveIcon = SaveIcon;
 Icons.FilledHeartIcon = FilledHeartIcon;
+Icons.FilledSaveIcon = FilledSaveIcon;
 
 export default Icons;

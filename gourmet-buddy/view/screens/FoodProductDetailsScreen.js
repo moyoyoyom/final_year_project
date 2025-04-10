@@ -14,6 +14,7 @@ const FoodProductDetailsScreen = ({
   onLikeClick,
   onSaveClick,
   likeStatus,
+  saveStatus,
 }) => {
   //View
   return (
@@ -36,6 +37,7 @@ const FoodProductDetailsScreen = ({
           </Text>
           <IconTray
             likeStatus={likeStatus}
+            saveStatus={saveStatus}
             onLikeClick={onLikeClick}
             onSaveClick={onSaveClick}
           />
