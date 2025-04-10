@@ -11,7 +11,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   const { foodProduct } = route.params;
   const userSensitivitiesEndpoint = `http://192.168.1.253:8090/api/relationships/cannoteat/${user.userID}`;
   const saveRatingEndpoint = "http://192.168.1.253:8090/api/rating/save";
-  const likeProductEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.result.code}/liked`;
+  const likeProductEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.result.code}/LIKED`;
 
   //State
   const [userSensitivities, isUserSensitivitiesLoading] = useLoad(
@@ -23,9 +23,10 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
 
   useEffect(() => {
     if (likeStatus && !isLikeStatusLoading) {
+      console.log("Like status: ", likeStatus.userFoodProductRatingID.rating);
       setIsProductLiked(likeStatus.userFoodProductRatingID.rating);
     }
-  });
+  }, [isProductLiked, likeStatus]);
 
   const formattedSensitivities = userSensitivities.map(
     (trigger) => trigger.triggerName
@@ -51,17 +52,20 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
     };
 
     if (isProductLiked === "LIKED") {
-      setIsProductLiked("NONE");
       const response = await API.delete(likeProductEndpoint, rating);
       if (response.isSuccess) {
         loadLikeStatus(likeProductEndpoint);
+        setIsProductLiked("NONE");
+        navigation.navigate("FoodProductDetailsScreen", { foodProduct });
       } else {
         Alert.alert("Issue removing your rating from this product.");
+        console.error(response);
       }
     } else if (isProductLiked !== "LIKED") {
       const response = await API.post(`${saveRatingEndpoint}/liked`, rating);
       if (response.isSuccess) {
         loadLikeStatus(likeProductEndpoint);
+        setIsProductLiked("LIKED");
       } else {
         Alert.alert(
           "There have been issues rating this product, try again later."

@@ -43,9 +43,14 @@ public class UserFoodProductRatingService {
         return userFoodProductRatingRepository.findById(userFoodProductRatingID);
     }
 
-    public void removeRating(Long userID, String code, String relationship) {
+    public boolean removeRating(Long userID, String code, String relationship) {
         UserFoodProductRatingID ratingID = new UserFoodProductRatingID(userID, code, getRatingType(relationship));
-        userFoodProductRatingRepository.deleteById(ratingID);
+        if (userFoodProductRatingRepository.existsById(ratingID)) {
+            userFoodProductRatingRepository.deleteById(ratingID);
+            System.out.println("Rating has been removed");
+            return true;
+        }
+        return false;
     }
 
     public Rating getRatingType(String relationship) {

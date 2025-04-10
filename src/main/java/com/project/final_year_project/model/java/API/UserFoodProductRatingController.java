@@ -52,12 +52,9 @@ public class UserFoodProductRatingController {
     @DeleteMapping("/{userID}/{code}/{relationship}")
     public ResponseEntity<?> deleteFoodProductRating(@PathVariable("userID") Long userID,
             @PathVariable("code") String code, @PathVariable("relationship") String relationship) {
-        Optional<UserFoodProductRating> rating = userFoodProductRatingService.getUsersFoodProductRating(userID, code,
-                relationship);
-        if (rating.isPresent()) {
-            userFoodProductRatingService.removeRating(userID, code, relationship);
-            return ResponseEntity.ok("Removed rating");
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Could not find this rating");
+        boolean hasRatingBeenRemoved = userFoodProductRatingService.removeRating(userID, code, relationship);
+
+        return hasRatingBeenRemoved ? (ResponseEntity.ok("Rating has been removed"))
+                : (ResponseEntity.status(HttpStatus.NOT_FOUND).body("Currently unable to remove rating"));
     }
 }
