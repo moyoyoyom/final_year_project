@@ -5,7 +5,7 @@ import {
 import formatNutriments from "../model/formatNutriments";
 import LearnMoreScreen from "../view/screens/LearnMoreScreen";
 
-const LearnMorePresenter = ({ route }) => {
+const LearnMorePresenter = ({ route, navigation }) => {
   //Initialisations
   const { foodProduct } = route.params;
   if (!foodProduct) return;
@@ -15,8 +15,18 @@ const LearnMorePresenter = ({ route }) => {
 
   const { pros, cons } = categoriseNutrimentsList(classifiedNutriments);
 
+  //Handlers
+  const handleBackClick = () => navigation.goBack();
+
   //View
-  return <LearnMoreScreen foodProduct={foodProduct} pros={pros} cons={cons} />;
+  return (
+    <LearnMoreScreen
+      foodProduct={foodProduct}
+      pros={pros}
+      cons={cons}
+      onBackClick={handleBackClick}
+    />
+  );
 };
 
 export default LearnMorePresenter;
