@@ -1,9 +1,9 @@
 package com.project.final_year_project.model.java.API;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -53,8 +53,12 @@ public class UserFoodProductRatingController {
     public ResponseEntity<?> deleteFoodProductRating(@PathVariable("userID") Long userID,
             @PathVariable("code") String code, @PathVariable("relationship") String relationship) {
         boolean hasRatingBeenRemoved = userFoodProductRatingService.removeRating(userID, code, relationship);
+        System.out.println(hasRatingBeenRemoved);
+        return hasRatingBeenRemoved ? (formatResponse("Rating has been removed"))
+                : (formatResponse("Rating has already been removed"));
+    }
 
-        return hasRatingBeenRemoved ? (ResponseEntity.ok("Rating has been removed"))
-                : (ResponseEntity.status(HttpStatus.NOT_FOUND).body("Currently unable to remove rating"));
+    public ResponseEntity<?> formatResponse(String responseMessage) {
+        return ResponseEntity.ok(Collections.singletonMap("message", responseMessage));
     }
 }

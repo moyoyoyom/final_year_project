@@ -47,7 +47,6 @@ public class UserFoodProductRatingService {
         UserFoodProductRatingID ratingID = new UserFoodProductRatingID(userID, code, getRatingType(relationship));
         if (userFoodProductRatingRepository.existsById(ratingID)) {
             userFoodProductRatingRepository.deleteById(ratingID);
-            System.out.println("Rating has been removed");
             return true;
         }
         return false;

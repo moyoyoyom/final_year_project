@@ -26,7 +26,9 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
       console.log("Like status: ", likeStatus.userFoodProductRatingID.rating);
       setIsProductLiked(likeStatus.userFoodProductRatingID.rating);
     }
-  }, [isProductLiked, likeStatus]);
+  }, [likeStatus]);
+
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const formattedSensitivities = userSensitivities.map(
     (trigger) => trigger.triggerName
@@ -53,12 +55,12 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
 
     if (isProductLiked === "LIKED") {
       const response = await API.delete(likeProductEndpoint, rating);
+      console.log(response);
       if (response.isSuccess) {
         loadLikeStatus(likeProductEndpoint);
         setIsProductLiked("NONE");
-        navigation.navigate("FoodProductDetailsScreen", { foodProduct });
       } else {
-        Alert.alert("Issue removing your rating from this product.");
+        navigation.goBack();
         console.error(response);
       }
     } else if (isProductLiked !== "LIKED") {
@@ -74,24 +76,6 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
     }
   };
 
-  const handleSaveClick = async () => {
-    const response = await API.post(likeProductEndpoint, {
-      user: {
-        userID: user.userID,
-      },
-      foodProduct: {
-        code: foodProduct.result.code,
-      },
-      rating: "SAVED",
-    });
-    if (response.isSuccess) {
-    } else {
-      Alert.alert(
-        "There have been issues rating this product, try again later."
-      );
-    }
-  };
-
   //View
   return (
     <FoodProductDetailsScreen
@@ -100,7 +84,6 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
       onBackClick={handleBackClick}
       onLearnMoreClick={handleLearnMoreClick}
       onLikeClick={handleLikeClick}
-      onSaveClick={handleSaveClick}
       likeStatus={isProductLiked}
     />
   );
