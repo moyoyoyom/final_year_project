@@ -13,6 +13,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   const saveRatingEndpoint = "http://192.168.1.253:8090/api/rating/save";
   const likeProductEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.result.code}/LIKED`;
   const ratingEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.result.code}`;
+  const saveHistoryEndpoint = `http://192.168.1.253:8090/api/history/save`;
 
   //State
   const [userSensitivities] = useLoad(userSensitivitiesEndpoint);
@@ -38,6 +39,21 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
       setIsProductSaved(saveStatus.userFoodProductRatingID.rating);
     }
   }, [saveStatus]);
+
+  useEffect(() => {
+    const saveHistory = async () => {
+      const viewedProductHistory = {
+        user: {
+          userID: user.userID,
+        },
+        foodProduct: {
+          code: foodProduct.result.code,
+        },
+      };
+      await API.post(saveHistoryEndpoint, viewedProductHistory);
+    };
+    saveHistory(), [];
+  });
 
   const formattedSensitivities = userSensitivities.map(
     (trigger) => trigger.triggerName
