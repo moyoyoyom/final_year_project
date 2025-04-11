@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import SearchScreen from "../view/screens/SearchScreen";
 import API from "../model/API";
 import CameraScreen from "../view/screens/CameraScreen";
 import Screen from "../view/UI/layout/Screen";
 import { Camera, useCameraPermissions } from "expo-camera";
 import { Alert } from "react-native";
+import useLoad from "../model/useLoad";
+import { AuthenticationContext } from "../model/AuthenicationContext";
 
 const SearchScreenPresenter = ({ navigation }) => {
   //Initialisations
@@ -22,6 +24,8 @@ const SearchScreenPresenter = ({ navigation }) => {
       productName: "Ice cream",
     },
   ];
+  const { user } = useContext(AuthenticationContext);
+  const historyEndpoint = `http://192.168.1.253:8090/api/history/recent/${user.userID}`;
 
   //State
   const [searchValue, setSearchValue] = useState(" ");
@@ -29,6 +33,12 @@ const SearchScreenPresenter = ({ navigation }) => {
   const [scanned, setScanned] = useState(false);
   const [hasPermissionBeenGranted, setHasPermissionBeenGranted] =
     useCameraPermissions();
+  const [userHistory, isUserHistoryLoading, loadUserHistory] =
+    useLoad(historyEndpoint);
+
+  const viewedFoodProducts = userHistory.map(
+    (foodProduct) => foodProduct.foodProduct
+  );
 
   //Handlers
   const handleSubmit = (newValue) => {
@@ -71,6 +81,12 @@ const SearchScreenPresenter = ({ navigation }) => {
     navigation.goBack();
   };
 
+  const handleFoodProductSelect = (foodProduct) => {
+    navigation.navigate("FoodProductDetailsScreen", {
+      foodProduct: foodProduct,
+    });
+  };
+
   //View
   return (
     <Screen>
@@ -85,7 +101,8 @@ const SearchScreenPresenter = ({ navigation }) => {
           searchInputValue={searchValue}
           onScanButtonClick={onScanButtonClick}
           onReturnClick={handleReturnClick}
-          foodProducts={foodProducts}
+          foodProducts={viewedFoodProducts}
+          onSelect={handleFoodProductSelect}
         />
       )}
     </Screen>

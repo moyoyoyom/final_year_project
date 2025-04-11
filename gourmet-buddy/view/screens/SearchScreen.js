@@ -15,6 +15,7 @@ const SearchScreen = ({
   onScanButtonClick,
   onReturnClick,
   foodProducts,
+  onSelect,
 }) => {
   //View
   return (
@@ -53,7 +54,7 @@ const SearchScreen = ({
           buttonIcon={<Icons.SortAscending size={20} />}
         />
       </View>
-      <FoodProductList foodProducts={foodProducts} />
+      <FoodProductList foodProducts={foodProducts} onSelect={onSelect} />
       <NavigationBarPresenter />
     </Screen>
   );
