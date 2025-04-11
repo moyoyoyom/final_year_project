@@ -3,6 +3,7 @@ import IntoleranceProfileScreen from "../view/screens/IntoleranceProfileScreen";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { jwtDecode } from "jwt-decode";
+import useLoad from "../model/useLoad";
 
 const DislikeProfilePresenter = ({ navigation }) => {
   //Initialisations
@@ -17,10 +18,6 @@ const DislikeProfilePresenter = ({ navigation }) => {
   const screenType = "dislikeProfile";
 
   useEffect(() => {
-    getFoodTriggersFromEndpoint();
-  }, []);
-
-  useEffect(() => {
     const findUserToken = async () => {
       try {
         const token = await AsyncStorage.getItem("userToken");
@@ -33,24 +30,15 @@ const DislikeProfilePresenter = ({ navigation }) => {
   }, []);
 
   //State
-  const [foodTriggers, setFoodTriggers] = useState([]);
+  const [foodTriggers, isFoodTriggersLoading] = useLoad(foodTriggerEndpoint);
   const [userFoodTriggers, setUserFoodTriggers] = useState([]);
   const [userToken, setUserToken] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [filteredFoodTriggers, setFilteredFoodTriggers] = useState([
+    foodTriggers,
+  ]);
 
   //Handlers
-  const getFoodTriggersFromEndpoint = async () => {
-    try {
-      const response = await fetch(foodTriggerEndpoint, getFoodTriggersOptions);
-      if (response.ok) {
-        const result = await response.json();
-        setFoodTriggers(result);
-      }
-    } catch (error) {
-      Alert.alert(error);
-    }
-  };
-
   const onTriggerSelect = (selectedTrigger) => {
     setUserFoodTriggers([...userFoodTriggers, selectedTrigger]);
     if (!selectedItems.includes(selectedTrigger)) {
@@ -96,14 +84,22 @@ const DislikeProfilePresenter = ({ navigation }) => {
     });
   };
 
+  const handleSearchBarInput = (input) => {
+    const filteredTriggers = foodTriggers.filter((trigger) =>
+      trigger.triggerName.toLowerCase().includes(input.toLowerCase())
+    );
+    setFilteredFoodTriggers(filteredTriggers);
+  };
+
   //View
   return (
     <IntoleranceProfileScreen
-      foodTriggers={foodTriggers}
+      foodTriggers={filteredFoodTriggers}
       onTriggerSelect={onTriggerSelect}
       onNextPageSelect={onNextPageSelect}
       selectedItems={selectedItems}
       screenType={screenType}
+      onSearchBarInput={handleSearchBarInput}
     />
   );
 };

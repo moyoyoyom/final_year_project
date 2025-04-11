@@ -3,7 +3,7 @@ import Icons from "./Icons";
 
 const SearchField = ({
   value,
-  onSubmit,
+  onTextChange,
   customSearchFieldStyle,
   placeholderText,
 }) => {
@@ -13,7 +13,7 @@ const SearchField = ({
       <TextInput
         style={styles.inputStyle}
         value={value}
-        onSubmitEditing={onSubmit}
+        onChangeText={(value) => onTextChange(value)}
         placeholder={placeholderText}
       />
     </View>
@@ -23,9 +23,9 @@ const SearchField = ({
 const styles = StyleSheet.create({
   backgroundStyle: {
     backgroundColor: "white",
-    padding: 10,
+    paddingLeft: 10,
     borderRadius: 30,
-    height: "10%",
+    maxHeight: 20,
     width: 270,
     flex: 1,
     flexDirection: "row",

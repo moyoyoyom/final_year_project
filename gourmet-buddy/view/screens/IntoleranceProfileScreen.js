@@ -10,6 +10,7 @@ const IntoleranceProfileScreen = ({
   onNextPageSelect,
   selectedItems,
   screenType,
+  onSearchBarInput,
 }) => {
   //Initialisations
   const searchBarPlaceholder =
@@ -40,6 +41,7 @@ const IntoleranceProfileScreen = ({
       <SearchField
         customSearchFieldStyle={styles.searchFieldStyle}
         placeholderText={searchBarPlaceholder}
+        onTextChange={onSearchBarInput}
       />
       <TriggerList
         triggerFoods={foodTriggers}
