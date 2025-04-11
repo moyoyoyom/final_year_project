@@ -13,8 +13,10 @@ const FoodProductItem = ({ foodProduct, onSelect }) => {
           style={styles.imageStyle}
         />
       </View>
-      <View>
-        <Text style={styles.productInfo}>{foodProduct.product_name}</Text>
+      <View style={styles.textContainerStyle}>
+        <Text style={styles.productInfo}>
+          {foodProduct.brands} - {foodProduct.product_name}
+        </Text>
       </View>
       <Icons.ForwardIcon size={30} color={"#0B3007"} />
     </Pressable>
@@ -43,6 +45,9 @@ const styles = StyleSheet.create({
     minHeight: 70,
     minWidth: 70,
     borderRadius: 10,
+  },
+  textContainerStyle: {
+    width: "50%",
   },
 });
 

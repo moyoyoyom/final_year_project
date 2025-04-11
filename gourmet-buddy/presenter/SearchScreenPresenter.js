@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SearchScreen from "../view/screens/SearchScreen";
 import API from "../model/API";
 import CameraScreen from "../view/screens/CameraScreen";
@@ -9,21 +9,7 @@ import useLoad from "../model/useLoad";
 import { AuthenticationContext } from "../model/AuthenicationContext";
 
 const SearchScreenPresenter = ({ navigation }) => {
-  //Initialisations
-  const foodProducts = [
-    {
-      productID: 0,
-      productName: "Nutella",
-    },
-    {
-      productID: 1,
-      productName: "Pizza",
-    },
-    {
-      productID: 2,
-      productName: "Ice cream",
-    },
-  ];
+  //Initalisations
   const { user } = useContext(AuthenticationContext);
   const historyEndpoint = `http://192.168.1.253:8090/api/history/recent/${user.userID}`;
 
@@ -33,12 +19,18 @@ const SearchScreenPresenter = ({ navigation }) => {
   const [scanned, setScanned] = useState(false);
   const [hasPermissionBeenGranted, setHasPermissionBeenGranted] =
     useCameraPermissions();
-  const [userHistory, isUserHistoryLoading, loadUserHistory] =
-    useLoad(historyEndpoint);
+  const [userHistory, isUserHistoryLoading] = useLoad(historyEndpoint);
 
-  const viewedFoodProducts = userHistory.map(
-    (foodProduct) => foodProduct.foodProduct
-  );
+  const [historicFoodProducts, setHistoricFoodProducts] = useState([]);
+
+  useEffect(() => {
+    if (isUserHistoryLoading) return;
+    const viewedFoodProducts = userHistory.map(
+      (foodProduct) => foodProduct.foodProduct
+    );
+
+    setHistoricFoodProducts(viewedFoodProducts);
+  }, [userHistory, isUserHistoryLoading]);
 
   //Handlers
   const handleSubmit = (newValue) => {
@@ -87,6 +79,11 @@ const SearchScreenPresenter = ({ navigation }) => {
     });
   };
 
+  const handleReverseList = () => {
+    const reversedList = [...historicFoodProducts].reverse();
+    setHistoricFoodProducts(reversedList);
+  };
+
   //View
   return (
     <Screen>
@@ -101,7 +98,7 @@ const SearchScreenPresenter = ({ navigation }) => {
           searchInputValue={searchValue}
           onScanButtonClick={onScanButtonClick}
           onReturnClick={handleReturnClick}
-          foodProducts={viewedFoodProducts}
+          foodProducts={historicFoodProducts}
           onSelect={handleFoodProductSelect}
         />
       )}
