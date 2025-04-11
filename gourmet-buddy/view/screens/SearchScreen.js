@@ -14,23 +14,8 @@ const SearchScreen = ({
   searchInputValue,
   onScanButtonClick,
   onReturnClick,
+  foodProducts,
 }) => {
-  //DELETE THIS DUMMY DATA LATER
-  const foodProducts = [
-    {
-      productID: 0,
-      productName: "Vegetable Oil",
-    },
-    {
-      productID: 1,
-      productName: "Pizza",
-    },
-    {
-      productID: 2,
-      productName: "Ice cream",
-    },
-  ];
-
   //View
   return (
     <Screen>

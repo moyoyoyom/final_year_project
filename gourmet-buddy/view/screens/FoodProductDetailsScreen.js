@@ -5,6 +5,7 @@ import Header from "../UI/components/Header";
 import IconTray from "../UI/components/IconTray";
 import FormattedIngredientText from "../UI/components/FormattedIngredientText";
 import Icons from "../UI/components/Icons";
+import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
 
 const FoodProductDetailsScreen = ({
   foodProduct,
@@ -61,6 +62,7 @@ const FoodProductDetailsScreen = ({
           <Text> Missing information </Text>
         )}
       </View>
+      <NavigationBarPresenter />
     </Screen>
   );
 };

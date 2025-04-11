@@ -6,7 +6,23 @@ import Screen from "../view/UI/layout/Screen";
 import { Camera, useCameraPermissions } from "expo-camera";
 import { Alert } from "react-native";
 
-const SearchFieldPresenter = ({ navigation }) => {
+const SearchScreenPresenter = ({ navigation }) => {
+  //Initialisations
+  const foodProducts = [
+    {
+      productID: 0,
+      productName: "Nutella",
+    },
+    {
+      productID: 1,
+      productName: "Pizza",
+    },
+    {
+      productID: 2,
+      productName: "Ice cream",
+    },
+  ];
+
   //State
   const [searchValue, setSearchValue] = useState(" ");
   const [isScanning, setIsScanning] = useState(false);
@@ -69,10 +85,11 @@ const SearchFieldPresenter = ({ navigation }) => {
           searchInputValue={searchValue}
           onScanButtonClick={onScanButtonClick}
           onReturnClick={handleReturnClick}
+          foodProducts={foodProducts}
         />
       )}
     </Screen>
   );
 };
 
-export default SearchFieldPresenter;
+export default SearchScreenPresenter;
