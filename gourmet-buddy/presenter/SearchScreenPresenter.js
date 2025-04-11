@@ -100,6 +100,7 @@ const SearchScreenPresenter = ({ navigation }) => {
           onReturnClick={handleReturnClick}
           foodProducts={historicFoodProducts}
           onSelect={handleFoodProductSelect}
+          onReverseClick={handleReverseList}
         />
       )}
     </Screen>
