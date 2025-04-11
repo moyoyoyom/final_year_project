@@ -26,6 +26,10 @@ const SortAscending = ({ color, size }) => (
   <MaterialCommunityIcons name="sort-ascending" size={size} color={color} />
 );
 
+const SortDescending = ({ color, size }) => (
+  <MaterialCommunityIcons name="sort-descending" size={size} color={color} />
+);
+
 const ExploreIcon = ({ color, size }) => (
   <Ionicons name="compass-outline" size={size} color={color} />
 );
@@ -73,6 +77,7 @@ Icons.ForwardIcon = ForwardIcon;
 Icons.MenuOptionsIcon = MenuOptionsIcon;
 Icons.CameraIcon = CameraIcon;
 Icons.SortAscending = SortAscending;
+Icons.SortDescending = SortDescending;
 Icons.DefaultImage = DefaultImage;
 Icons.ExploreIcon = ExploreIcon;
 Icons.SearchIcon = SearchIcon;

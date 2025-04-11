@@ -17,6 +17,7 @@ const SearchScreen = ({
   foodProducts,
   onSelect,
   onReverseClick,
+  reversed,
 }) => {
   //View
   return (
@@ -51,8 +52,14 @@ const SearchScreen = ({
         <Button
           buttonStyle={styles.mostRecentButtonStyle}
           labelStyle={styles.mostRecentButtonLabelStyle}
-          buttonText="Most recent"
-          buttonIcon={<Icons.SortAscending size={20} />}
+          buttonText={reversed ? "Least recent" : "Most recent"}
+          buttonIcon={
+            reversed ? (
+              <Icons.SortDescending size={20} />
+            ) : (
+              <Icons.SortAscending size={20} />
+            )
+          }
           onClick={onReverseClick}
         />
       </View>

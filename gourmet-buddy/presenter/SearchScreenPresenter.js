@@ -22,6 +22,7 @@ const SearchScreenPresenter = ({ navigation }) => {
   const [userHistory, isUserHistoryLoading] = useLoad(historyEndpoint);
 
   const [historicFoodProducts, setHistoricFoodProducts] = useState([]);
+  const [hasListBeenReversed, setHasListBeenReversed] = useState(false);
 
   useEffect(() => {
     if (isUserHistoryLoading) return;
@@ -82,6 +83,7 @@ const SearchScreenPresenter = ({ navigation }) => {
   const handleReverseList = () => {
     const reversedList = [...historicFoodProducts].reverse();
     setHistoricFoodProducts(reversedList);
+    setHasListBeenReversed(!hasListBeenReversed);
   };
 
   //View
@@ -101,6 +103,7 @@ const SearchScreenPresenter = ({ navigation }) => {
           foodProducts={historicFoodProducts}
           onSelect={handleFoodProductSelect}
           onReverseClick={handleReverseList}
+          reversed={hasListBeenReversed}
         />
       )}
     </Screen>
