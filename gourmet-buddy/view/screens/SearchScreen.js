@@ -14,23 +14,11 @@ const SearchScreen = ({
   searchInputValue,
   onScanButtonClick,
   onReturnClick,
+  foodProducts,
+  onSelect,
+  onReverseClick,
+  reversed,
 }) => {
-  //DELETE THIS DUMMY DATA LATER
-  const foodProducts = [
-    {
-      productID: 0,
-      productName: "Vegetable Oil",
-    },
-    {
-      productID: 1,
-      productName: "Pizza",
-    },
-    {
-      productID: 2,
-      productName: "Ice cream",
-    },
-  ];
-
   //View
   return (
     <Screen>
@@ -64,11 +52,18 @@ const SearchScreen = ({
         <Button
           buttonStyle={styles.mostRecentButtonStyle}
           labelStyle={styles.mostRecentButtonLabelStyle}
-          buttonText="Most recent"
-          buttonIcon={<Icons.SortAscending size={20} />}
+          buttonText={reversed ? "Least recent" : "Most recent"}
+          buttonIcon={
+            reversed ? (
+              <Icons.SortDescending size={20} />
+            ) : (
+              <Icons.SortAscending size={20} />
+            )
+          }
+          onClick={onReverseClick}
         />
       </View>
-      <FoodProductList foodProducts={foodProducts} />
+      <FoodProductList foodProducts={foodProducts} onSelect={onSelect} />
       <NavigationBarPresenter />
     </Screen>
   );

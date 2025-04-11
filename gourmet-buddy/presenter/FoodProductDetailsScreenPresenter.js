@@ -11,13 +11,12 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   const { foodProduct } = route.params;
   const userSensitivitiesEndpoint = `http://192.168.1.253:8090/api/relationships/cannoteat/${user.userID}`;
   const saveRatingEndpoint = "http://192.168.1.253:8090/api/rating/save";
-  const likeProductEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.result.code}/LIKED`;
-  const ratingEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.result.code}`;
+  const likeProductEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.code}/LIKED`;
+  const ratingEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.code}`;
+  const saveHistoryEndpoint = `http://192.168.1.253:8090/api/history/save`;
 
   //State
-  const [userSensitivities, isUserSensitivitiesLoading] = useLoad(
-    userSensitivitiesEndpoint
-  );
+  const [userSensitivities] = useLoad(userSensitivitiesEndpoint);
   const [likeStatus, isLikeStatusLoading, loadLikeStatus] = useLoad(
     `${ratingEndpoint}/LIKED`
   );
@@ -41,6 +40,21 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
     }
   }, [saveStatus]);
 
+  useEffect(() => {
+    const saveHistory = async () => {
+      const viewedProductHistory = {
+        user: {
+          userID: user.userID,
+        },
+        foodProduct: {
+          code: foodProduct.code,
+        },
+      };
+      await API.post(saveHistoryEndpoint, viewedProductHistory);
+    };
+    saveHistory(), [];
+  });
+
   const formattedSensitivities = userSensitivities.map(
     (trigger) => trigger.triggerName
   );
@@ -59,7 +73,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
         userID: user.userID,
       },
       foodProduct: {
-        code: foodProduct.result.code,
+        code: foodProduct.code,
       },
       rating: "LIKED",
     };
@@ -93,7 +107,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
         userID: user.userID,
       },
       foodProduct: {
-        code: foodProduct.result.code,
+        code: foodProduct.code,
       },
       rating: "SAVED",
     };

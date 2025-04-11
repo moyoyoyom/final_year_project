@@ -1,18 +1,37 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SearchScreen from "../view/screens/SearchScreen";
 import API from "../model/API";
 import CameraScreen from "../view/screens/CameraScreen";
 import Screen from "../view/UI/layout/Screen";
 import { Camera, useCameraPermissions } from "expo-camera";
 import { Alert } from "react-native";
+import useLoad from "../model/useLoad";
+import { AuthenticationContext } from "../model/AuthenicationContext";
 
-const SearchFieldPresenter = ({ navigation }) => {
+const SearchScreenPresenter = ({ navigation }) => {
+  //Initalisations
+  const { user } = useContext(AuthenticationContext);
+  const historyEndpoint = `http://192.168.1.253:8090/api/history/recent/${user.userID}`;
+
   //State
   const [searchValue, setSearchValue] = useState(" ");
   const [isScanning, setIsScanning] = useState(false);
   const [scanned, setScanned] = useState(false);
   const [hasPermissionBeenGranted, setHasPermissionBeenGranted] =
     useCameraPermissions();
+  const [userHistory, isUserHistoryLoading] = useLoad(historyEndpoint);
+
+  const [historicFoodProducts, setHistoricFoodProducts] = useState([]);
+  const [hasListBeenReversed, setHasListBeenReversed] = useState(false);
+
+  useEffect(() => {
+    if (isUserHistoryLoading) return;
+    const viewedFoodProducts = userHistory.map(
+      (foodProduct) => foodProduct.foodProduct
+    );
+
+    setHistoricFoodProducts(viewedFoodProducts);
+  }, [userHistory, isUserHistoryLoading]);
 
   //Handlers
   const handleSubmit = (newValue) => {
@@ -27,7 +46,7 @@ const SearchFieldPresenter = ({ navigation }) => {
     );
     if (response.isSuccess) {
       navigation.navigate("FoodProductDetailsScreen", {
-        foodProduct: response,
+        foodProduct: response.result,
       });
     }
     setIsScanning(false);
@@ -55,6 +74,18 @@ const SearchFieldPresenter = ({ navigation }) => {
     navigation.goBack();
   };
 
+  const handleFoodProductSelect = (foodProduct) => {
+    navigation.navigate("FoodProductDetailsScreen", {
+      foodProduct: foodProduct,
+    });
+  };
+
+  const handleReverseList = () => {
+    const reversedList = [...historicFoodProducts].reverse();
+    setHistoricFoodProducts(reversedList);
+    setHasListBeenReversed(!hasListBeenReversed);
+  };
+
   //View
   return (
     <Screen>
@@ -69,10 +100,14 @@ const SearchFieldPresenter = ({ navigation }) => {
           searchInputValue={searchValue}
           onScanButtonClick={onScanButtonClick}
           onReturnClick={handleReturnClick}
+          foodProducts={historicFoodProducts}
+          onSelect={handleFoodProductSelect}
+          onReverseClick={handleReverseList}
+          reversed={hasListBeenReversed}
         />
       )}
     </Screen>
   );
 };
 
-export default SearchFieldPresenter;
+export default SearchScreenPresenter;

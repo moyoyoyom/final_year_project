@@ -16,13 +16,13 @@ const LearnMoreScreen = ({ foodProduct, onBackClick, pros, cons }) => {
       />
       <View style={styles.titleRowLayout}>
         <Image
-          source={{ uri: foodProduct.result.image_url }}
+          source={{ uri: foodProduct.image_url }}
           style={styles.imageStyling}
         />
         <View style={styles.productInfoPaneStyle}>
           <Text style={styles.titleStyle}>
-            {foodProduct.result.brands} {foodProduct.result.product_name} -{" "}
-            {foodProduct.result.quantity}
+            {foodProduct.brands} {foodProduct.product_name} -{" "}
+            {foodProduct.quantity}
           </Text>
         </View>
       </View>

@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import Icons from "../UI/components/Icons";
 
 const FoodProductItem = ({ foodProduct, onSelect }) => {
@@ -8,11 +8,14 @@ const FoodProductItem = ({ foodProduct, onSelect }) => {
       style={styles.pressableItemStyle}
     >
       <View style={styles.productImageStyle}>
-        <Icons.DefaultImage size={30} color={"#0B3007"} />
+        <Image
+          source={{ uri: foodProduct.image_url }}
+          style={styles.imageStyle}
+        />
       </View>
-      <View>
+      <View style={styles.textContainerStyle}>
         <Text style={styles.productInfo}>
-          {foodProduct.productID} {foodProduct.productName}
+          {foodProduct.brands} - {foodProduct.product_name}
         </Text>
       </View>
       <Icons.ForwardIcon size={30} color={"#0B3007"} />
@@ -26,7 +29,7 @@ const styles = StyleSheet.create({
     margin: 5,
     flex: 1,
     flexDirection: "row",
-    height: 70,
+    height: 90,
     borderRadius: 20,
     justifyContent: "space-between",
     width: "95%",
@@ -36,7 +39,15 @@ const styles = StyleSheet.create({
     color: "#0B3007",
   },
   productImageStyle: {
-    marginLeft: 20,
+    marginLeft: 10,
+  },
+  imageStyle: {
+    minHeight: 70,
+    minWidth: 70,
+    borderRadius: 10,
+  },
+  textContainerStyle: {
+    width: "50%",
   },
 });
 

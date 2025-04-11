@@ -8,7 +8,7 @@ const FoodProductList = ({ foodProducts, onSelect }) => {
       {foodProducts.map((foodProduct) => {
         return (
           <FoodProductItem
-            key={foodProduct.productID}
+            key={foodProduct.code}
             foodProduct={foodProduct}
             onSelect={onSelect}
           />

@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 const Button = ({
   buttonText,
@@ -8,13 +8,13 @@ const Button = ({
   buttonStyle,
 }) => {
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={onClick}
       style={[styles.defaultButtonStyle, buttonStyle]}
     >
       {buttonIcon ? buttonIcon : null}
       <Text style={[styles.defaultLabelStyle, labelStyle]}> {buttonText}</Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

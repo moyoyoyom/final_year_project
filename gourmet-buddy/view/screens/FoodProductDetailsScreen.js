@@ -5,6 +5,7 @@ import Header from "../UI/components/Header";
 import IconTray from "../UI/components/IconTray";
 import FormattedIngredientText from "../UI/components/FormattedIngredientText";
 import Icons from "../UI/components/Icons";
+import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
 
 const FoodProductDetailsScreen = ({
   foodProduct,
@@ -27,13 +28,13 @@ const FoodProductDetailsScreen = ({
       />
       <View style={styles.titleRowLayout}>
         <Image
-          source={{ uri: foodProduct.result.image_url }}
+          source={{ uri: foodProduct.image_url }}
           style={styles.imageStyling}
         />
         <View style={styles.productInfoPaneStyle}>
           <Text style={styles.titleStyle}>
-            {foodProduct.result.brands} {foodProduct.result.product_name} -{" "}
-            {foodProduct.result.quantity}
+            {foodProduct.brands} {foodProduct.product_name} -{" "}
+            {foodProduct.quantity}
           </Text>
           <IconTray
             likeStatus={likeStatus}
@@ -51,9 +52,9 @@ const FoodProductDetailsScreen = ({
       </View>
       <View style={styles.ingredientsInfoPaneStyle}>
         <Text style={styles.titleStyle}>Ingredients:</Text>
-        {foodProduct.result.ingredients_text ? (
+        {foodProduct.ingredients_text ? (
           <FormattedIngredientText
-            ingredientText={foodProduct.result.ingredients_text}
+            ingredientText={foodProduct.ingredients_text}
             highlightStyle={styles.sensitivityHighlightStyle}
             keyIngredients={userSensitivities}
           />
@@ -61,6 +62,7 @@ const FoodProductDetailsScreen = ({
           <Text> Missing information </Text>
         )}
       </View>
+      <NavigationBarPresenter />
     </Screen>
   );
 };
