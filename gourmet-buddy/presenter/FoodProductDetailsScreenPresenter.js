@@ -15,9 +15,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   const ratingEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.result.code}`;
 
   //State
-  const [userSensitivities, isUserSensitivitiesLoading] = useLoad(
-    userSensitivitiesEndpoint
-  );
+  const [userSensitivities] = useLoad(userSensitivitiesEndpoint);
   const [likeStatus, isLikeStatusLoading, loadLikeStatus] = useLoad(
     `${ratingEndpoint}/LIKED`
   );
