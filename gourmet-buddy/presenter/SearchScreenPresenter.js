@@ -53,7 +53,7 @@ const SearchScreenPresenter = ({ navigation }) => {
     );
     if (response.isSuccess) {
       navigation.navigate("FoodProductDetailsScreen", {
-        foodProduct: response,
+        foodProduct: response.result,
       });
     }
     setIsScanning(false);
