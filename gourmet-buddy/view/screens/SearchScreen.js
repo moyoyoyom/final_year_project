@@ -63,7 +63,11 @@ const SearchScreen = ({
           onClick={onReverseClick}
         />
       </View>
-      <FoodProductList foodProducts={foodProducts} onSelect={onSelect} />
+      {foodProducts.length > 0 ? (
+        <FoodProductList foodProducts={foodProducts} onSelect={onSelect} />
+      ) : (
+        <Text>No recent history</Text>
+      )}
       <NavigationBarPresenter />
     </Screen>
   );

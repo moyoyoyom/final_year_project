@@ -10,6 +10,7 @@ const IntoleranceProfileScreen = ({
   onNextPageSelect,
   selectedItems,
   screenType,
+  onSearchBarInput,
 }) => {
   //Initialisations
   const searchBarPlaceholder =
@@ -40,6 +41,7 @@ const IntoleranceProfileScreen = ({
       <SearchField
         customSearchFieldStyle={styles.searchFieldStyle}
         placeholderText={searchBarPlaceholder}
+        onTextChange={onSearchBarInput}
       />
       <TriggerList
         triggerFoods={foodTriggers}
@@ -58,7 +60,7 @@ const IntoleranceProfileScreen = ({
 
 const styles = StyleSheet.create({
   screenTitle: {
-    paddingTop: 30,
+    paddingTop: 50,
     paddingBottom: 15,
     fontSize: 30,
     fontWeight: 500,

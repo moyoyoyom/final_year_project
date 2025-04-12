@@ -10,7 +10,9 @@ import { AuthenticationContext } from "../model/AuthenicationContext";
 
 const SearchScreenPresenter = ({ navigation }) => {
   //Initalisations
-  const { user } = useContext(AuthenticationContext);
+  const { user, isUserLoading } = useContext(AuthenticationContext);
+  if (isUserLoading || user === null) return;
+  console.log("User details: ", user);
   const historyEndpoint = `http://192.168.1.253:8090/api/history/recent/${user.userID}`;
 
   //State
@@ -31,6 +33,7 @@ const SearchScreenPresenter = ({ navigation }) => {
     );
 
     setHistoricFoodProducts(viewedFoodProducts);
+    console.log(historicFoodProducts);
   }, [userHistory, isUserHistoryLoading]);
 
   //Handlers

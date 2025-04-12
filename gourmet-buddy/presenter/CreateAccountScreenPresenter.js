@@ -1,10 +1,12 @@
 import { Alert } from "react-native";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AuthenticationScreen from "../view/UI/layout/generalScreen/AuthenticationScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthenticationContext } from "../model/AuthenicationContext";
 
 const CreateAccountScreenPresenter = ({ navigation }) => {
   //Initialisations
+  const { loginUser } = useContext(AuthenticationContext);
   const authenticationType = "SignUp";
 
   const userEndpoint =
