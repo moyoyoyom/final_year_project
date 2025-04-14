@@ -5,7 +5,7 @@ const ProfileItem = ({ itemText, icon }) => {
   return (
     <View>
       <View style={styles.lineStyle}>
-        <View>{icon}</View>
+        <View style={styles.iconStyle}>{icon}</View>
         <Text style={styles.textStyle}>{itemText}</Text>
       </View>
       <Divider customDividerStyle={styles.dividerStyle} />
@@ -21,16 +21,15 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: 16,
     marginLeft: 10,
-    marginBottom: 5,
-    marginTop: 5,
+    marginBottom: 8,
+    marginTop: 8,
   },
   lineStyle: {
     flexDirection: "row",
     alignItems: "center",
   },
   iconStyle: {
-    height: 20,
-    width: 20,
+    marginLeft: 10,
   },
 });
 

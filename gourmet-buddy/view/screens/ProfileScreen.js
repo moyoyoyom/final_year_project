@@ -13,7 +13,7 @@ const ProfileScreen = ({ onLogoutPress }) => {
   return (
     <Screen>
       <Header />
-      <Text>{user.sub}</Text>
+      <Text style={styles.usernameStyle}>{user.sub}</Text>
       <ProfileItem
         itemText={"Personal Details"}
         icon={<Icons.ProfileIcon size={24} />}
@@ -45,6 +45,12 @@ const ProfileScreen = ({ onLogoutPress }) => {
 const styles = StyleSheet.create({
   centering: {
     padding: 50,
+  },
+  usernameStyle: {
+    fontSize: 20,
+    fontWeight: 600,
+    marginTop: 100,
+    marginBottom: 200,
   },
 });
 
