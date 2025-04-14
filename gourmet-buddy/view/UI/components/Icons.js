@@ -67,8 +67,16 @@ const SaveIcon = ({ color, size, onPress }) => (
   />
 );
 
+const SettingsIcon = ({ color, size }) => (
+  <Ionicons name="cog" size={size} color={color} />
+);
+
 const FilledSaveIcon = ({ color, size, onPress }) => (
   <Ionicons name="bookmark" size={size} color={color} onPress={onPress} />
+);
+
+const FoodIcon = ({ color, size }) => (
+  <Ionicons name="fast-food-outline" size={size} color={color} />
 );
 
 //Compose
@@ -88,5 +96,7 @@ Icons.BuyIcon = BuyIcon;
 Icons.SaveIcon = SaveIcon;
 Icons.FilledHeartIcon = FilledHeartIcon;
 Icons.FilledSaveIcon = FilledSaveIcon;
+Icons.SettingsIcon = SettingsIcon;
+Icons.FoodIcon = FoodIcon;
 
 export default Icons;

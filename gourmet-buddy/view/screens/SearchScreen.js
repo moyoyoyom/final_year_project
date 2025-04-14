@@ -37,7 +37,6 @@ const SearchScreen = ({
             customSearchFieldStyle={styles.customSearchFieldStyle}
           />
         }
-        rightItem={<Icons.MenuOptionsIcon color={"#FFDC7A"} size={30} />}
       />
       <Button
         onClick={onScanButtonClick}
@@ -108,6 +107,11 @@ const styles = StyleSheet.create({
   },
   dividerSpacing: {
     marginBottom: 15,
+  },
+  customSearchFieldStyle: {
+    minHeight: 35,
+    marginRight: 30,
+    width: 300,
   },
 });
 
