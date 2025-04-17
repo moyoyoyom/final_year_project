@@ -1,6 +1,9 @@
 package com.project.final_year_project.model.java.API;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,5 +25,10 @@ public class FoodProductController {
     @GetMapping("barcode/{barcode}")
     public FoodProduct getFoodProductByBarcode(@PathVariable("barcode") String barcode) {
         return foodProductService.getFoodProductByBarcode(barcode);
+    }
+
+    @GetMapping("recommendations/{userID}")
+    public ResponseEntity<List<FoodProduct>> getUserFoodProductRecommendations(@PathVariable("userID") Long userID) {
+        return ResponseEntity.ok(foodProductService.getUserRecommendations(userID), 10);
     }
 }

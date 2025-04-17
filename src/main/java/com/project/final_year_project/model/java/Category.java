@@ -22,25 +22,25 @@ import lombok.Setter;
 @Setter
 @Data
 @Entity
-@Table(name = "Keyword")
-public class Keyword {
+@Table(name = "Category")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer keywordID;
+    private Integer categoryID;
 
     @Column(unique = true)
-    private String keywordText;
+    private String categoryText;
 
-    @ManyToMany(mappedBy = "keywords")
+    @ManyToMany(mappedBy = "categories")
     @JsonIgnore
-    private List<FoodProduct> foodProducts;
+    private List<FoodProduct> categories;
 
-    public Keyword(String keywordText) {
-        this.keywordText = keywordText;
+    public Category(String categoryText) {
+        this.categoryText = categoryText;
     }
 
     @JsonCreator
-    public static Keyword fromString(String keywordText) {
-        return new Keyword(keywordText);
+    public static Category fromString(String categoryText) {
+        return new Category(categoryText);
     }
 }
