@@ -29,6 +29,6 @@ public class FoodProductController {
 
     @GetMapping("recommendations/{userID}")
     public ResponseEntity<List<FoodProduct>> getUserFoodProductRecommendations(@PathVariable("userID") Long userID) {
-        return ResponseEntity.ok(foodProductService.getUserRecommendations(userID), 10);
+        return ResponseEntity.ok(foodProductService.getUserRecommendations(userID, 10));
     }
 }

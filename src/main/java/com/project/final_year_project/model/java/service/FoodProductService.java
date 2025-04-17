@@ -50,7 +50,7 @@ public class FoodProductService {
     }
 
     public List<FoodProduct> getUserRecommendations(Long userID, int numberOfRecommendations) {
-        List<UserFoodProductRating> userFoodProductRatings = userFoodProductRatingRepository.findByIdUserID(userID);
+        List<UserFoodProductRating> userFoodProductRatings = userFoodProductRatingRepository.findByUserUserID(userID);
         Set<String> ratedFoodProductIDs = userFoodProductRatings.stream()
                 .map(userFoodProductRating -> userFoodProductRating.getFoodProduct().getCode())
                 .collect(Collectors.toSet());

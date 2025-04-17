@@ -10,6 +10,6 @@ import com.project.final_year_project.model.java.UserFoodProductRatingID;
 
 @Repository
 public interface UserFoodProductRatingRepository extends JpaRepository<UserFoodProductRating, UserFoodProductRatingID> {
-    List<UserFoodProductRating> findByIdUserID(Long userID);
+    List<UserFoodProductRating> findByUserUserID(Long userID);
 
 }
