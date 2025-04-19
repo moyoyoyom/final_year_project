@@ -28,21 +28,26 @@ public class FoodProductUpdateService {
     private final StagingFoodProductRepository stagingFoodProductRepository;
     private final CategoryRepository categoryRepository;
     private final KeywordRepository keywordRepository;
+    private final StagingFoodProductService stagingFoodProductService;
     private final ObjectMapper objectMapper;
 
     @Autowired
     public FoodProductUpdateService(FoodProductRepository foodProductRepository,
             StagingFoodProductRepository stagingFoodProductRepository, CategoryRepository categoryRepository,
-            KeywordRepository keywordRepository, ObjectMapper objectMapper) {
+            KeywordRepository keywordRepository, StagingFoodProductService stagingFoodProductService,
+            ObjectMapper objectMapper) {
         this.foodProductRepository = foodProductRepository;
         this.stagingFoodProductRepository = stagingFoodProductRepository;
         this.categoryRepository = categoryRepository;
         this.keywordRepository = keywordRepository;
+        this.stagingFoodProductService = stagingFoodProductService;
         this.objectMapper = objectMapper;
     }
 
     @Transactional
     public void updateFoodProductsFromStagingTable() {
+        stagingFoodProductService.populateTableWithCSV("foodproducts.csv");
+
         List<StagingFoodProduct> allStagedFoodProducts = stagingFoodProductRepository.findAll();
         allStagedFoodProducts.stream().forEach(
                 stagedFoodProduct -> {
