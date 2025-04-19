@@ -33,11 +33,11 @@ public class FoodProduct {
     private String code;
 
     @JsonProperty("product_name")
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String productName;
 
     @JsonProperty("ingredients_text")
-    @Column(length = 800)
+    @Column(columnDefinition = "TEXT")
     private String ingredientsText;
 
     @JsonProperty("nutriments")

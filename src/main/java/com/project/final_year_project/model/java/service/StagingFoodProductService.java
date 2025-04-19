@@ -55,6 +55,7 @@ public class StagingFoodProductService {
                     }
                 }
                 linesRead++;
+                System.out.println(linesRead);
             }
 
             if (!stagedFoodProductBatch.isEmpty()) {

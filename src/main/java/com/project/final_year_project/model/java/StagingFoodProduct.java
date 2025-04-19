@@ -20,27 +20,27 @@ public class StagingFoodProduct {
     @Id
     private String code;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String brands;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String imageUrl;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String ingredientsText;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String keywords;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String nutrtionalInformation;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String productName;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String quantity;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String categories;
 }
