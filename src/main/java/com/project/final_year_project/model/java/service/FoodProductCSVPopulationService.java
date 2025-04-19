@@ -16,7 +16,7 @@ import com.opencsv.CSVWriter;
 
 @Service
 public class FoodProductCSVPopulationService {
-    private static final String RAW_INPUT_FILE = "en.openfoodfacts.org.products.json.gz";
+    private static final String RAW_INPUT_FILE = "openfoodfacts-products.jsonl.gz";
     private static final String FOOD_PRODUCT_CSV_FILE = "foodproducts.csv";
 
     // Writes the CSV file with the raw data for the Food Product Table
