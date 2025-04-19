@@ -23,6 +23,8 @@ public class FileDownloader {
         if (!foodProductFile.exists()) {
             System.out.println("openfoodfacts-products.jsonl.gz not found");
             downloadFoodProductFile();
+        } else {
+            System.out.println("openfoodfacts-products.jsonl.gz was found");
         }
     }
 
