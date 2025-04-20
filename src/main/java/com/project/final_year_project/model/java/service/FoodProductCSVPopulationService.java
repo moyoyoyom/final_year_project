@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
 import org.springframework.stereotype.Service;
@@ -50,7 +53,10 @@ public class FoodProductCSVPopulationService {
 
                         String code = node.path("code").asText("");
                         String brands = node.path("brands").asText("");
-                        String imageUrl = node.path("image_url").asText("");
+
+                        String barcodePath = convertBarcodeToPath(code);
+                        String imageUrl = constructImageUrl(barcodePath, node);
+
                         String ingredientsText = node.path("ingredients_text").asText("");
                         String nutritionalInformation = node.path("nutriments").toString();
                         String productName = node.path("product_name").asText("");
@@ -60,7 +66,7 @@ public class FoodProductCSVPopulationService {
                         JsonNode keywordsNode = node.path("_keywords");
                         String keywords = objectMapper.writeValueAsString(keywordsNode);
 
-                        String[] csvRow = { code, brands, imageUrl, ingredientsText, keywords, keywords,
+                        String[] csvRow = { code, brands, imageUrl, ingredientsText, keywords,
                                 nutritionalInformation, productName, quantity, categories };
                         csvFileWriter.writeNext(csvRow);
 
@@ -82,4 +88,53 @@ public class FoodProductCSVPopulationService {
         return foodProductCSV.exists();
     }
 
+    public String convertBarcodeToPath(String barcode) {
+        if (barcode.length() == 8) {
+            return String.format("%013d", Long.parseLong(barcode));
+        } else if (barcode.length() == 13) {
+            String firstPart = barcode.substring(0, 3);
+            String secondPart = barcode.substring(3, 6);
+            String thirdPart = barcode.substring(6, 9);
+            String fourthPart = barcode.substring(9, 12);
+            String fifthPart = barcode.substring(12, 13);
+
+            return firstPart + "/" + secondPart + "/" + thirdPart + "/" + fourthPart + fifthPart + "/";
+        }
+        return barcode;
+
+        /*
+         * StringBuilder path = new StringBuilder();
+         * 
+         * for (int count = 0; count < barcode.length(); count += 3) {
+         * int end = Math.min(count + 3, barcode.length());
+         * path.append(barcode.substring(count, end)).append("/");
+         * }
+         * 
+         * return path.toString();
+         */
+    }
+
+    public String constructImageUrl(String barcodePath, JsonNode foodProductNode) {
+        JsonNode imageNode = foodProductNode.path("images");
+        List<String> sizes = List.of("400", "full", "100");
+
+        for (Iterator<Map.Entry<String, JsonNode>> imageFieldsIterator = imageNode.fields(); imageFieldsIterator
+                .hasNext();) {
+            Map.Entry<String, JsonNode> imageFieldsMapEntry = imageFieldsIterator.next();
+            String imageKey = imageFieldsMapEntry.getKey();
+            JsonNode info = imageFieldsMapEntry.getValue();
+
+            String rev = info.path("rev").asText(null);
+
+            if (rev != null) {
+                for (String size : sizes) {
+                    if (info.path("sizes").has(size)) {
+                        return "https://images.openfoodfacts.org/images/products/"
+                                + barcodePath + imageKey + "." + rev + "." + size + ".jpg";
+                    }
+                }
+            }
+        }
+        return "";
+    }
 }

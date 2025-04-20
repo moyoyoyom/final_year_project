@@ -40,10 +40,9 @@ public class StagingFoodProductService {
                     stagedFoodProduct.setCode(nextFoodProductLine[0]);
                     stagedFoodProduct.setBrands(nextFoodProductLine[1]);
                     stagedFoodProduct.setImageUrl(nextFoodProductLine[2]);
-                    stagedFoodProduct.setIngredientsText(nextFoodProductLine[3]);
+                    stagedFoodProduct.setProductName(nextFoodProductLine[3]);
                     stagedFoodProduct.setKeywords(nextFoodProductLine[4]);
-                    stagedFoodProduct.setNutrtionalInformation(nextFoodProductLine[5]);
-                    stagedFoodProduct.setProductName(nextFoodProductLine[6]);
+                    stagedFoodProduct.setNutrtionalInformation(nextFoodProductLine[6]);
                     stagedFoodProduct.setQuantity(nextFoodProductLine[7]);
                     stagedFoodProduct.setQuantity(nextFoodProductLine[8]);
 
