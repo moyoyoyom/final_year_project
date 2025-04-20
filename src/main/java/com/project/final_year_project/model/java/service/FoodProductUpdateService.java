@@ -80,7 +80,7 @@ public class FoodProductUpdateService {
 
             String existingNutritionalInformation = objectMapper
                     .writeValueAsString(existingFoodProduct.getNutritionalInformation());
-            return !Objects.equals(existingNutritionalInformation, stagingFoodProduct.getNutrtionalInformation());
+            return !Objects.equals(existingNutritionalInformation, stagingFoodProduct.getNutritionalInformation());
         } catch (Exception exception) {
             System.out.println("Caught exception: " + exception);
             return true;
@@ -98,7 +98,7 @@ public class FoodProductUpdateService {
 
         try {
             NutritionalInformation nutritionalInformation = objectMapper
-                    .readValue(stagedFoodProduct.getNutrtionalInformation(), NutritionalInformation.class);
+                    .readValue(stagedFoodProduct.getNutritionalInformation(), NutritionalInformation.class);
             foodProduct.setNutritionalInformation(nutritionalInformation);
         } catch (Exception exception) {
 

@@ -33,7 +33,7 @@ public class StagingFoodProduct {
     private String keywords;
 
     @Column(columnDefinition = "TEXT")
-    private String nutrtionalInformation;
+    private String nutritionalInformation;
 
     @Column(columnDefinition = "TEXT")
     private String productName;
