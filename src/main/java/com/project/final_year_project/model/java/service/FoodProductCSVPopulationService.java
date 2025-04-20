@@ -89,34 +89,23 @@ public class FoodProductCSVPopulationService {
     }
 
     public String convertBarcodeToPath(String barcode) {
-        if (barcode.length() == 8) {
-            return String.format("%013d", Long.parseLong(barcode));
-        } else if (barcode.length() == 13) {
-            String firstPart = barcode.substring(0, 3);
-            String secondPart = barcode.substring(3, 6);
-            String thirdPart = barcode.substring(6, 9);
-            String fourthPart = barcode.substring(9, 12);
-            String fifthPart = barcode.substring(12, 13);
-
-            return firstPart + "/" + secondPart + "/" + thirdPart + "/" + fourthPart + fifthPart + "/";
+        if (barcode.length() != 13) {
+            // Add leading zeroes, so now it is 13 digits
+            barcode = String.format("%013d", Long.parseLong(barcode)) + "/";
         }
-        return barcode;
 
-        /*
-         * StringBuilder path = new StringBuilder();
-         * 
-         * for (int count = 0; count < barcode.length(); count += 3) {
-         * int end = Math.min(count + 3, barcode.length());
-         * path.append(barcode.substring(count, end)).append("/");
-         * }
-         * 
-         * return path.toString();
-         */
+        String firstPart = barcode.substring(0, 3);
+        String secondPart = barcode.substring(3, 6);
+        String thirdPart = barcode.substring(6, 9);
+        String fourthPart = barcode.substring(9, 12);
+        String fifthPart = barcode.substring(12, 13);
+
+        return firstPart + "/" + secondPart + "/" + thirdPart + "/" + fourthPart + fifthPart + "/";
     }
 
     public String constructImageUrl(String barcodePath, JsonNode foodProductNode) {
         JsonNode imageNode = foodProductNode.path("images");
-        List<String> sizes = List.of("400", "full", "100");
+        List<String> sizes = List.of("full", "400", "100");
 
         for (Iterator<Map.Entry<String, JsonNode>> imageFieldsIterator = imageNode.fields(); imageFieldsIterator
                 .hasNext();) {
