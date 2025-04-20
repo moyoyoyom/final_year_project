@@ -1,12 +1,9 @@
 package com.project.final_year_project.model.java.service;
 
-import java.security.Key;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +45,7 @@ public class FoodProductUpdateService {
 
     @Transactional
     public void updateFoodProductsFromStagingTable() {
+        foodProductRepository.deleteAll();
         System.out.println("Cleared the food product table");
 
         stagingFoodProductService.populateTableWithCSV("foodproducts.csv");
@@ -55,55 +53,28 @@ public class FoodProductUpdateService {
 
         List<FoodProduct> foodProductBatch = new ArrayList<>();
         int batchSize = 1000;
+        Set<String> existingFoodProductsCodes = foodProductRepository.findAllCodes();
 
-        List<StagingFoodProduct> allStagedFoodProducts = stagingFoodProductRepository.findAll();
-        allStagedFoodProducts.stream().forEach(
-                stagedFoodProduct -> {
-                    Optional<FoodProduct> existingFoodProduct = foodProductRepository
-                            .findByCode(stagedFoodProduct.getCode());
+        try (Stream<StagingFoodProduct> stream = stagingFoodProductRepository.streamAll()) {
+            stream.forEach(stagingFoodProduct -> {
+                if (!existingFoodProductsCodes.contains(stagingFoodProduct.getCode())) {
+                    FoodProduct foodProduct = mapStagedFoodProductToFoodProduct(stagingFoodProduct);
+                    foodProductBatch.add(foodProduct);
+                }
 
-                    if (!existingFoodProduct.isPresent()
-                            || needToUpdateFoodProduct(existingFoodProduct.get(), stagedFoodProduct)) {
-                        FoodProduct updatedFoodProduct = mapStagedFoodProductToFoodProduct(stagedFoodProduct);
-                        // foodProductRepository.save(updatedFoodProduct);
-                        foodProductBatch.add(updatedFoodProduct);
-                    }
-
-                    if (foodProductBatch.size() >= batchSize) {
-                        foodProductRepository.saveAll(foodProductBatch);
-                        foodProductBatch.clear();
-                    }
-                });
+                if (foodProductBatch.size() >= batchSize) {
+                    foodProductRepository.saveAll(new ArrayList<>(foodProductBatch));
+                    foodProductBatch.clear();
+                }
+            });
+        }
 
         if (!foodProductBatch.isEmpty()) {
             foodProductRepository.saveAll(foodProductBatch);
-            foodProductBatch.clear();
         }
 
         stagingFoodProductRepository.deleteAll();
         System.out.println("Attempted to update the Food Product table");
-    }
-
-    private boolean needToUpdateFoodProduct(FoodProduct existingFoodProduct, StagingFoodProduct stagingFoodProduct) {
-        try {
-            if (!Objects.equals(existingFoodProduct.getBrands(), stagingFoodProduct.getBrands()))
-                return true;
-            if (!Objects.equals(existingFoodProduct.getImageUrl(), stagingFoodProduct.getImageUrl()))
-                return true;
-            if (!Objects.equals(existingFoodProduct.getIngredientsText(), stagingFoodProduct.getIngredientsText()))
-                return true;
-            if (!Objects.equals(existingFoodProduct.getQuantity(), stagingFoodProduct.getQuantity()))
-                return true;
-            if (!Objects.equals(existingFoodProduct.getProductName(), stagingFoodProduct.getProductName()))
-                return true;
-
-            String existingNutritionalInformation = objectMapper
-                    .writeValueAsString(existingFoodProduct.getNutritionalInformation());
-            return !Objects.equals(existingNutritionalInformation, stagingFoodProduct.getNutritionalInformation());
-        } catch (Exception exception) {
-            System.out.println("Caught exception: " + exception);
-            return true;
-        }
     }
 
     private FoodProduct mapStagedFoodProductToFoodProduct(StagingFoodProduct stagedFoodProduct) {
@@ -120,7 +91,7 @@ public class FoodProductUpdateService {
                     .readValue(stagedFoodProduct.getNutritionalInformation(), NutritionalInformation.class);
             foodProduct.setNutritionalInformation(nutritionalInformation);
         } catch (Exception exception) {
-
+            exception.printStackTrace();
         }
 
         for (String categoryText : stagedFoodProduct.getCategories().split(",")) {
