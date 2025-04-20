@@ -1,16 +1,18 @@
 package com.project.final_year_project.model.java.service;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.security.Key;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.final_year_project.model.java.Category;
 import com.project.final_year_project.model.java.FoodProduct;
@@ -46,7 +48,13 @@ public class FoodProductUpdateService {
 
     @Transactional
     public void updateFoodProductsFromStagingTable() {
+        System.out.println("Cleared the food product table");
+
         stagingFoodProductService.populateTableWithCSV("foodproducts.csv");
+        System.out.println("Staging food product table has been populated");
+
+        List<FoodProduct> foodProductBatch = new ArrayList<>();
+        int batchSize = 1000;
 
         List<StagingFoodProduct> allStagedFoodProducts = stagingFoodProductRepository.findAll();
         allStagedFoodProducts.stream().forEach(
@@ -57,12 +65,23 @@ public class FoodProductUpdateService {
                     if (!existingFoodProduct.isPresent()
                             || needToUpdateFoodProduct(existingFoodProduct.get(), stagedFoodProduct)) {
                         FoodProduct updatedFoodProduct = mapStagedFoodProductToFoodProduct(stagedFoodProduct);
-                        foodProductRepository.save(updatedFoodProduct);
+                        // foodProductRepository.save(updatedFoodProduct);
+                        foodProductBatch.add(updatedFoodProduct);
+                    }
+
+                    if (foodProductBatch.size() >= batchSize) {
+                        foodProductRepository.saveAll(foodProductBatch);
+                        foodProductBatch.clear();
                     }
                 });
 
+        if (!foodProductBatch.isEmpty()) {
+            foodProductRepository.saveAll(foodProductBatch);
+            foodProductBatch.clear();
+        }
+
         stagingFoodProductRepository.deleteAll();
-        System.out.println("Updated the Food Product table");
+        System.out.println("Attempted to update the Food Product table");
     }
 
     private boolean needToUpdateFoodProduct(FoodProduct existingFoodProduct, StagingFoodProduct stagingFoodProduct) {
@@ -104,28 +123,44 @@ public class FoodProductUpdateService {
 
         }
 
-        List<Category> categories = Optional.ofNullable(stagedFoodProduct.getCategories())
-                .map(categoriesString -> Arrays.stream(categoriesString.split(","))
-                        .map(unformattedCategory -> unformattedCategory.trim())
-                        .filter(categoryName -> !categoryName.isEmpty())
-                        .map(categoryName -> categoryRepository.findByCategoryText(categoryName)
-                                .orElseGet(() -> new Category(categoryName)))
-                        .collect(Collectors.toList()))
-                .orElse(Collections.emptyList());
+        for (String categoryText : stagedFoodProduct.getCategories().split(",")) {
+            Category category = categoryRepository.findByCategoryText(categoryText)
+                    .orElseGet(() -> categoryRepository.save(new Category(categoryText)));
 
-        foodProduct.setCategories(categories);
+            if (foodProduct.getCategories() == null) {
+                List<Category> categoryList = new ArrayList<>();
+                foodProduct.setCategories(categoryList);
+            }
 
-        List<Keyword> keywords = Optional.ofNullable(stagedFoodProduct.getKeywords())
-                .map(keywordsString -> Arrays.stream(keywordsString.split(","))
-                        .map(unformattedKeyword -> unformattedKeyword.trim())
-                        .filter(keywordName -> !keywordName.isEmpty())
-                        .map(keywordName -> keywordRepository.findByKeywordText(keywordName)
-                                .orElseGet(() -> new Keyword(keywordName)))
-                        .collect(Collectors.toList()))
-                .orElse(Collections.emptyList());
+            foodProduct.getCategories().add(category);
+        }
 
-        foodProduct.setKeywords(keywords);
+        for (String keywordText : stagedFoodProduct.getKeywords().split(",")) {
+            Keyword keyword = keywordRepository.findByKeywordText(keywordText)
+                    .orElseGet(() -> keywordRepository.save(new Keyword(keywordText)));
+
+            if (foodProduct.getKeywords() == null) {
+                List<Keyword> keywordList = new ArrayList<>();
+                foodProduct.setKeywords(keywordList);
+            }
+
+            foodProduct.getKeywords().add(keyword);
+        }
 
         return foodProduct;
+    }
+
+    public List<String> convertJSONToList(String jsonAsString) {
+        try {
+            String formattedString = jsonAsString.replaceAll("\"\"", "\"");
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(formattedString, new TypeReference<List<String>>() {
+            });
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            List<String> emptyList = new ArrayList<>();
+            return emptyList;
+        }
     }
 }

@@ -58,13 +58,13 @@ public class FoodProduct {
     private String brands;
 
     @JsonProperty("_keywords")
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
     @JoinTable(name = "FoodProductKeyword", joinColumns = @JoinColumn(name = "code"), inverseJoinColumns = @JoinColumn(name = "keywordID"))
     @Column
     private List<Keyword> keywords;
 
     @JsonProperty("categories_hierarchy")
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
     @JoinTable(name = "FoodProductCategory", joinColumns = @JoinColumn(name = "code"), inverseJoinColumns = @JoinColumn(name = "categoryID"))
     @Column
     private List<Category> categories;
