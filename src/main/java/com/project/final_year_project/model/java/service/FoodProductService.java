@@ -1,24 +1,35 @@
 package com.project.final_year_project.model.java.service;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.project.final_year_project.model.java.FoodProduct;
 import com.project.final_year_project.model.java.FoodProductResponse;
+import com.project.final_year_project.model.java.Keyword;
+import com.project.final_year_project.model.java.UserFoodProductRating;
 import com.project.final_year_project.model.java.data.repository.FoodProductRepository;
+import com.project.final_year_project.model.java.data.repository.UserFoodProductRatingRepository;
 
 @Service
 public class FoodProductService {
     private final RestTemplate restTemplate;
     private final FoodProductRepository foodProductRepository;
+    private final UserFoodProductRatingRepository userFoodProductRatingRepository;
 
     @Autowired
-    public FoodProductService(RestTemplate restTemplate, FoodProductRepository foodProductRepository) {
+    public FoodProductService(RestTemplate restTemplate, FoodProductRepository foodProductRepository,
+            UserFoodProductRatingRepository userFoodProductRatingRepository) {
         this.restTemplate = restTemplate;
         this.foodProductRepository = foodProductRepository;
+        this.userFoodProductRatingRepository = userFoodProductRatingRepository;
     }
 
     public FoodProduct getFoodProductByBarcode(String barcode) {
@@ -32,5 +43,47 @@ public class FoodProductService {
         if (response != null)
             foodProductRepository.save(response.getFoodProduct());
         return (response != null) ? response.getFoodProduct() : null;
+    }
+
+    public List<FoodProduct> getUserRecommendations(Long userID, int numberOfRecommendations) {
+        List<UserFoodProductRating> userFoodProductRatings = userFoodProductRatingRepository.findByUserUserID(userID);
+        if (userFoodProductRatings.isEmpty()) {
+            System.out.println("ratings are empty");
+            return foodProductRepository.getRandomFoodProducts(PageRequest.of(0, numberOfRecommendations));
+        }
+
+        Set<String> userFoodProductRatingIDs = userFoodProductRatings.stream()
+                .map(userFoodProductRating -> userFoodProductRating.getFoodProduct().getCode())
+                .collect(Collectors.toSet());
+
+        List<FoodProduct> ratedFoodProducts = userFoodProductRatings.stream()
+                .map(UserFoodProductRating::getFoodProduct)
+                .collect(Collectors.toList());
+
+        Set<String> mostCommonKeywords = findMostCommonKeywords(ratedFoodProducts);
+
+        if (mostCommonKeywords.isEmpty()) {
+            System.out.println("common keywords are empty");
+            return foodProductRepository.getRandomFoodProducts(PageRequest.of(0, numberOfRecommendations));
+        }
+
+        List<FoodProduct> possibleRecommendations = foodProductRepository.findRecommendations(mostCommonKeywords,
+                userFoodProductRatingIDs);
+
+        return possibleRecommendations.stream()
+                .limit(numberOfRecommendations)
+                .collect(Collectors.toList());
+    }
+
+    public Set<String> findMostCommonKeywords(List<FoodProduct> foodProducts) {
+        Set<String> keywords = new HashSet<>();
+
+        for (FoodProduct foodProduct : foodProducts) {
+            for (Keyword keyword : foodProduct.getKeywords()) {
+                keywords.add(keyword.getKeywordText());
+            }
+        }
+
+        return keywords;
     }
 }
