@@ -40,7 +40,4 @@ public class StagingFoodProduct {
 
     @Column(columnDefinition = "TEXT")
     private String quantity;
-
-    @Column(columnDefinition = "TEXT")
-    private String categories;
 }

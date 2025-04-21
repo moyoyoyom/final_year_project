@@ -1,5 +1,6 @@
 package com.project.final_year_project.model.java;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NutritionalInformation {
     @JsonProperty("carbohydrates_100g")
     private Double carbohydratesPer100g;

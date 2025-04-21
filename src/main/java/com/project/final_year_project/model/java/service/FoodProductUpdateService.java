@@ -2,21 +2,24 @@ package com.project.final_year_project.model.java.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.final_year_project.model.java.Category;
 import com.project.final_year_project.model.java.FoodProduct;
 import com.project.final_year_project.model.java.Keyword;
 import com.project.final_year_project.model.java.NutritionalInformation;
 import com.project.final_year_project.model.java.StagingFoodProduct;
-import com.project.final_year_project.model.java.data.repository.CategoryRepository;
 import com.project.final_year_project.model.java.data.repository.FoodProductRepository;
 import com.project.final_year_project.model.java.data.repository.KeywordRepository;
 import com.project.final_year_project.model.java.data.repository.StagingFoodProductRepository;
@@ -25,29 +28,26 @@ import com.project.final_year_project.model.java.data.repository.StagingFoodProd
 public class FoodProductUpdateService {
     private final FoodProductRepository foodProductRepository;
     private final StagingFoodProductRepository stagingFoodProductRepository;
-    private final CategoryRepository categoryRepository;
     private final KeywordRepository keywordRepository;
     private final StagingFoodProductService stagingFoodProductService;
     private final ObjectMapper objectMapper;
+    private final Map<String, Keyword> keywordCache = new ConcurrentHashMap<>();
 
     @Autowired
     public FoodProductUpdateService(FoodProductRepository foodProductRepository,
-            StagingFoodProductRepository stagingFoodProductRepository, CategoryRepository categoryRepository,
-            KeywordRepository keywordRepository, StagingFoodProductService stagingFoodProductService,
+            StagingFoodProductRepository stagingFoodProductRepository, KeywordRepository keywordRepository,
+            StagingFoodProductService stagingFoodProductService,
             ObjectMapper objectMapper) {
         this.foodProductRepository = foodProductRepository;
         this.stagingFoodProductRepository = stagingFoodProductRepository;
-        this.categoryRepository = categoryRepository;
         this.keywordRepository = keywordRepository;
         this.stagingFoodProductService = stagingFoodProductService;
         this.objectMapper = objectMapper;
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     @Transactional
     public void updateFoodProductsFromStagingTable() {
-        foodProductRepository.deleteAll();
-        System.out.println("Cleared the food product table");
-
         stagingFoodProductService.populateTableWithCSV("foodproducts.csv");
         System.out.println("Staging food product table has been populated");
 
@@ -70,7 +70,8 @@ public class FoodProductUpdateService {
         }
 
         if (!foodProductBatch.isEmpty()) {
-            foodProductRepository.saveAll(foodProductBatch);
+            foodProductRepository.saveAll(new ArrayList<>(foodProductBatch));
+            foodProductBatch.clear();
         }
 
         stagingFoodProductRepository.deleteAll();
@@ -94,29 +95,11 @@ public class FoodProductUpdateService {
             exception.printStackTrace();
         }
 
-        for (String categoryText : stagedFoodProduct.getCategories().split(",")) {
-            Category category = categoryRepository.findByCategoryText(categoryText)
-                    .orElseGet(() -> categoryRepository.save(new Category(categoryText)));
+        NutritionalInformation nutritionalInformation = getNutritionalInformationFromJSONString(
+                stagedFoodProduct.getNutritionalInformation());
+        foodProduct.setNutritionalInformation(nutritionalInformation);
 
-            if (foodProduct.getCategories() == null) {
-                List<Category> categoryList = new ArrayList<>();
-                foodProduct.setCategories(categoryList);
-            }
-
-            foodProduct.getCategories().add(category);
-        }
-
-        for (String keywordText : stagedFoodProduct.getKeywords().split(",")) {
-            Keyword keyword = keywordRepository.findByKeywordText(keywordText)
-                    .orElseGet(() -> keywordRepository.save(new Keyword(keywordText)));
-
-            if (foodProduct.getKeywords() == null) {
-                List<Keyword> keywordList = new ArrayList<>();
-                foodProduct.setKeywords(keywordList);
-            }
-
-            foodProduct.getKeywords().add(keyword);
-        }
+        foodProduct.setKeywords(mapKeywordsFromStagedFoodProduct(stagedFoodProduct.getKeywords()));
 
         return foodProduct;
     }
@@ -124,8 +107,6 @@ public class FoodProductUpdateService {
     public List<String> convertJSONToList(String jsonAsString) {
         try {
             String formattedString = jsonAsString.replaceAll("\"\"", "\"");
-
-            ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(formattedString, new TypeReference<List<String>>() {
             });
         } catch (Exception exception) {
@@ -133,5 +114,52 @@ public class FoodProductUpdateService {
             List<String> emptyList = new ArrayList<>();
             return emptyList;
         }
+    }
+
+    public NutritionalInformation getNutritionalInformationFromJSONString(String nutritionalInformationJSONString) {
+        try {
+            return objectMapper.readValue(nutritionalInformationJSONString, NutritionalInformation.class);
+        } catch (JsonProcessingException exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    private List<Keyword> mapKeywordsFromStagedFoodProduct(String keywordsJSONString) {
+        List<Keyword> keywords = new ArrayList<>();
+        String[] rawKeywords = formatJSONString(keywordsJSONString);
+        for (String keyword : rawKeywords) {
+            String cleanedKeyword = keyword.trim().replaceAll("^\"|\"$", "");
+
+            Keyword resolvedKeyword = findKeyword(cleanedKeyword);
+            keywords.add(resolvedKeyword);
+        }
+        return keywords;
+    }
+
+    private String[] formatJSONString(String JSONString) {
+        return JSONString
+                .replaceAll("\"\"", "\"")
+                .replaceAll("^\\[|\\]$", "")
+                .split(",");
+    }
+
+    private Keyword findKeyword(String keywordText) {
+        Keyword cachedKeyword = keywordCache.get(keywordText);
+        if (cachedKeyword != null) {
+            return cachedKeyword;
+        }
+
+        Optional<Keyword> keywordFromRepository = keywordRepository.findByKeywordText(keywordText);
+        if (keywordFromRepository.isPresent()) {
+            Keyword foundKeyword = keywordFromRepository.get();
+            keywordCache.put(keywordText, foundKeyword);
+            return foundKeyword;
+        }
+
+        Keyword newKeyword = new Keyword(keywordText);
+        Keyword savedKeyword = keywordRepository.save(newKeyword);
+        keywordCache.put(keywordText, savedKeyword);
+        return savedKeyword;
     }
 }

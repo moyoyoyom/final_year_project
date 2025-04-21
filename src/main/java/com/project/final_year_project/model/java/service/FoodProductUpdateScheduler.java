@@ -23,8 +23,8 @@ public class FoodProductUpdateScheduler {
     }
 
     // updates the food products table daily at midnight
-    @Scheduled(cron = "0 0 0 * * ?")
-    @PostConstruct
+    // @Scheduled(cron = "0 0 0 * * ?")
+    // @PostConstruct
     public void updateFoodProducts() {
         System.out.println("Updating the food products table");
         try {

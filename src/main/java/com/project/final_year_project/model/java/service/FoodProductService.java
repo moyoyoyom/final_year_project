@@ -1,9 +1,7 @@
 package com.project.final_year_project.model.java.service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -14,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.project.final_year_project.model.java.Category;
 import com.project.final_year_project.model.java.FoodProduct;
 import com.project.final_year_project.model.java.FoodProductResponse;
 import com.project.final_year_project.model.java.Keyword;
@@ -59,17 +56,21 @@ public class FoodProductService {
                 .map(userFoodProductRating -> userFoodProductRating.getFoodProduct()).collect(Collectors.toList());
 
         Map<String, Integer> keywordFrequency = findKeywordFrequency(ratedFoodProducts);
-        Set<String> interactedCategories = findUserInteractedCategories(ratedFoodProducts);
 
-        List<FoodProduct> possibleRecommendations = foodProductRepository.findRelevantFoodProducts(interactedCategories,
-                ratedFoodProductIDs);
+        // List<FoodProduct> possibleRecommendations =
+        // foodProductRepository.findRelevantFoodProducts(interactedCategories,
+        // ratedFoodProductIDs);
 
-        return possibleRecommendations.stream()
-                .sorted(Comparator
-                        .comparingInt((foodProduct) -> scoreFoodProduct((FoodProduct) foodProduct, keywordFrequency))
-                        .reversed())
-                .limit(numberOfRecommendations)
-                .collect(Collectors.toList());
+        /*
+         * return possibleRecommendations.stream()
+         * .sorted(Comparator
+         * .comparingInt((foodProduct) -> scoreFoodProduct((FoodProduct) foodProduct,
+         * keywordFrequency))
+         * .reversed())
+         * .limit(numberOfRecommendations)
+         * .collect(Collectors.toList());
+         */
+        return List.of();
     }
 
     public Map<String, Integer> findKeywordFrequency(List<FoodProduct> foodProducts) {
@@ -81,15 +82,6 @@ public class FoodProductService {
             }
         }
         return keywordFrequencies;
-    }
-
-    public Set<String> findUserInteractedCategories(List<FoodProduct> foodProducts) {
-        Set<String> userCategories = new HashSet<>();
-        for (FoodProduct foodProduct : foodProducts) {
-            List<Category> categories = Optional.ofNullable(foodProduct.getCategories()).orElse(List.of());
-            categories.stream().forEach((category) -> userCategories.add(category.getCategoryText()));
-        }
-        return userCategories;
     }
 
     public int scoreFoodProduct(FoodProduct foodProduct, Map<String, Integer> keywordFrequency) {

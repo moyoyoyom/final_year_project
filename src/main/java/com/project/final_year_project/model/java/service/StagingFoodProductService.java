@@ -35,19 +35,20 @@ public class StagingFoodProductService {
 
             while ((nextFoodProductLine = csvReader.readNext()) != null) {
                 if (linesRead != 0) {
-                    StagingFoodProduct stagedFoodProduct = new StagingFoodProduct();
+                    if (nextFoodProductLine[0].length() <= 14) {
+                        StagingFoodProduct stagedFoodProduct = new StagingFoodProduct();
 
-                    stagedFoodProduct.setCode(nextFoodProductLine[0]);
-                    stagedFoodProduct.setBrands(nextFoodProductLine[1]);
-                    stagedFoodProduct.setImageUrl(nextFoodProductLine[2]);
-                    stagedFoodProduct.setIngredientsText(nextFoodProductLine[3]);
-                    stagedFoodProduct.setKeywords(nextFoodProductLine[4]);
-                    stagedFoodProduct.setNutritionalInformation(nextFoodProductLine[5]);
-                    stagedFoodProduct.setProductName(nextFoodProductLine[6]);
-                    stagedFoodProduct.setQuantity(nextFoodProductLine[7]);
-                    stagedFoodProduct.setCategories(nextFoodProductLine[8]);
+                        stagedFoodProduct.setCode(nextFoodProductLine[0]);
+                        stagedFoodProduct.setBrands(nextFoodProductLine[1]);
+                        stagedFoodProduct.setImageUrl(nextFoodProductLine[2]);
+                        stagedFoodProduct.setIngredientsText(nextFoodProductLine[3]);
+                        stagedFoodProduct.setKeywords(nextFoodProductLine[4]);
+                        stagedFoodProduct.setNutritionalInformation(nextFoodProductLine[5]);
+                        stagedFoodProduct.setProductName(nextFoodProductLine[6]);
+                        stagedFoodProduct.setQuantity(nextFoodProductLine[7]);
 
-                    stagedFoodProductBatch.add(stagedFoodProduct);
+                        stagedFoodProductBatch.add(stagedFoodProduct);
+                    }
 
                     if (stagedFoodProductBatch.size() >= 1000) {
                         stagingFoodProductRepository.saveAll(stagedFoodProductBatch);
@@ -55,7 +56,7 @@ public class StagingFoodProductService {
                     }
                 }
                 linesRead++;
-                System.out.println(linesRead);
+                System.out.println(linesRead + " lines read");
             }
 
             if (!stagedFoodProductBatch.isEmpty()) {

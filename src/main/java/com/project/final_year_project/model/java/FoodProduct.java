@@ -63,15 +63,8 @@ public class FoodProduct {
     @Column
     private List<Keyword> keywords;
 
-    @JsonProperty("categories_hierarchy")
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
-    @JoinTable(name = "FoodProductCategory", joinColumns = @JoinColumn(name = "code"), inverseJoinColumns = @JoinColumn(name = "categoryID"))
-    @Column
-    private List<Category> categories;
-
     public FoodProduct(String code, String productName, String ingredientsText,
-            NutritionalInformation nutritionalInformation, String imageURL, String quantity, String brands,
-            List<Category> categories) {
+            NutritionalInformation nutritionalInformation, String imageURL, String quantity, String brands) {
         this.code = code;
         this.productName = productName;
         this.ingredientsText = ingredientsText;
@@ -79,6 +72,5 @@ public class FoodProduct {
         this.imageUrl = imageURL;
         this.quantity = quantity;
         this.brands = brands;
-        this.categories = categories;
     }
 }
