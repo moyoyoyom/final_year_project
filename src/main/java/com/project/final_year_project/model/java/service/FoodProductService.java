@@ -1,7 +1,7 @@
 package com.project.final_year_project.model.java.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -48,40 +48,34 @@ public class FoodProductService {
 
     public List<FoodProduct> getUserRecommendations(Long userID, int numberOfRecommendations) {
         List<UserFoodProductRating> userFoodProductRatings = userFoodProductRatingRepository.findByUserUserID(userID);
-        Set<String> ratedFoodProductIDs = userFoodProductRatings.stream()
+        Set<String> userFoodProductRatingIDs = userFoodProductRatings.stream()
                 .map(userFoodProductRating -> userFoodProductRating.getFoodProduct().getCode())
                 .collect(Collectors.toSet());
 
         List<FoodProduct> ratedFoodProducts = userFoodProductRatings.stream()
-                .map(userFoodProductRating -> userFoodProductRating.getFoodProduct()).collect(Collectors.toList());
+                .map(UserFoodProductRating::getFoodProduct)
+                .collect(Collectors.toList());
 
-        Map<String, Integer> keywordFrequency = findKeywordFrequency(ratedFoodProducts);
+        Set<String> mostCommonKeywords = findMostCommonKeywords(ratedFoodProducts);
 
-        // List<FoodProduct> possibleRecommendations =
-        // foodProductRepository.findRelevantFoodProducts(interactedCategories,
-        // ratedFoodProductIDs);
+        List<FoodProduct> possibleRecommendations = foodProductRepository.findRecommendations(mostCommonKeywords,
+                userFoodProductRatingIDs);
 
-        /*
-         * return possibleRecommendations.stream()
-         * .sorted(Comparator
-         * .comparingInt((foodProduct) -> scoreFoodProduct((FoodProduct) foodProduct,
-         * keywordFrequency))
-         * .reversed())
-         * .limit(numberOfRecommendations)
-         * .collect(Collectors.toList());
-         */
-        return List.of();
+        return possibleRecommendations.stream()
+                .limit(numberOfRecommendations)
+                .collect(Collectors.toList());
     }
 
-    public Map<String, Integer> findKeywordFrequency(List<FoodProduct> foodProducts) {
-        Map<String, Integer> keywordFrequencies = new HashMap<>();
+    public Set<String> findMostCommonKeywords(List<FoodProduct> foodProducts) {
+        Set<String> keywords = new HashSet<>();
+
         for (FoodProduct foodProduct : foodProducts) {
             for (Keyword keyword : foodProduct.getKeywords()) {
-                String keywordText = keyword.getKeywordText();
-                keywordFrequencies.put(keywordText, keywordFrequencies.getOrDefault(keywordText, 0) + 1);
+                keywords.add(keyword.getKeywordText());
             }
         }
-        return keywordFrequencies;
+
+        return keywords;
     }
 
     public int scoreFoodProduct(FoodProduct foodProduct, Map<String, Integer> keywordFrequency) {

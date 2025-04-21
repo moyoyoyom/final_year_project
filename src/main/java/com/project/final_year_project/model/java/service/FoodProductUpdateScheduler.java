@@ -3,10 +3,7 @@ package com.project.final_year_project.model.java.service;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import jakarta.annotation.PostConstruct;
 
 @Service
 public class FoodProductUpdateScheduler {
