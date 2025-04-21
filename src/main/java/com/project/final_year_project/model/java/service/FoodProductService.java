@@ -1,14 +1,13 @@
 package com.project.final_year_project.model.java.service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -48,6 +47,11 @@ public class FoodProductService {
 
     public List<FoodProduct> getUserRecommendations(Long userID, int numberOfRecommendations) {
         List<UserFoodProductRating> userFoodProductRatings = userFoodProductRatingRepository.findByUserUserID(userID);
+        if (userFoodProductRatings.isEmpty()) {
+            System.out.println("ratings are empty");
+            return foodProductRepository.getRandomFoodProducts(PageRequest.of(0, numberOfRecommendations));
+        }
+
         Set<String> userFoodProductRatingIDs = userFoodProductRatings.stream()
                 .map(userFoodProductRating -> userFoodProductRating.getFoodProduct().getCode())
                 .collect(Collectors.toSet());
@@ -57,6 +61,11 @@ public class FoodProductService {
                 .collect(Collectors.toList());
 
         Set<String> mostCommonKeywords = findMostCommonKeywords(ratedFoodProducts);
+
+        if (mostCommonKeywords.isEmpty()) {
+            System.out.println("common keywords are empty");
+            return foodProductRepository.getRandomFoodProducts(PageRequest.of(0, numberOfRecommendations));
+        }
 
         List<FoodProduct> possibleRecommendations = foodProductRepository.findRecommendations(mostCommonKeywords,
                 userFoodProductRatingIDs);
@@ -76,15 +85,5 @@ public class FoodProductService {
         }
 
         return keywords;
-    }
-
-    public int scoreFoodProduct(FoodProduct foodProduct, Map<String, Integer> keywordFrequency) {
-        int score = 0;
-        List<Keyword> foodProductKeywords = Optional.ofNullable(foodProduct.getKeywords())
-                .orElse(new ArrayList<Keyword>());
-        for (Keyword keyword : foodProductKeywords) {
-            score += keywordFrequency.getOrDefault(keyword.getKeywordText(), 0);
-        }
-        return score;
     }
 }
