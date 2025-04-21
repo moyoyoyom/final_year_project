@@ -15,7 +15,10 @@ import com.project.final_year_project.model.java.FoodProduct;
 public interface FoodProductRepository extends JpaRepository<FoodProduct, String> {
     Optional<FoodProduct> findByCode(String id);
 
-    @Query("SELECT f FROM FoodProduct f JOIN f.categories c WHERE c.categoryText IN :categories AND f.code NOT IN :currentIDs")
-    List<FoodProduct> findRelevantFoodProducts(@Param("categories") Set<String> categories,
-            @Param("currentIDs") Set<String> currentIDs);
+    @Query("SELECT f.code FROM FoodProduct f")
+    Set<String> findAllCodes();
+
+    @Query("SELECT f FROM FoodProduct f JOIN f.keywords k WHERE k.keywordText IN keywordNames AND f.code NOT IN :excludedIDs")
+    List<FoodProduct> findRecommendations(@Param("keywordNames") Set<String> mostCommonKeywords,
+            @Param(":excludedIDs") Set<String> userFoodProductRatingIDs);
 }
