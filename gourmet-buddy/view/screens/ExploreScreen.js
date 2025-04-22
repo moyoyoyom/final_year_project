@@ -1,7 +1,23 @@
-import { Text } from "react-native";
+import Header from "../UI/components/Header";
+import Screen from "../UI/layout/Screen";
+import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
+import { ScrollView, StyleSheet } from "react-native";
 
 const ExploreScreen = () => {
-  return <Text> This is the explore screen </Text>;
+  return (
+    <Screen>
+      <Header />
+      <ScrollView style={styles.recommendationPane}></ScrollView>
+      <NavigationBarPresenter />
+    </Screen>
+  );
 };
+
+const styles = StyleSheet.create({
+  recommendationPane: {
+    backgroundColor: "lightgray",
+    width: "100%",
+  },
+});
 
 export default ExploreScreen;

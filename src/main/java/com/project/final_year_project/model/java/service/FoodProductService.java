@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -45,16 +46,15 @@ public class FoodProductService {
         return (response != null) ? response.getFoodProduct() : null;
     }
 
-    public List<FoodProduct> getUserRecommendations(Long userID, int numberOfRecommendations) {
+    public List<FoodProduct> getUserRecommendations(Long userID, int numberOfRecommendations,
+            @Nullable String recommendationTheme) {
         List<UserFoodProductRating> userFoodProductRatings = userFoodProductRatingRepository.findByUserUserID(userID);
-        if (userFoodProductRatings.isEmpty()) {
-            System.out.println("ratings are empty");
-            return foodProductRepository.getRandomFoodProducts(PageRequest.of(0, numberOfRecommendations));
-        }
-
         Set<String> userFoodProductRatingIDs = userFoodProductRatings.stream()
                 .map(userFoodProductRating -> userFoodProductRating.getFoodProduct().getCode())
                 .collect(Collectors.toSet());
+
+        Set<String> excludedFoodProductIDs = userFoodProductRatingIDs.isEmpty() ? Set.of("no ids")
+                : userFoodProductRatingIDs;
 
         List<FoodProduct> ratedFoodProducts = userFoodProductRatings.stream()
                 .map(UserFoodProductRating::getFoodProduct)
@@ -62,13 +62,18 @@ public class FoodProductService {
 
         Set<String> mostCommonKeywords = findMostCommonKeywords(ratedFoodProducts);
 
+        System.out.println("Recommendation theme: " + recommendationTheme);
+        if (recommendationTheme != null && !recommendationTheme.isBlank()) {
+            mostCommonKeywords.add(recommendationTheme);
+        }
+
         if (mostCommonKeywords.isEmpty()) {
             System.out.println("common keywords are empty");
             return foodProductRepository.getRandomFoodProducts(PageRequest.of(0, numberOfRecommendations));
         }
 
         List<FoodProduct> possibleRecommendations = foodProductRepository.findRecommendations(mostCommonKeywords,
-                userFoodProductRatingIDs);
+                excludedFoodProductIDs);
 
         return possibleRecommendations.stream()
                 .limit(numberOfRecommendations)
