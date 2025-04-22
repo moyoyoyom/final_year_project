@@ -11,6 +11,7 @@ const ExploreScreenPresenter = () => {
   const { user } = useContext(AuthenticationContext);
   const recommendationsEndpoint = `http://192.168.1.253:8090/api/foodproducts/recommendations/${user.userID}/50`;
 
+  //State
   const [recommendations, setRecommendations] = useState(null);
   const [isRecommendationsLoading, setIsRecommendationsLoading] =
     useState(true);
@@ -29,13 +30,20 @@ const ExploreScreenPresenter = () => {
     };
     getRecommedations();
   }, []);
+
+  //Handlers
+  const handleRecommendationClick = () => {};
+
   //View
   return (
     <Screen>
       {isRecommendationsLoading ? (
         <LoadingScreen />
       ) : (
-        <ExploreScreen recommendations={recommendations} />
+        <ExploreScreen
+          recommendations={recommendations}
+          onSelect={handleRecommendationClick}
+        />
       )}
     </Screen>
   );
