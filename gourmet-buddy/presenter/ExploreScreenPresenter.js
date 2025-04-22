@@ -6,7 +6,7 @@ import { Alert } from "react-native";
 import LoadingScreen from "../view/screens/LoadingScreen";
 import Screen from "../view/UI/layout/Screen";
 
-const ExploreScreenPresenter = () => {
+const ExploreScreenPresenter = ({ navigation }) => {
   //Initialisations
   const { user } = useContext(AuthenticationContext);
   const recommendationsEndpoint = `http://192.168.1.253:8090/api/foodproducts/recommendations/${user.userID}/50`;
@@ -32,7 +32,13 @@ const ExploreScreenPresenter = () => {
   }, []);
 
   //Handlers
-  const handleRecommendationClick = () => {};
+  const handleRecommendationClick = (foodProduct) => {
+    console.log("Trying to navigate");
+    navigation.navigate("FoodProductDetailsScreen", {
+      foodProduct: foodProduct,
+    });
+    console.log("Navigating");
+  };
 
   //View
   return (
