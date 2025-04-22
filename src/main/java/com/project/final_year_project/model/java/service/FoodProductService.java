@@ -62,7 +62,6 @@ public class FoodProductService {
 
         Set<String> mostCommonKeywords = findMostCommonKeywords(ratedFoodProducts);
 
-        System.out.println("Recommendation theme: " + recommendationTheme);
         if (recommendationTheme != null && !recommendationTheme.isBlank()) {
             mostCommonKeywords.add(recommendationTheme);
         }

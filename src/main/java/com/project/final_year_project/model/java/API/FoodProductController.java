@@ -29,12 +29,11 @@ public class FoodProductController {
         return foodProductService.getFoodProductByBarcode(barcode);
     }
 
-    @PostMapping("recommendations/{userID}")
+    @PostMapping("recommendations/{userID}/{quantity}")
     public ResponseEntity<List<FoodProduct>> getUserFoodProductRecommendations(@PathVariable("userID") Long userID,
-            @RequestParam(defaultValue = "10") int numberOfRecommendations,
+            @PathVariable("quantity") int numberOfRecommendations,
             @RequestParam(required = false) String theme) {
-        System.out.println("The theme: " + theme);
         return ResponseEntity
-                .ok(foodProductService.getUserRecommendations(userID, numberOfRecommendations, "healthy"));
+                .ok(foodProductService.getUserRecommendations(userID, numberOfRecommendations, theme));
     }
 }
