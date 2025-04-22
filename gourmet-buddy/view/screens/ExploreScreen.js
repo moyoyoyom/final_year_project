@@ -1,17 +1,30 @@
 import Header from "../UI/components/Header";
 import Screen from "../UI/layout/Screen";
 import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
-import { ScrollView, StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Icons from "../UI/components/Icons";
 
-const ExploreScreen = () => {
+const ExploreScreen = ({ recommendations }) => {
   return (
     <Screen>
       <Header />
-      <View>
-        <Icons />
+      <View style={styles.categoryPanes}>
+        <View style={styles.categoryItemStyle}>
+          <Icons.CuisineIcon size={50} />
+          <Text>Meals</Text>
+        </View>
+        <View style={styles.categoryItemStyle}>
+          <Icons.HealthyIcon size={50} />
+          <Text>Healthy Food</Text>
+        </View>
+        <View style={styles.categoryItemStyle}>
+          <Icons.GroceryIcon size={50} />
+          <Text>Groceries</Text>
+        </View>
       </View>
-      <ScrollView style={styles.recommendationPane}></ScrollView>
+      <View style={styles.recommendationPane}>
+        <Text style={styles.subheadingStyle}>Check these out: </Text>
+      </View>
       <NavigationBarPresenter />
     </Screen>
   );
@@ -19,8 +32,26 @@ const ExploreScreen = () => {
 
 const styles = StyleSheet.create({
   recommendationPane: {
-    backgroundColor: "lightgray",
+    backgroundColor: "#faebc3",
     width: "100%",
+    height: "100%",
+    borderRadius: 30,
+  },
+  categoryPanes: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: "100%",
+    marginTop: 30,
+    marginBottom: 15,
+  },
+  categoryItemStyle: {
+    alignItems: "center",
+  },
+  subheadingStyle: {
+    marginLeft: 30,
+    marginTop: 28,
+    fontWeight: 600,
+    fontSize: 18,
   },
 });
 
