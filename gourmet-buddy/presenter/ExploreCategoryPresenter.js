@@ -1,15 +1,16 @@
 import { useContext, useEffect, useState } from "react";
-import ExploreScreen from "../view/screens/ExploreScreen";
+import ExploreCategoryScreen from "../view/screens/ExploreCategoryScreen";
 import { AuthenticationContext } from "../model/AuthenicationContext";
-import API from "../model/API";
-import { Alert } from "react-native";
-import LoadingScreen from "../view/screens/LoadingScreen";
 import Screen from "../view/UI/layout/Screen";
+import LoadingScreen from "../view/screens/LoadingScreen";
+import { Alert } from "react-native";
+import API from "../model/API";
 
-const ExploreScreenPresenter = ({ navigation }) => {
+const ExploreCategoryPresenter = ({ navigation, route }) => {
   //Initialisations
   const { user } = useContext(AuthenticationContext);
-  const recommendationsEndpoint = `http://192.168.1.253:8090/api/foodproducts/recommendations/${user.userID}/50`;
+  const { theme } = route.params;
+  const recommendationsEndpoint = `http://192.168.1.253:8090/api/foodproducts/recommendations/${user.userID}/50?theme=${theme}`;
 
   //State
   const [recommendations, setRecommendations] = useState(null);
@@ -20,6 +21,7 @@ const ExploreScreenPresenter = ({ navigation }) => {
     const getRecommedations = async () => {
       const response = await API.post(recommendationsEndpoint);
       if (response.isSuccess) {
+        console.log("Successful");
         setRecommendations(response.result);
         setIsRecommendationsLoading(false);
       } else
@@ -37,15 +39,7 @@ const ExploreScreenPresenter = ({ navigation }) => {
       foodProduct: foodProduct,
     });
   };
-  const handleMealsPress = () => {
-    navigation.navigate("ExploreCategoryScreen", { theme: "Vegan" });
-  };
-  const handleHealthyFoodPress = () => {
-    navigation.navigate("ExploreCategoryScreen", { theme: "Health" });
-  };
-  const handleGroceryPress = () => {
-    navigation.navigate("ExploreCategoryScreen", { theme: "Grocery" });
-  };
+  const handleReturnClick = () => navigation.goBack();
 
   //View
   return (
@@ -53,16 +47,15 @@ const ExploreScreenPresenter = ({ navigation }) => {
       {isRecommendationsLoading ? (
         <LoadingScreen />
       ) : (
-        <ExploreScreen
+        <ExploreCategoryScreen
           recommendations={recommendations}
           onSelect={handleRecommendationClick}
-          onMealsPress={handleMealsPress}
-          onHealthyFoodPress={handleHealthyFoodPress}
-          onGroceryPress={handleGroceryPress}
+          onReturnClick={handleReturnClick}
+          theme={theme}
         />
       )}
     </Screen>
   );
 };
 
-export default ExploreScreenPresenter;
+export default ExploreCategoryPresenter;

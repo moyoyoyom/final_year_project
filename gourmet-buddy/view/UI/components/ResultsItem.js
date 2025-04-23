@@ -10,7 +10,7 @@ const ResultsItem = ({ result, onSelect }) => {
   const brands = result.brands;
 
   //Handler
-  const handleSelect = () => onSelect(recommendation);
+  const handleSelect = () => onSelect(result);
 
   //View
   return (
