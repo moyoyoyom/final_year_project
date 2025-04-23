@@ -1,9 +1,12 @@
 package com.project.final_year_project.model.java.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.project.final_year_project.model.java.FoodProduct;
 import com.project.final_year_project.model.java.Rating;
 import com.project.final_year_project.model.java.User;
 import com.project.final_year_project.model.java.UserFoodProductRating;
@@ -50,6 +53,19 @@ public class UserFoodProductRatingService {
             return true;
         }
         return false;
+    }
+
+    public List<FoodProduct> getAllFoodProductsWithSpecifiedUserRating(String rating, Long userID) {
+        List<UserFoodProductRating> userFoodProductRatings = userFoodProductRatingRepository.findByUserUserID(userID);
+        List<FoodProduct> foodProductsWithSpecificRelationship = userFoodProductRatings.stream()
+                .filter(
+                        userFoodProductRating -> userFoodProductRating
+                                .getUserFoodProductRatingID()
+                                .getRating().equals(getRatingType(rating)))
+                .map(UserFoodProductRating::getFoodProduct)
+                .collect(Collectors.toList());
+
+        return foodProductsWithSpecificRelationship;
     }
 
     public Rating getRatingType(String relationship) {

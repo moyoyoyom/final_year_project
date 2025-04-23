@@ -18,8 +18,10 @@ const RecommendationItem = ({ recommendation, onSelect }) => {
     <TouchableOpacity onPress={handleSelect}>
       <View style={styles.itemStyle}>
         <Image source={{ uri: imageURL }} style={styles.imageStyle} />
-        <Text>{productName}</Text>
-        <Text>{brands}</Text>
+        <View>
+          <Text style={styles.productNameStyle}>{productName}</Text>
+          <Text>{brands}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -39,6 +41,11 @@ const styles = StyleSheet.create({
     width: 150,
     height: 120,
     borderRadius: 20,
+  },
+  productNameStyle: {
+    marginTop: 10,
+    marginBottom: 5,
+    fontWeight: 500,
   },
 });
 export default RecommendationItem;

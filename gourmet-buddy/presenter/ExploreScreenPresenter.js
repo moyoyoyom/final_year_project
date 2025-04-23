@@ -33,11 +33,9 @@ const ExploreScreenPresenter = ({ navigation }) => {
 
   //Handlers
   const handleRecommendationClick = (foodProduct) => {
-    console.log("Trying to navigate");
     navigation.navigate("FoodProductDetailsScreen", {
       foodProduct: foodProduct,
     });
-    console.log("Navigating");
   };
 
   //View
