@@ -1,12 +1,14 @@
 package com.project.final_year_project.model.java.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.lang.Nullable;
@@ -27,6 +29,7 @@ public class FoodProductService {
     private final FoodProductRepository foodProductRepository;
     private final UserFoodProductRatingRepository userFoodProductRatingRepository;
     private final KeywordRepository keywordRepository;
+    private final LevenshteinDistance levenshteinDistance = new LevenshteinDistance();
 
     @Autowired
     public FoodProductService(RestTemplate restTemplate, FoodProductRepository foodProductRepository,
@@ -35,6 +38,7 @@ public class FoodProductService {
         this.foodProductRepository = foodProductRepository;
         this.userFoodProductRatingRepository = userFoodProductRatingRepository;
         this.keywordRepository = keywordRepository;
+        ;
     }
 
     public FoodProduct getFoodProductByBarcode(String barcode) {
@@ -115,6 +119,14 @@ public class FoodProductService {
 
     public List<FoodProduct> getFoodProductBySearchTerm(String query) {
         List<FoodProduct> results = foodProductRepository.searchByProductNameOrBrand(query);
-        return results;
+
+        return results.stream().sorted(Comparator.comparingInt(result -> scoreSimiliarity(result, query))).limit(50)
+                .collect(Collectors.toList());
+    }
+
+    private int scoreSimiliarity(FoodProduct candidateFoodProduct, String query) {
+        return Math.min(
+                levenshteinDistance.apply(candidateFoodProduct.getBrands().toLowerCase(), query.toLowerCase()),
+                levenshteinDistance.apply(candidateFoodProduct.getProductName(), query.toLowerCase()));
     }
 }
