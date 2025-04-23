@@ -1,5 +1,6 @@
 package com.project.final_year_project.model.java.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import com.project.final_year_project.model.java.FoodProductResponse;
 import com.project.final_year_project.model.java.Keyword;
 import com.project.final_year_project.model.java.UserFoodProductRating;
 import com.project.final_year_project.model.java.data.repository.FoodProductRepository;
+import com.project.final_year_project.model.java.data.repository.KeywordRepository;
 import com.project.final_year_project.model.java.data.repository.UserFoodProductRatingRepository;
 
 @Service
@@ -24,13 +26,15 @@ public class FoodProductService {
     private final RestTemplate restTemplate;
     private final FoodProductRepository foodProductRepository;
     private final UserFoodProductRatingRepository userFoodProductRatingRepository;
+    private final KeywordRepository keywordRepository;
 
     @Autowired
     public FoodProductService(RestTemplate restTemplate, FoodProductRepository foodProductRepository,
-            UserFoodProductRatingRepository userFoodProductRatingRepository) {
+            UserFoodProductRatingRepository userFoodProductRatingRepository, KeywordRepository keywordRepository) {
         this.restTemplate = restTemplate;
         this.foodProductRepository = foodProductRepository;
         this.userFoodProductRatingRepository = userFoodProductRatingRepository;
+        this.keywordRepository = keywordRepository;
     }
 
     public FoodProduct getFoodProductByBarcode(String barcode) {
@@ -41,8 +45,26 @@ public class FoodProductService {
         String foodProductUrl = "https://world.openfoodfacts.org/api/v0/product/" + barcode + ".json";
         FoodProductResponse response = restTemplate.getForObject(foodProductUrl, FoodProductResponse.class);
 
-        if (response != null)
+        List<Keyword> foodProductKeywords = new ArrayList<>();
+
+        if (response != null) {
+            // get keywords from keyword repository to prevent duplicate keywords being
+            // insterted
+            FoodProduct foodProduct = response.getFoodProduct();
+            for (Keyword keyword : foodProduct.getKeywords()) {
+                String keywordText = keyword.getKeywordText();
+                Optional<Keyword> foundKeyword = keywordRepository.findByKeywordText(keywordText);
+
+                if (foundKeyword.isPresent()) {
+                    foodProductKeywords.add(foundKeyword.get());
+                } else {
+                    foodProductKeywords.add(new Keyword(keywordText));
+                }
+            }
+            response.getFoodProduct().setKeywords(foodProductKeywords);
+
             foodProductRepository.save(response.getFoodProduct());
+        }
         return (response != null) ? response.getFoodProduct() : null;
     }
 
