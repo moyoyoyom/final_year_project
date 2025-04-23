@@ -16,7 +16,7 @@ const SearchScreenPresenter = ({ navigation }) => {
   const historyEndpoint = `http://192.168.1.253:8090/api/history/recent/${user.userID}`;
 
   //State
-  const [searchValue, setSearchValue] = useState(" ");
+  const [searchValue, setSearchValue] = useState("");
   const [isScanning, setIsScanning] = useState(false);
   const [scanned, setScanned] = useState(false);
   const [hasPermissionBeenGranted, setHasPermissionBeenGranted] =
@@ -85,7 +85,7 @@ const SearchScreenPresenter = ({ navigation }) => {
   };
 
   const handleSearch = () => {
-    console.log("Searching");
+    navigation.navigate("SearchResultsScreen", { searchTerm: searchValue });
   };
 
   //View
