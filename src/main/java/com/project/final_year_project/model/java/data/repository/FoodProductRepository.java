@@ -25,4 +25,8 @@ public interface FoodProductRepository extends JpaRepository<FoodProduct, String
 
     @Query("SELECT f FROM FoodProduct f ORDER BY function('RAND')")
     List<FoodProduct> getRandomFoodProducts(Pageable pageable);
+
+    @Query("SELECT f FROM FoodProduct f WHERE LOWER(f.productName) LIKE LOWER(CONCAT('%', :query, '%' )) "
+            + "OR LOWER(f.brands) LIKE LOWER(CONCAT('%', : query, '%'))")
+    List<FoodProduct> searchByProductNameOrBrand(String query);
 }

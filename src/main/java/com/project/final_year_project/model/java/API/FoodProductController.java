@@ -37,4 +37,9 @@ public class FoodProductController {
         return ResponseEntity
                 .ok(foodProductService.getUserRecommendations(userID, numberOfRecommendations, theme));
     }
+
+    @GetMapping("search")
+    public ResponseEntity<List<FoodProduct>> findFoodProductsMatchingTerm(@RequestParam String searchTerm) {
+        return ResponseEntity.ok(foodProductService.getFoodProductBySearchTerm(searchTerm));
+    }
 }

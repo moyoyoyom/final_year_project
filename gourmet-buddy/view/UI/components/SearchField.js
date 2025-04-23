@@ -6,6 +6,7 @@ const SearchField = ({
   onTextChange,
   customSearchFieldStyle,
   placeholderText,
+  onSubmit,
 }) => {
   return (
     <View style={[styles.backgroundStyle, customSearchFieldStyle]}>
@@ -15,6 +16,7 @@ const SearchField = ({
         value={value}
         onChangeText={(value) => onTextChange(value)}
         placeholder={placeholderText}
+        onSubmitEditing={onSubmit}
       />
     </View>
   );

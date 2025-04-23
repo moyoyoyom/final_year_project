@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   listStyle: {
     width: "95%",
     paddingLeft: 5,
+    marginBottom: 100,
   },
 });
 
