@@ -1,15 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Divider from "../UI/components/Divider";
 
-const ProfileItem = ({ itemText, icon }) => {
+const ProfileItem = ({ itemText, icon, onPress }) => {
   return (
-    <View>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.lineStyle}>
         <View style={styles.iconStyle}>{icon}</View>
         <Text style={styles.textStyle}>{itemText}</Text>
       </View>
       <Divider customDividerStyle={styles.dividerStyle} />
-    </View>
+    </TouchableOpacity>
   );
 };
 

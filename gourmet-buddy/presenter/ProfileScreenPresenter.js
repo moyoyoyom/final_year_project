@@ -11,8 +11,17 @@ const ProfileScreenPresenter = ({ navigation }) => {
     navigation.replace("AuthenticationStack", { screen: "LoginScreen" });
   };
 
+  const handleGoToLikedProducts = () => {
+    navigation.navigate("LikedProductsScreen");
+  };
+
   //View
-  return <ProfileScreen onLogoutPress={onLogoutPress} />;
+  return (
+    <ProfileScreen
+      onLogoutPress={onLogoutPress}
+      onLikedProductsClick={handleGoToLikedProducts}
+    />
+  );
 };
 
 export default ProfileScreenPresenter;
