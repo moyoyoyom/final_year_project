@@ -6,6 +6,7 @@ import Icons from "../UI/components/Icons";
 import FoodProductList from "../entity/FoodProductList";
 
 const LikedProductsScreen = ({ onReturnClick, foodProducts, onSelect }) => {
+  console.log(foodProducts);
   return (
     <Screen>
       <Header
@@ -21,7 +22,7 @@ const LikedProductsScreen = ({ onReturnClick, foodProducts, onSelect }) => {
       {foodProducts.length > 0 ? (
         <FoodProductList foodProducts={foodProducts} onSelect={onSelect} />
       ) : (
-        <Text>No recent history</Text>
+        <Text style={styles.placeholderTextStyle}>No recent history</Text>
       )}
       <NavigationBarPresenter />
     </Screen>
