@@ -5,7 +5,7 @@ import Screen from "../UI/layout/Screen";
 import Icons from "../UI/components/Icons";
 import FoodProductList from "../entity/FoodProductList";
 
-const LikedProductsScreen = ({ onReturnClick, foodProducts, onSelect }) => {
+const SavedProductsScreen = ({ onReturnClick, foodProducts, onSelect }) => {
   return (
     <Screen>
       <Header
@@ -16,13 +16,13 @@ const LikedProductsScreen = ({ onReturnClick, foodProducts, onSelect }) => {
             onPress={onReturnClick}
           />
         }
-        centerItem={<Text style={styles.titleStyle}>Liked Products</Text>}
+        centerItem={<Text style={styles.titleStyle}>Saved Products</Text>}
       />
       {foodProducts.length > 0 ? (
         <FoodProductList foodProducts={foodProducts} onSelect={onSelect} />
       ) : (
         <Text style={styles.placeholderTextStyle}>
-          No previously liked food products
+          No previously saved food products
         </Text>
       )}
       <NavigationBarPresenter />
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LikedProductsScreen;
+export default SavedProductsScreen;

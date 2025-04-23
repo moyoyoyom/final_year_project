@@ -7,7 +7,11 @@ import ProfileItem from "../entity/ProfileItem";
 import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
 import Icons from "../UI/components/Icons";
 
-const ProfileScreen = ({ onLogoutPress, onLikedProductsClick }) => {
+const ProfileScreen = ({
+  onLogoutPress,
+  onLikedProductsClick,
+  onSavedProductsClick,
+}) => {
   //Initialisations
   const { user } = useContext(AuthenticationContext);
   return (
@@ -30,6 +34,7 @@ const ProfileScreen = ({ onLogoutPress, onLikedProductsClick }) => {
       <ProfileItem
         itemText={"Saved Products"}
         icon={<Icons.SaveIcon size={24} />}
+        onPress={onSavedProductsClick}
       />
       <ProfileItem
         itemText={"Account Settings"}
