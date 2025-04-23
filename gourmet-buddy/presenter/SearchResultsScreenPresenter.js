@@ -1,20 +1,27 @@
+import { StyleSheet, View } from "react-native";
 import useLoad from "../model/useLoad";
 import SearchResultsScreen from "../view/screens/SearchResultsScreen";
+import LoadingScreen from "../view/screens/LoadingScreen";
 
 const SearchResultsScreenPresenter = ({ route, navigation }) => {
   //Initialisations
   const { searchTerm } = route.params;
-  const resultsEndpoint = ``;
+  const resultsEndpoint = `http://192.168.1.253:8090/api/foodproducts/search?searchTerm=${searchTerm}`;
 
   //State
   const [results, isResultsLoading] = useLoad(resultsEndpoint);
 
   //Handlers
   const handleBackClick = () => navigation.goBack();
+  const handleResultsSelect = (foodProduct) => {
+    navigation.navigate("FoodProductDetailsScreen", {
+      foodProduct: foodProduct,
+    });
+  };
 
   //View
   return (
-    <View>
+    <View style={styles.viewStyle}>
       {isResultsLoading ? (
         <LoadingScreen />
       ) : (
@@ -22,10 +29,17 @@ const SearchResultsScreenPresenter = ({ route, navigation }) => {
           searchTerm={searchTerm}
           onBackClick={handleBackClick}
           results={results}
+          onSelect={handleResultsSelect}
         />
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  viewStyle: {
+    height: "100%",
+  },
+});
 
 export default SearchResultsScreenPresenter;

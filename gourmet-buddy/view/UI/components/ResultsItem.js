@@ -1,14 +1,13 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const ResultsItem = ({ recommendation, onSelect }) => {
+const ResultsItem = ({ result, onSelect }) => {
   //Initialisation
   const imageURL =
-    recommendation.image_url === null ||
-    recommendation.image_url.trim().length === 0
+    result.image_url === null || result.image_url.trim().length === 0
       ? "https://hadramut.com/_nuxt/img/placeholder.d41418b.jpg"
-      : recommendation.image_url;
-  const productName = recommendation.product_name;
-  const brands = recommendation.brands;
+      : result.image_url;
+  const productName = result.product_name;
+  const brands = result.brands;
 
   //Handler
   const handleSelect = () => onSelect(recommendation);

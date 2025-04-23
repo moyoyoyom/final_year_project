@@ -5,7 +5,12 @@ import Screen from "../UI/layout/Screen";
 import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
 import ResultsList from "../UI/components/ResultsList";
 
-const SearchResultsScreen = ({ onBackClick, searchTerm, results }) => {
+const SearchResultsScreen = ({
+  onBackClick,
+  searchTerm,
+  results,
+  onSelect,
+}) => {
   return (
     <Screen>
       <Header
@@ -17,9 +22,11 @@ const SearchResultsScreen = ({ onBackClick, searchTerm, results }) => {
       <Text>Results for the search: "{searchTerm}"</Text>
       <View style={styles.backgroundStyle}>
         {results.length === 0 ? (
-          <Text>No results could be found for that search term</Text>
+          <Text style={styles.placeholderText}>
+            No results could be found for that search term
+          </Text>
         ) : (
-          <ResultsList />
+          <ResultsList results={results} onSelect={onSelect} />
         )}
       </View>
       <NavigationBarPresenter />
@@ -41,6 +48,10 @@ const styles = StyleSheet.create({
     height: "100%",
     marginTop: 20,
     borderRadius: 30,
+  },
+  placeholderText: {
+    marginLeft: 50,
+    marginTop: 30,
   },
 });
 export default SearchResultsScreen;

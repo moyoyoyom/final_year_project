@@ -25,7 +25,7 @@ const ExploreScreen = ({ recommendations, onSelect }) => {
       </View>
       <View style={styles.recommendationPane}>
         <Text style={styles.subheadingStyle}>Check these out: </Text>
-        <ResultsList recommendations={recommendations} onSelect={onSelect} />
+        <ResultsList results={recommendations} onSelect={onSelect} />
       </View>
       <NavigationBarPresenter />
     </Screen>
