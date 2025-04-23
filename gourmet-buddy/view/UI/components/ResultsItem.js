@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const RecommendationItem = ({ recommendation, onSelect }) => {
+const ResultsItem = ({ recommendation, onSelect }) => {
   //Initialisation
   const imageURL =
     recommendation.image_url === null ||
@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
     fontWeight: 500,
   },
 });
-export default RecommendationItem;
+export default ResultsItem;

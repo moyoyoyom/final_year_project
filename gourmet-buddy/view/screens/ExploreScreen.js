@@ -3,7 +3,7 @@ import Screen from "../UI/layout/Screen";
 import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
 import { StyleSheet, Text, View } from "react-native";
 import Icons from "../UI/components/Icons";
-import RecommendationsList from "../UI/components/RecommendationsList";
+import ResultsList from "../UI/components/ResultsList";
 
 const ExploreScreen = ({ recommendations, onSelect }) => {
   return (
@@ -25,10 +25,7 @@ const ExploreScreen = ({ recommendations, onSelect }) => {
       </View>
       <View style={styles.recommendationPane}>
         <Text style={styles.subheadingStyle}>Check these out: </Text>
-        <RecommendationsList
-          recommendations={recommendations}
-          onSelect={onSelect}
-        />
+        <ResultsList recommendations={recommendations} onSelect={onSelect} />
       </View>
       <NavigationBarPresenter />
     </Screen>

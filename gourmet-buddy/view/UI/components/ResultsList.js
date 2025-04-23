@@ -1,12 +1,12 @@
 import { ScrollView, StyleSheet } from "react-native";
-import RecommendationItem from "./RecommendationItem";
+import ResultsItem from "./ResultsItem";
 
-const RecommendationsList = ({ recommendations, onSelect }) => {
+const ResultsList = ({ recommendations, onSelect }) => {
   return (
     <ScrollView contentContainerStyle={styles.scrollPaneStyle}>
       {recommendations.map((recommendation) => {
         return (
-          <RecommendationItem
+          <ResultsItem
             key={recommendation.code}
             recommendation={recommendation}
             onSelect={onSelect}
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RecommendationsList;
+export default ResultsList;
