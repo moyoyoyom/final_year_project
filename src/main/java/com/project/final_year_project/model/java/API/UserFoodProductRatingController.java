@@ -1,6 +1,7 @@
 package com.project.final_year_project.model.java.API;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.project.final_year_project.model.java.FoodProduct;
 import com.project.final_year_project.model.java.Rating;
 import com.project.final_year_project.model.java.UserFoodProductRating;
 import com.project.final_year_project.model.java.UserFoodProductRatingID;
@@ -56,6 +58,13 @@ public class UserFoodProductRatingController {
         System.out.println(hasRatingBeenRemoved);
         return hasRatingBeenRemoved ? (formatResponse("Rating has been removed"))
                 : (formatResponse("Rating has already been removed"));
+    }
+
+    @GetMapping("/{userID}/{relationship}")
+    public ResponseEntity<List<FoodProduct>> getAllProductsWithSpecificRelationship(@PathVariable("userID") Long userID,
+            @PathVariable("relationship") String relationship) {
+        return ResponseEntity
+                .ok(userFoodProductRatingService.getAllFoodProductsWithSpecifiedUserRating(relationship, userID));
     }
 
     public ResponseEntity<?> formatResponse(String responseMessage) {

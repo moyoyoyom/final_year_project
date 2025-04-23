@@ -2,16 +2,20 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import Icons from "../UI/components/Icons";
 
 const FoodProductItem = ({ foodProduct, onSelect }) => {
+  //Initialisations
+  const imageURL =
+    foodProduct.image_url === null || foodProduct.image_url.trim().length === 0
+      ? "https://hadramut.com/_nuxt/img/placeholder.d41418b.jpg"
+      : foodProduct.image_url;
+
+  //View
   return (
     <Pressable
       onPress={() => onSelect(foodProduct)}
       style={styles.pressableItemStyle}
     >
       <View style={styles.productImageStyle}>
-        <Image
-          source={{ uri: foodProduct.image_url }}
-          style={styles.imageStyle}
-        />
+        <Image source={{ uri: imageURL }} style={styles.imageStyle} />
       </View>
       <View style={styles.textContainerStyle}>
         <Text style={styles.productInfo}>

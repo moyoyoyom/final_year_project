@@ -21,7 +21,7 @@ public interface FoodProductRepository extends JpaRepository<FoodProduct, String
 
     @Query("SELECT f FROM FoodProduct f JOIN f.keywords k WHERE k.keywordText IN :keywordNames AND f.code NOT IN :excludedIDs")
     List<FoodProduct> findRecommendations(@Param("keywordNames") Set<String> mostCommonKeywords,
-            @Param(":excludedIDs") Set<String> userFoodProductRatingIDs);
+            @Param("excludedIDs") Set<String> userFoodProductRatingIDs);
 
     @Query("SELECT f FROM FoodProduct f ORDER BY function('RAND')")
     List<FoodProduct> getRandomFoodProducts(Pageable pageable);

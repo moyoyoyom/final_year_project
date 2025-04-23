@@ -1,4 +1,8 @@
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 const Icons = {};
 
@@ -79,6 +83,18 @@ const FoodIcon = ({ color, size }) => (
   <Ionicons name="fast-food-outline" size={size} color={color} />
 );
 
+const CuisineIcon = ({ color, size }) => (
+  <Ionicons name="restaurant" size={size} color={color} />
+);
+
+const HealthyIcon = ({ color, size }) => (
+  <Ionicons name="fitness-outline" size={size} color={color} />
+);
+
+const GroceryIcon = ({ color, size }) => (
+  <MaterialIcons name="local-grocery-store" size={size} color={color} />
+);
+
 //Compose
 Icons.ReturnIcon = ReturnIcon;
 Icons.ForwardIcon = ForwardIcon;
@@ -98,5 +114,8 @@ Icons.FilledHeartIcon = FilledHeartIcon;
 Icons.FilledSaveIcon = FilledSaveIcon;
 Icons.SettingsIcon = SettingsIcon;
 Icons.FoodIcon = FoodIcon;
+Icons.CuisineIcon = CuisineIcon;
+Icons.HealthyIcon = HealthyIcon;
+Icons.GroceryIcon = GroceryIcon;
 
 export default Icons;

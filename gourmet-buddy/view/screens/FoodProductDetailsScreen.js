@@ -17,6 +17,12 @@ const FoodProductDetailsScreen = ({
   likeStatus,
   saveStatus,
 }) => {
+  //Initialisations
+  const imageURL =
+    foodProduct.image_url === null || foodProduct.image_url.trim().length === 0
+      ? "https://hadramut.com/_nuxt/img/placeholder.d41418b.jpg"
+      : foodProduct.image_url;
+
   //View
   return (
     <Screen>
@@ -27,10 +33,7 @@ const FoodProductDetailsScreen = ({
         }
       />
       <View style={styles.titleRowLayout}>
-        <Image
-          source={{ uri: foodProduct.image_url }}
-          style={styles.imageStyling}
-        />
+        <Image source={{ uri: imageURL }} style={styles.imageStyling} />
         <View style={styles.productInfoPaneStyle}>
           <Text style={styles.titleStyle}>
             {foodProduct.brands} {foodProduct.product_name} -{" "}
