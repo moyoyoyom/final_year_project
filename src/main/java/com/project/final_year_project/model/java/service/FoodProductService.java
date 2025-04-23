@@ -112,4 +112,9 @@ public class FoodProductService {
 
         return keywords;
     }
+
+    public List<FoodProduct> getFoodProductBySearchTerm(String query) {
+        List<FoodProduct> results = foodProductRepository.searchByProductNameOrBrand(query);
+        return results;
+    }
 }

@@ -3,8 +3,9 @@ import Header from "../UI/components/Header";
 import Icons from "../UI/components/Icons";
 import Screen from "../UI/layout/Screen";
 import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
+import ResultsList from "../UI/components/ResultsList";
 
-const SearchResultsScreen = ({ onBackClick, searchTerm }) => {
+const SearchResultsScreen = ({ onBackClick, searchTerm, results }) => {
   return (
     <Screen>
       <Header
@@ -14,7 +15,13 @@ const SearchResultsScreen = ({ onBackClick, searchTerm }) => {
         centerItem={<Text style={styles.titleStyle}>Search Results</Text>}
       />
       <Text>Results for the search: "{searchTerm}"</Text>
-      <View style={styles.backgroundStyle}></View>
+      <View style={styles.backgroundStyle}>
+        {results.length === 0 ? (
+          <Text>No results could be found for that search term</Text>
+        ) : (
+          <ResultsList />
+        )}
+      </View>
       <NavigationBarPresenter />
     </Screen>
   );
