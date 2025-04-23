@@ -18,6 +18,7 @@ const SearchScreen = ({
   onSelect,
   onReverseClick,
   reversed,
+  setSearchFieldInputValue,
 }) => {
   //View
   return (
@@ -35,6 +36,7 @@ const SearchScreen = ({
             value={searchInputValue}
             onSubmit={onSearch}
             customSearchFieldStyle={styles.customSearchFieldStyle}
+            onTextChange={setSearchFieldInputValue}
           />
         }
       />

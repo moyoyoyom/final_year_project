@@ -33,14 +33,9 @@ const SearchScreenPresenter = ({ navigation }) => {
     );
 
     setHistoricFoodProducts(viewedFoodProducts);
-    console.log(historicFoodProducts);
   }, [userHistory, isUserHistoryLoading]);
 
   //Handlers
-  const handleSubmit = (newValue) => {
-    setSearchValue(newValue);
-  };
-
   const onBarcodeScanned = async ({ data }) => {
     if (scanned) return;
     setScanned(true);
@@ -89,6 +84,10 @@ const SearchScreenPresenter = ({ navigation }) => {
     setHasListBeenReversed(!hasListBeenReversed);
   };
 
+  const handleSearch = () => {
+    console.log("Searching");
+  };
+
   //View
   return (
     <Screen>
@@ -99,8 +98,9 @@ const SearchScreenPresenter = ({ navigation }) => {
         />
       ) : (
         <SearchScreen
-          onSubmit={handleSubmit}
           searchInputValue={searchValue}
+          setSearchFieldInputValue={setSearchValue}
+          onSearch={handleSearch}
           onScanButtonClick={onScanButtonClick}
           onReturnClick={handleReturnClick}
           foodProducts={historicFoodProducts}
