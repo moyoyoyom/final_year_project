@@ -1,43 +1,28 @@
+import { StyleSheet, Text, View } from "react-native";
 import Header from "../UI/components/Header";
 import Screen from "../UI/layout/Screen";
-import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Icons from "../UI/components/Icons";
 import ResultsList from "../UI/components/ResultsList";
+import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
+import Icons from "../UI/components/Icons";
 
-const ExploreScreen = ({
+const ExploreCategoryScreen = ({
   recommendations,
   onSelect,
-  onMealsPress,
-  onHealthyFoodPress,
-  onGroceryPress,
+  onReturnClick,
+  theme,
 }) => {
   return (
     <Screen>
-      <Header />
-      <View style={styles.categoryPanes}>
-        <TouchableOpacity
-          style={styles.categoryItemStyle}
-          onPress={onMealsPress}
-        >
-          <Icons.CuisineIcon size={50} />
-          <Text>Vegan</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.categoryItemStyle}
-          onPress={onHealthyFoodPress}
-        >
-          <Icons.HealthyIcon size={50} />
-          <Text>Healthy Food</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.categoryItemStyle}
-          onPress={onGroceryPress}
-        >
-          <Icons.GroceryIcon size={50} />
-          <Text>Groceries</Text>
-        </TouchableOpacity>
-      </View>
+      <Header
+        leftItem={
+          <Icons.ReturnIcon
+            color={"#FFDC7A"}
+            size={30}
+            onPress={onReturnClick}
+          />
+        }
+        centerItem={<Text style={styles.titleStyle}>{theme} Products</Text>}
+      />
       <View style={styles.recommendationPane}>
         <Text style={styles.subheadingStyle}>Check these out: </Text>
         <ResultsList results={recommendations} onSelect={onSelect} />
@@ -70,6 +55,13 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     fontSize: 18,
   },
+  titleStyle: {
+    marginRight: 120,
+    textAlign: "center",
+    color: "#faebc3",
+    fontWeight: 600,
+    fontSize: 20,
+  },
 });
 
-export default ExploreScreen;
+export default ExploreCategoryScreen;

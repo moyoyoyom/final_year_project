@@ -7,6 +7,7 @@ import FoodProductDetailsScreenPresenter from "../presenter/FoodProductDetailsSc
 import LearnMorePresenter from "../presenter/LearnMorePresenter";
 import LikedProductsPresenter from "../presenter/LikedProductsPresenter";
 import SavedProductsPresenter from "../presenter/SavedProductsPresenter";
+import ExploreCategoryPresenter from "../presenter/ExploreCategoryPresenter";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,10 @@ const AppStack = () => (
     <Stack.Screen
       name="SavedProductsScreen"
       component={SavedProductsPresenter}
+    />
+    <Stack.Screen
+      name="ExploreCategoryScreen"
+      component={ExploreCategoryPresenter}
     />
   </Stack.Navigator>
 );
