@@ -12,6 +12,9 @@ const FormattedIngredientText = ({
   const formattedIngredientsArray = keyIngredients.map((ingredient) =>
     ingredient.toUpperCase()
   );
+  const formattedDislikesArray = dislikedIngredients.map((ingredient) =>
+    ingredient.toUpperCase()
+  );
 
   //View
   return (
@@ -28,6 +31,14 @@ const FormattedIngredientText = ({
         ) {
           return (
             <Text key={index} style={highlightStyle}>
+              {word}
+            </Text>
+          );
+        } else if (
+          formattedDislikesArray.includes(wordWithNoPunctuation.toUpperCase())
+        ) {
+          return (
+            <Text key={index} style={dislikeHighlightStyle}>
               {word}
             </Text>
           );
