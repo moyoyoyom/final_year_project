@@ -10,7 +10,7 @@ const ExploreCategoryPresenter = ({ navigation, route }) => {
   //Initialisations
   const { user } = useContext(AuthenticationContext);
   const { theme } = route.params;
-  const recommendationsEndpoint = `http://192.168.1.253:8090/api/foodproducts/recommendations/${user.userID}/50?theme=${theme}`;
+  const recommendationsEndpoint = `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/foodproducts/recommendations/${user.userID}/50?theme=${theme}`;
 
   //State
   const [recommendations, setRecommendations] = useState(null);

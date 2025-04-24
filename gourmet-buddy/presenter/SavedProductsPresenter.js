@@ -8,7 +8,7 @@ import SavedProductsScreen from "../view/screens/SavedProductsScreen";
 const SavedProductsPresenter = ({ navigation }) => {
   //Initialisations
   const { user } = useContext(AuthenticationContext);
-  const likedFoodProductsEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/SAVED`;
+  const likedFoodProductsEndpoint = `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/rating/${user.userID}/SAVED`;
 
   //State
   const [foodProducts, isFoodProductsLoading] = useLoad(

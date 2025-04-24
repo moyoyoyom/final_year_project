@@ -13,7 +13,7 @@ const SearchScreenPresenter = ({ navigation }) => {
   const { user, isUserLoading } = useContext(AuthenticationContext);
   if (isUserLoading || user === null) return;
   console.log("User details: ", user);
-  const historyEndpoint = `http://192.168.1.253:8090/api/history/recent/${user.userID}`;
+  const historyEndpoint = `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/history/recent/${user.userID}`;
 
   //State
   const [searchValue, setSearchValue] = useState("");
@@ -40,7 +40,7 @@ const SearchScreenPresenter = ({ navigation }) => {
     if (scanned) return;
     setScanned(true);
     const response = await API.get(
-      `http://192.168.1.253:8090/api/foodproducts/barcode/${data}`
+      `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/foodproducts/barcode/${data}`
     );
     if (response.isSuccess) {
       navigation.navigate("FoodProductDetailsScreen", {

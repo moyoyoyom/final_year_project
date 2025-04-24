@@ -9,11 +9,12 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   //Initialisations
   const { user } = useContext(AuthenticationContext);
   const { foodProduct } = route.params;
-  const userSensitivitiesEndpoint = `http://192.168.1.253:8090/api/relationships/cannoteat/${user.userID}`;
-  const saveRatingEndpoint = "http://192.168.1.253:8090/api/rating/save";
-  const likeProductEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.code}/LIKED`;
-  const ratingEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/${foodProduct.code}`;
-  const saveHistoryEndpoint = `http://192.168.1.253:8090/api/history/save`;
+  const userSensitivitiesEndpoint = `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/relationships/cannoteat/${user.userID}`;
+  const saveRatingEndpoint =
+    "http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/rating/save";
+  const likeProductEndpoint = `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/rating/${user.userID}/${foodProduct.code}/LIKED`;
+  const ratingEndpoint = `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/rating/${user.userID}/${foodProduct.code}`;
+  const saveHistoryEndpoint = `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/history/save`;
 
   //State
   const [userSensitivities] = useLoad(userSensitivitiesEndpoint);

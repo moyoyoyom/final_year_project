@@ -6,7 +6,7 @@ import LoadingScreen from "../view/screens/LoadingScreen";
 const SearchResultsScreenPresenter = ({ route, navigation }) => {
   //Initialisations
   const { searchTerm } = route.params;
-  const resultsEndpoint = `http://192.168.1.253:8090/api/foodproducts/search?searchTerm=${searchTerm}`;
+  const resultsEndpoint = `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/foodproducts/search?searchTerm=${searchTerm}`;
 
   //State
   const [results, isResultsLoading] = useLoad(resultsEndpoint);

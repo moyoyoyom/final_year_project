@@ -9,7 +9,8 @@ const LoginScreenPresenter = ({ navigation }) => {
   const { loginUser } = useContext(AuthenticationContext);
   const authenticationType = "Login";
 
-  const loginEndpoint = "http://192.168.1.253:8090/api/users/login";
+  const loginEndpoint =
+    "http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/users/login";
 
   //State
   const [usernameValue, setUsernameValue] = useState("");

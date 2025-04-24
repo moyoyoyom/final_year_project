@@ -8,7 +8,7 @@ import { StyleSheet, View } from "react-native";
 const LikedProductsPresenter = ({ navigation }) => {
   //Initialisations
   const { user } = useContext(AuthenticationContext);
-  const likedFoodProductsEndpoint = `http://192.168.1.253:8090/api/rating/${user.userID}/LIKED`;
+  const likedFoodProductsEndpoint = `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/rating/${user.userID}/LIKED`;
 
   //State
   const [foodProducts, isFoodProductsLoading] = useLoad(
