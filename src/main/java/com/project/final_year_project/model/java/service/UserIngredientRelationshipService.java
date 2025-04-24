@@ -33,12 +33,22 @@ public class UserIngredientRelationshipService {
         return userIngredientRelationshipRepository.save(userIngredientRelationship);
     }
 
-    public List<FoodTrigger> getAllUserSensitivities(Long userID) {
+    public List<FoodTrigger> getAllUserSensitivities(Long userID, String specifiedRelationship) {
         List<UserIngredientRelationship> userIngredientRelationships = userIngredientRelationshipRepository
                 .findByUserUserID(userID);
         return userIngredientRelationships.stream()
-                .filter(relationship -> relationship.getRelationship() == Relationship.CANNOTEAT)
+                .filter(relationship -> relationship
+                        .getRelationship() == getRelationshipFromString(specifiedRelationship))
                 .map(UserIngredientRelationship::getFoodTrigger)
                 .collect(Collectors.toList());
+    }
+
+    public Relationship getRelationshipFromString(String relationship) {
+        if (relationship.equalsIgnoreCase("CANNOTEAT")) {
+            return Relationship.CANNOTEAT;
+        } else if (relationship.equalsIgnoreCase("DISLIKES")) {
+            return Relationship.DISLIKES;
+        }
+        return Relationship.NONE;
     }
 }

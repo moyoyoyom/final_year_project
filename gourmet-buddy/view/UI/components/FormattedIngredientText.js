@@ -3,7 +3,9 @@ import { Text } from "react-native";
 const FormattedIngredientText = ({
   ingredientText,
   keyIngredients,
+  dislikedIngredients,
   highlightStyle,
+  dislikeHighlightStyle,
 }) => {
   //Initialisations
   const words = ingredientText.split(/(\s+)/);
