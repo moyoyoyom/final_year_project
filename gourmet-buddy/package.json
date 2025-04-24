@@ -25,7 +25,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@react-native-community/cli": "latest"
+    "@react-native-community/cli": "latest",
+    "eslint-plugin-react-hooks": "^5.2.0"
   },
   "private": true
 }

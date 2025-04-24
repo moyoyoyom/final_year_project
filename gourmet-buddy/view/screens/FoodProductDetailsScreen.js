@@ -10,6 +10,7 @@ import NavigationBarPresenter from "../../presenter/NavigationBarPresenter";
 const FoodProductDetailsScreen = ({
   foodProduct,
   userSensitivities,
+  dislikedIngredients,
   onBackClick,
   onLearnMoreClick,
   onLikeClick,
@@ -59,7 +60,9 @@ const FoodProductDetailsScreen = ({
           <FormattedIngredientText
             ingredientText={foodProduct.ingredients_text}
             highlightStyle={styles.sensitivityHighlightStyle}
+            dislikeHighlightStyle={styles.dislikeHighlightStyle}
             keyIngredients={userSensitivities}
+            dislikedIngredients={dislikedIngredients}
           />
         ) : (
           <Text> Missing information </Text>
@@ -107,6 +110,10 @@ const styles = StyleSheet.create({
   sensitivityHighlightStyle: {
     fontWeight: "600",
     color: "red",
+  },
+  dislikeHighlightStyle: {
+    fontWeight: "500",
+    color: "orange",
   },
 });
 

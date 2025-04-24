@@ -10,6 +10,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
   const { user } = useContext(AuthenticationContext);
   const { foodProduct } = route.params;
   const userSensitivitiesEndpoint = `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/relationships/cannoteat/${user.userID}`;
+  const dislikedIngredientsEndpoint = `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/relationships/dislikes/${user.userID}`;
   const saveRatingEndpoint =
     "http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/rating/save";
   const likeProductEndpoint = `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/rating/${user.userID}/${foodProduct.code}/LIKED`;
@@ -18,6 +19,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
 
   //State
   const [userSensitivities] = useLoad(userSensitivitiesEndpoint);
+  const [dislikedIngredients] = useLoad(dislikedIngredientsEndpoint);
   const [likeStatus, isLikeStatusLoading, loadLikeStatus] = useLoad(
     `${ratingEndpoint}/LIKED`
   );
@@ -58,6 +60,9 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
 
   const formattedSensitivities = userSensitivities.map(
     (trigger) => trigger.triggerName
+  );
+  const formattedDislikes = dislikedIngredients.map(
+    (ingredient) => ingredient.triggerName
   );
 
   //Handlers
@@ -140,6 +145,7 @@ const FoodProductDetailsScreenPresenter = ({ navigation, route }) => {
     <FoodProductDetailsScreen
       foodProduct={foodProduct}
       userSensitivities={formattedSensitivities}
+      dislikedIngredients={formattedDislikes}
       onBackClick={handleBackClick}
       onLearnMoreClick={handleLearnMoreClick}
       onLikeClick={handleLikeClick}

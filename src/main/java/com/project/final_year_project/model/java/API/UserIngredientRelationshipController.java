@@ -33,9 +33,11 @@ public class UserIngredientRelationshipController {
         return ResponseEntity.ok(relationship);
     }
 
-    @GetMapping("/cannoteat/{userID}")
-    public ResponseEntity<List<FoodTrigger>> getAllUserSensitivities(@PathVariable("userID") Long userID) {
-        List<FoodTrigger> foodTriggers = userIngredientRelationshipService.getAllUserSensitivities(userID);
+    @GetMapping("/{relationship}/{userID}")
+    public ResponseEntity<List<FoodTrigger>> getAllUserSensitivities(@PathVariable("userID") Long userID,
+            @PathVariable("relationship") String relationship) {
+        List<FoodTrigger> foodTriggers = userIngredientRelationshipService.getAllUserSensitivities(userID,
+                relationship);
         return ResponseEntity.ok(foodTriggers);
     }
 

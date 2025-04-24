@@ -11,9 +11,15 @@ import { AuthenticationContext } from "../model/AuthenicationContext";
 const SearchScreenPresenter = ({ navigation }) => {
   //Initalisations
   const { user, isUserLoading } = useContext(AuthenticationContext);
-  if (isUserLoading || user === null) return;
-  console.log("User details: ", user);
-  const historyEndpoint = `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/history/recent/${user.userID}`;
+  const historyEndpoint = user
+    ? `http://gourmet-buddy-app.eu-west-2.elasticbeanstalk.com/api/history/recent/${user.userID}`
+    : null;
+
+  useEffect(() => {
+    if (!isUserLoading && historyEndpoint) {
+      loadUserHistory(historyEndpoint);
+    }
+  }, [historyEndpoint, isUserLoading]);
 
   //State
   const [searchValue, setSearchValue] = useState("");
@@ -21,7 +27,8 @@ const SearchScreenPresenter = ({ navigation }) => {
   const [scanned, setScanned] = useState(false);
   const [hasPermissionBeenGranted, setHasPermissionBeenGranted] =
     useCameraPermissions();
-  const [userHistory, isUserHistoryLoading] = useLoad(historyEndpoint);
+  const [userHistory, isUserHistoryLoading, loadUserHistory] =
+    useLoad(historyEndpoint);
 
   const [historicFoodProducts, setHistoricFoodProducts] = useState([]);
   const [hasListBeenReversed, setHasListBeenReversed] = useState(false);
